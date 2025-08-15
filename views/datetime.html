@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reserve Your VIP Detailing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./datetime.css" />
+</head>
+<body>
+  <div class="outer-container">
+    <div class="container">
+      <header>
+        <h1 class="headline">Reserve Your VIP Detailing Experience</h1>
+        <p class="subline">Availability is extremely limited — secure your spot now.</p>
+      </header>
+
+      <!-- Month Navigation -->
+      <div class="calendar-nav">
+        <button id="prevBtn" class="nav-btn" aria-label="Previous month">←</button>
+        <div class="month-year" id="monthYear">—</div>
+        <button id="nextBtn" class="nav-btn" aria-label="Next month">→</button>
+      </div>
+
+      <!-- Calendar -->
+      <div class="calendar" id="calendar"></div>
+
+      <!-- Time Slots -->
+      <section class="timeslots">
+        <h2>Available Time Slots</h2>
+        <div class="slots-grid" id="slotsGrid"></div>
+      </section>
+
+      <button id="continueBtn" class="reserve-btn">Reserve My Spot</button>
+    </div>
+  </div>
+
+  <script src="./datetime.js" defer></script>
+</body>
+</html>

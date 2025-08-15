@@ -1,0 +1,80 @@
+/* Checkout – Dark + Gold, consistent with services */
+:root{
+  --gold:#f5b301;
+  --gold-2:#ff9800;
+  --panel:#222325;
+  --text:#f5f7fb;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; color:var(--text);
+  font:16px/1.45 "Inter","Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+  background:
+    radial-gradient(900px 380px at 20% -10%, rgba(245,179,1,.10), transparent 60%),
+    radial-gradient(800px 360px at 110% 0%, rgba(255,152,0,.08), transparent 65%),
+    #161616;
+}
+
+.outer{
+  max-width:1000px; padding:28px; margin:42px auto;
+  background:var(--panel); border:1px solid #2c2d31; border-radius:14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.45);
+}
+
+.header{ text-align:center; margin-bottom:16px }
+.title{ font-weight:800; font-size:1.6rem; margin:0 0 6px }
+.subtitle{ color:#cfd3dd; margin:0 0 6px; font-size:.95rem }
+
+.grid{
+  display:grid; grid-template-columns: 1fr 1fr; gap:16px;
+}
+@media (max-width: 860px){ .grid{ grid-template-columns: 1fr } }
+
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 18%), #0e0f12;
+  border:1px solid #2b2d34; border-radius:12px; padding:16px 16px 14px;
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
+}
+.card-title{
+  font-weight:800; margin:2px 0 10px;
+  background: linear-gradient(90deg, #fff, #e7eaf2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+
+.summary .row{
+  display:flex; justify-content:space-between; padding:8px 2px;
+  border-bottom:1px dashed #2b2d34;
+}
+.summary .row:last-of-type{ border-bottom:none }
+.summary .total{ font-weight:900; font-size:1.12rem; border-top:1px solid #2d2f36; margin-top:8px; padding-top:10px }
+.note{ color:#d8d2bd; font-size:.9rem; font-style:italic; margin-top:8px }
+
+.form .field{ display:flex; flex-direction:column; gap:6px; margin-bottom:12px }
+.form .row-2{ display:grid; grid-template-columns: 1fr 1fr; gap:12px }
+@media (max-width: 680px){ .form .row-2{ grid-template-columns: 1fr } }
+.form input, .form select, .form textarea{
+  background:#0b0c0f; border:1px solid #2a2c33; color:#fff;
+  border-radius:10px; padding:10px 12px; outline:none;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.form input:focus, .form select:focus, .form textarea:focus{
+  border-color: var(--gold); box-shadow: 0 0 0 3px rgba(245,179,1,.20);
+}
+
+.actions{ display:flex; justify-content:space-between; gap:12px; margin-top:10px }
+.btn{
+  padding:12px 18px; border-radius:12px; border:0; font-weight:900; letter-spacing:.3px; cursor:pointer;
+  transition: transform .15s ease, box-shadow .25s ease, opacity .15s ease, background .2s ease;
+}
+.btn-secondary{ background:#25262b; color:#fff; border:1px solid #343740 }
+.btn-secondary:hover{ background:#2f3137; transform:translateY(-1px) }
+.btn-primary{
+  background: linear-gradient(90deg, var(--gold), var(--gold-2)); color:#111;
+  box-shadow:0 14px 30px rgba(245,179,1,.35);
+}
+.btn-primary:hover{ transform: translateY(-1px) scale(1.02); box-shadow: 0 18px 40px rgba(245,179,1,.45) }
+
+.error{ color:#ff5a5a; font-size:.9rem; margin:8px 0 0 }
+.success{ color:#2ecc71; font-size:.9rem; margin:8px 0 0 }
+.hidden{ display:none }

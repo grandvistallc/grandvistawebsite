@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout | GrandVista Booking</title>
+  <link rel="stylesheet" href="/checkout.css" />
+  <meta name="description" content="Confirm your details and finish booking." />
+</head>
+<body>
+  <div class="outer">
+    <header class="header">
+      <h1 class="title">Step 3: Checkout</h1>
+      <p class="subtitle">Review your selection, add your details, and confirm.</p>
+    </header>
+
+    <main class="grid">
+      <!-- Summary -->
+      <section class="card">
+        <h2 class="card-title">Your Selection</h2>
+        <div class="summary">
+          <div class="row"><span>Package</span><span id="sumPackage">—</span></div>
+          <div class="row"><span>Size</span><span id="sumSize">—</span></div>
+          <div class="row"><span>Pet Hair</span><span id="sumHair">—</span></div>
+          <div class="row"><span>Staining/Soiling</span><span id="sumStain">—</span></div>
+          <div class="row"><span>Deep Odor</span><span id="sumOdor">—</span></div>
+          <div class="row"><span>Add-ons</span><span id="sumAddons">—</span></div>
+          <div class="row"><span>Appointment</span><span id="sumAppt">—</span></div>
+          <hr/>
+
+          <!-- Totals block required by checkout.js -->
+          <div class="row"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
+          <div class="row"><span>Mileage Fee</span><span id="sumMileageFee">$0.00</span></div>
+          <div class="row"><span>Tax</span><span id="sumTax">$0.00</span></div>
+          <div class="row total"><strong>Total</strong><strong id="sumTotal">$0.00</strong></div>
+        </div>
+        <p class="note">
+          * Final total includes mileage (first 15 miles free) and applicable sales tax based on your address.
+        </p>
+      </section>
+
+      <!-- Contact -->
+      <section class="card">
+        <h2 class="card-title">Your Details</h2>
+        <form id="checkoutForm" class="form">
+          <label class="field">
+            <span>Name*</span>
+            <input type="text" id="customerName" required placeholder="First & Last name" />
+          </label>
+          <div class="row-2">
+            <label class="field">
+              <span>Phone*</span>
+              <input type="tel" id="phone" required placeholder="(555) 555-5555" />
+            </label>
+            <label class="field">
+              <span>Email</span>
+              <input type="email" id="email" placeholder="you@example.com" />
+            </label>
+          </div>
+
+          <!-- Address split into Street / City / State / ZIP -->
+          <label class="field">
+            <span>Street Address</span>
+            <input type="text" id="street" placeholder="123 Main St" />
+          </label>
+          <div class="row-2">
+            <label class="field">
+              <span>City</span>
+              <input type="text" id="city" placeholder="City" />
+            </label>
+            <label class="field">
+              <span>State</span>
+              <input type="text" id="state" placeholder="State" />
+            </label>
+          </div>
+          <div class="row-2">
+            <label class="field">
+              <span>ZIP (optional)</span>
+              <input type="text" id="zip" placeholder="ZIP / Postcode" />
+            </label>
+            <div class="field">
+              <span>&nbsp;</span>
+              <small>We’ll auto-calc mileage & tax from your address.</small>
+            </div>
+          </div>
+
+          <label class="field">
+            <span>How did you hear about us?</span>
+            <select id="heardFrom">
+              <option value="">Select…</option>
+              <option>Google</option>
+              <option>Facebook/Instagram</option>
+              <option>Repeat Customer</option>
+              <option>Referral</option>
+              <option>Flyer/Signage</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Notes</span>
+            <textarea id="notes" rows="3" placeholder="Gate code, parking notes, special requests…"></textarea>
+          </label>
+
+          <div class="actions">
+            <button type="button" class="btn btn-secondary" id="backBtn">Back</button>
+            <button type="submit" class="btn btn-primary" id="confirmBtn">Confirm Booking</button>
+          </div>
+          <p id="errorMsg" class="error hidden">Please fill required fields.</p>
+          <p id="successMsg" class="success hidden">Booking confirmed! Redirecting…</p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script src="/checkout.js" defer></script>
+</body>
+</html>

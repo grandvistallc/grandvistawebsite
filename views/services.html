@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Service | GrandVista Booking</title>
+  <meta name="description" content="Choose your detailing service, vehicle size, pet hair, condition severity, and add-ons. Subtotal updates live." />
+  <link rel="stylesheet" href="/services.css">
+</head>
+<body>
+  <div id="page" class="page">
+    <header class="header">
+      <h1 class="title">Step 2: Choose Your Service</h1>
+      <p class="subtitle">Pick a package, confirm vehicle size & pet hair, set condition levels, add options. Subtotal updates live.</p>
+    </header>
+
+    <main id="servicesContainer" class="container">
+      <!-- Packages -->
+      <section id="packagesSection" class="section">
+        <h2 class="section-title">Packages</h2>
+        <p class="section-hint">Tip: tap a package to select it, or <em>View details</em> to see everything included.</p>
+        <div id="dataError" class="validation hidden"></div>
+
+        <div id="packagesGrid" class="grid">
+          <!-- Gloss & Shield -->
+          <label class="card package-card" data-pkg="gloss-shield">
+            <input type="radio" name="package" value="gloss-shield" class="radio visually-hidden">
+            <div class="card-body">
+              <div class="card-head">
+                <h3 class="card-title">Gloss &amp; Shield Exterior Refresh</h3>
+                <div class="price">$150</div>
+              </div>
+              <p class="desc">Premium wash + protection.</p>
+              <div class="meta">≈1–1.5 hrs</div>
+              <button type="button" class="details-btn" data-open="gloss-shield">View details</button>
+            </div>
+          </label>
+
+<!-- Interior Revival -->
+<label class="card package-card best-value" data-pkg="interior-revival">
+  <input type="radio" name="package" value="interior-revival" class="radio visually-hidden">
+  <div class="best-value-badge">★ Best Value ★</div>
+  <div class="card-body">
+    <div class="card-head">
+      <h3 class="card-title">
+        The Interior Revival Package 
+        <span class="stars">★★★★★</span>
+      </h3>
+      <div class="price">$270</div>
+    </div>
+    <p class="desc">Deep interior reset.</p>
+    <div class="meta">≈2–3 hrs</div>
+    <button type="button" class="details-btn" data-open="interior-revival">View details</button>
+  </div>
+</label>
+
+          <!-- Showroom Rebirth -->
+          <label class="card package-card" data-pkg="showroom-rebirth">
+            <input type="radio" name="package" value="showroom-rebirth" class="radio visually-hidden">
+            <div class="card-body">
+              <div class="card-head">
+                <h3 class="card-title">Showroom Rebirth – Full Reset</h3>
+                <div class="price">$480</div>
+              </div>
+              <p class="desc">Complete transformation.</p>
+              <div class="meta">≈4–5 hrs</div>
+              <button type="button" class="details-btn" data-open="showroom-rebirth">View details</button>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <!-- Vehicle Size -->
+      <section id="vehicleSizeSection" class="section">
+        <h2 class="section-title">Vehicle Size</h2>
+        <div id="sizeList" class="size-list"></div>
+        <p id="sizeRequiredMsg" class="validation hidden" style="margin-top:8px;">Please choose a vehicle size.</p>
+      </section>
+
+      <!-- Pet Hair (Required) -->
+      <section id="hairSection" class="section">
+        <h2 class="section-title">Pet Hair</h2>
+        <div id="hairList" class="size-list"></div>
+        <p id="hairRequiredMsg" class="validation hidden" style="margin-top:8px;">Please choose a pet hair level.</p>
+      </section>
+
+      <!-- Condition Severity -->
+      <section id="conditionSection" class="section">
+        <h2 class="section-title">Condition Severity</h2>
+        <div class="subgroup">
+          <div class="subgroup-title">Excessive Staining / Soiling</div>
+          <div id="stainList" class="size-list"></div>
+        </div>
+        <div class="subgroup">
+          <div class="subgroup-title">Deep Odor</div>
+          <div id="odorList" class="size-list"></div>
+        </div>
+      </section>
+
+      <!-- Add-ons -->
+      <section id="addonsSection" class="section">
+        <h2 class="section-title">Add-ons</h2>
+        <div id="addonsList" class="addons-list"></div>
+      </section>
+
+      <!-- Size-based pricing note -->
+      <section class="section">
+        <p class="price-note">
+          * Heavy Pet Hair and Paint Correction pricing adjusts based on your vehicle size (Sedan lowest, SUV higher, Truck/Van highest). Changing size updates these prices automatically.
+        </p>
+      </section>
+
+      <!-- Summary -->
+      <section id="summarySection" class="section summary">
+        <div class="summary-row"><span>Base</span><span id="basePrice">$0</span></div>
+        <div class="summary-row"><span>Size Fee</span><span id="sizeFee">$0</span></div>
+        <div id="rowHair" class="summary-row hidden"><span>Pet Hair</span><span id="hairTotal">$0</span></div>
+        <div id="rowStain" class="summary-row hidden"><span>Staining/Soiling</span><span id="stainTotal">$0</span></div>
+        <div id="rowOdor" class="summary-row hidden"><span>Deep Odor</span><span id="odorTotal">$0</span></div>
+        <div id="rowPaint" class="summary-row hidden"><span>Paint Correction</span><span id="paintTotal">$0</span></div>
+        <div id="rowAddons" class="summary-row hidden"><span>Add-ons</span><span id="addonsTotal">$0</span></div>
+        <hr/>
+        <div class="summary-row total"><span>Subtotal</span><span id="subtotal">$0</span></div>
+
+        <div class="actions">
+          <button id="backBtn" type="button" class="btn btn-secondary">Back</button>
+          <button id="continueBtn" type="button" class="btn btn-primary" disabled>Continue</button>
+        </div>
+        <p id="validationMsg" class="validation hidden">Please complete all required selections.</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- Package Details Modal -->
+  <div id="pkgModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="pkgModalTitle">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-card">
+      <button class="modal-close" aria-label="Close" data-close="true">×</button>
+      <h3 id="pkgModalTitle" class="modal-title">Package Details</h3>
+      <div class="modal-meta">
+        <span id="pkgModalPrice" class="modal-price">$0</span>
+        <span id="pkgModalDuration" class="modal-duration"></span>
+      </div>
+      <p id="pkgModalDesc" class="modal-desc"></p>
+
+      <div id="pkgModalIncludesWrap" class="modal-list-wrap hidden">
+        <div class="modal-list-title">Includes</div>
+        <ul id="pkgModalIncludes" class="modal-list"></ul>
+      </div>
+
+      <div id="pkgModalBonusesWrap" class="modal-list-wrap hidden">
+        <div class="modal-list-title">Bonuses</div>
+        <ul id="pkgModalBonuses" class="modal-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== -->
+  <!-- Package breakdowns as templates (used by modal) -->
+  <!-- ===================== -->
+  <template id="tmpl-gloss-shield" data-name="Gloss &amp; Shield Exterior Refresh" data-price="150" data-duration="≈1–1.5 hrs" data-desc="Premium wash + protection.">
+    <div class="includes">
+      <li>Premium foam bath to lift dirt safely</li>
+      <li>Hand wash technique (no automated car washes)</li>
+      <li>Carnauba wax application for deep, wet shine</li>
+      <li>Wheels &amp; tires cleaned inside and out</li>
+      <li>Hand-dried with microfiber — zero water spots</li>
+      <li>Tire protection applied for that showroom look</li>
+    </div>
+    <div class="bonuses">
+      <li><strong>FREE Bonus ($15 value)</strong></li>
+      <li>Quick interior vacuum (seats, floor, mats)</li>
+      <li>Dashboard wipe-down</li>
+      <li>Exterior care guide (digital)</li>
+    </div>
+  </template>
+
+  <template id="tmpl-interior-revival" data-name="The Interior Revival Package" data-price="270" data-duration="≈2–3 hrs" data-desc="Deep interior reset.">
+    <div class="includes">
+      <li>Complete vacuum system — seats, carpets, trunk, crevices</li>
+      <li>Carpet shampoo + extraction to remove embedded dirt</li>
+      <li>Steam cleaning for stubborn stains &amp; sanitization</li>
+      <li>All surfaces degreased and sanitized</li>
+      <li>UV protectant on plastics and vinyl</li>
+      <li>Leather cleaning + conditioning</li>
+      <li>Interior windows &amp; mirrors crystal clear</li>
+      <li>Door jambs cleaned + protected</li>
+    </div>
+    <div class="bonuses">
+      <li><strong>Limited-Time Bonus Stack ($140 value)</strong></li>
+      <li>FREE Exterior Wash &amp; Wax</li>
+      <li>Premium Air Freshener (your choice of scent)</li>
+      <li>Rain-X Windshield Treatment</li>
+      <li>Pet Hair Removal (up to 20 minutes)</li>
+      <li>$20 Credit toward next service</li>
+    </div>
+  </template>
+
+  <template id="tmpl-showroom-rebirth" data-name="Showroom Rebirth – Full Reset" data-price="480" data-duration="≈4–5 hrs" data-desc="Complete transformation.">
+    <div class="includes">
+      <li><strong>Complete Interior Transformation</strong></li>
+      <li>Everything from Interior Revival Package</li>
+      <li>Premium scent selection (5 luxury options)</li>
+      <li>Fabric protection treatment (stain resistance)</li>
+      <li><strong>Full Exterior Restoration</strong></li>
+      <li>Premium foam bath + hand wash</li>
+      <li>Wheels, tires, and undercarriage deep clean</li>
+      <li>Clay bar treatment (removes embedded contaminants)</li>
+      <li>Bug and tar removal</li>
+      <li>Single-step machine polish (removes swirl marks)</li>
+      <li>Ceramic wax application (12+ months protection)</li>
+      <li>Window and wheel ceramic coating</li>
+      <li>Tire shine application (that glossy, wet look)</li>
+    </div>
+    <div class="bonuses">
+      <li><strong>VIP Bonus Package ($150 value)</strong></li>
+      <li>Engine Bay Detail (clean and protected)</li>
+      <li>Complete Car Care Guide (interior + exterior)</li>
+      <li>6-Month Stain Guard Protection</li>
+      <li>$50 Loyalty Credit toward next service</li>
+      <li>Priority Booking Status for future appointments</li>
+    </div>
+  </template>
+
+  <script src="/services.js" defer></script>
+</body>
+</html>

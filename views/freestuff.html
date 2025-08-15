@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free Resources | GrandVista Mobile Detailing</title>
+  <!-- Modern, clean sans-serif font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Add AOS.js CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/public/freestuff.css">
+</head>
+<body>
+  <!-- Sticky Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="/" class="navbar-logo">
+        <img src="Images/2025_logo_white_bg-removebg-preview.png" alt="GrandVista Logo" height="36" />
+      </a>
+      <ul class="navbar-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/packages">Packages</a></li>
+        <li><a href="Freestuff.html" class="free-stuff-btn">Free Stuff</a></li>
+        <li><a href="/blogs">Blogs</a></li>
+        <li><a href="/fleet">Fleet</a></li>
+        <li><a href="Contact.html">Contact</a></li>
+      </ul>
+      <a href="/services" class="btn btn-book navbar-book-btn">Book Now</a>
+      <button class="navbar-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section" data-aos="fade-up" data-aos-duration="900">
+      <h1 data-aos="fade-up" data-aos-delay="100">Free Resources & Special Offers</h1>
+      <p data-aos="fade-up" data-aos-delay="200">
+        Get expert car care tips, free virtual assessments, and exclusive discounts to keep your vehicle looking its absolute best. No strings attached—just valuable resources from the GrandVista team.
+      </p>
+      
+      <!-- Quick Navigation -->
+      <div class="quick-nav" data-aos="fade-up" data-aos-delay="300">
+        <a href="#care-guide">📚 Car Care Guide</a>
+        <a href="#free-assessment">🔍 Free Assessment</a>
+        <a href="#discount-offer">💰 $25 Off Coupon</a>
+      </div>
+    </section>
+
+    <!-- Offers Grid -->
+    <div class="offers-grid">
+      
+      <!-- Offer 1: Car Care Guide -->
+      <div class="offer-card" id="care-guide" data-aos="zoom-in" data-aos-delay="100">
+        <div class="offer-icon">📚</div>
+        <h3>7 Secrets to Keep Your Car Looking New</h3>
+        <p>Want your car to stay clean, protected, and shining between details? Our free guide shares expert tips on interior care, paint protection, seasonal upkeep, and more.</p>
+        
+        <div class="button-container">
+          <button class="cta-button" onclick="toggleForm('guide-form')">
+            📥 Download the Free Guide
+          </button>
+        </div>
+        
+        <div class="lead-form" id="guide-form">
+          <form action="https://formspree.io/f/mvgqvnal" method="POST" class="formspree-form">
+            <div class="form-group">
+              <label for="guide-name">Your Name:</label>
+              <input type="text" id="guide-name" name="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <label for="guide-email">Email Address:</label>
+              <input type="email" id="guide-email" name="email" placeholder="Your Email" required>
+            </div>
+            <!-- Honeypot field to trap bots -->
+            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+            <!-- Hidden field to identify form type -->
+            <input type="hidden" name="_subject" value="Free Guide Download - GrandVista">
+            <input type="hidden" name="form_type" value="Free Guide Download">
+            <input type="hidden" name="service_requested" value="Car Care Guide Download">
+            <button type="submit" class="submit-button">Get My Free Guide</button>
+          </form>
+          <div class="success-message" id="guide-success" style="display:none;">
+            ✅ Thanks — check your inbox for the free guide!
+          </div>
+        </div>
+      </div>
+
+      <!-- Offer 2: Free Assessment -->
+      <div class="offer-card" id="free-assessment" data-aos="zoom-in" data-aos-delay="200">
+        <div class="offer-icon">🔍</div>
+        <h3>Free Walkaround: What's Wearing Down Your Paint?</h3>
+        <p>Let us virtually inspect your entire vehicle and help you determine the best detailing option for your specific needs. We'll show you the hidden wear, fading, or damage affecting your car's value and appearance. No pressure — just expert guidance to find your perfect package.</p>
+        
+        <div class="button-container">
+          <button class="cta-button" onclick="toggleForm('assessment-form')">
+            👀 Book My Free Assessment
+          </button>
+        </div>
+        
+        <div class="lead-form" id="assessment-form">
+          <form action="https://formspree.io/f/mvgqvnal" method="POST" id="assessment-formspree">
+            <div class="form-group">
+              <label for="assessment-name">Full Name:</label>
+              <input type="text" id="assessment-name" name="name" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+              <label for="assessment-email">Email Address:</label>
+              <input type="email" id="assessment-email" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-group">
+              <label for="assessment-phone">Phone Number:</label>
+              <input type="tel" id="assessment-phone" name="phone" placeholder="Phone Number">
+            </div>
+            <div class="form-group">
+              <label for="assessment-message">Message or Preferred Date/Time:</label>
+              <textarea id="assessment-message" name="message" placeholder="Any notes or preferred time?" rows="3"></textarea>
+            </div>
+            <input type="hidden" name="_subject" value="Free Assessment Request - GrandVista">
+            <input type="hidden" name="form_type" value="Free Assessment">
+            <input type="hidden" name="service_requested" value="Free Virtual Vehicle Assessment">
+            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+            <button type="submit" class="submit-button">Book My Free Assessment</button>
+          </form>
+          <div class="success-message" id="assessment-success">
+            ✅ Thanks! We'll be in touch soon to confirm your free assessment.
+          </div>
+        </div>
+      </div>
+
+      <!-- Offer 3: Discount -->
+      <div class="offer-card discount-card" id="discount-offer" data-aos="zoom-in" data-aos-delay="300">
+        <div class="offer-icon">🎁</div>
+        <h3>Get $25 Off Your First Booking</h3>
+        <p>New to GrandVista? We're offering $25 off your first full detailing package. Join our email list to get your personal discount code instantly.</p>
+        
+        <div class="button-container">
+          <button class="cta-button" onclick="toggleForm('discount-form')">
+            🎁 Claim My $25 Discount
+          </button>
+        </div>
+        
+        <div class="lead-form" id="discount-form">
+          <form action="https://formspree.io/f/mvgqvnal" method="POST" class="formspree-form">
+            <div class="form-group">
+              <label for="discount-name">Your Name:</label>
+              <input type="text" id="discount-name" name="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+              <label for="discount-email">Email Address:</label>
+              <input type="email" id="discount-email" name="email" placeholder="Your Email" required>
+            </div>
+            <!-- Honeypot field to trap bots -->
+            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+            <!-- Hidden field to identify form type -->
+            <input type="hidden" name="_subject" value="$25 Discount Claim - GrandVista">
+            <input type="hidden" name="form_type" value="$25 Discount Claim">
+            <input type="hidden" name="service_requested" value="$25 Off First Detailing Package">
+            <button type="submit" class="submit-button">Get My Discount Code</button>
+          </form>
+          <div class="success-message" id="discount-success" style="display:none;">
+            ✅ Thanks — check your inbox for your $25 discount code!
+          </div>
+        </div>
+          </form>
+          <div class="success-message" id="discount-success">
+            ✅ Your discount code is: <strong>NEWCUSTOMER25</strong><br>
+            We've also sent it to your email. Valid for 30 days!
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Additional CTA Section -->
+    <section class="hero-section" style="margin-top: 4rem;" data-aos="fade-up" data-aos-duration="900">
+      <h2 data-aos="fade-up" data-aos-delay="100">Ready to Experience Premium Mobile Detailing?</h2>
+      <p data-aos="fade-up" data-aos-delay="200">
+        Browse our packages and book your appointment today. We bring showroom-quality results right to your driveway.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;" data-aos="fade-up" data-aos-delay="300">
+        <a href="/packages" class="cta-button" style="max-width: 250px; margin-bottom: 0;">View Our Packages</a>
+        <a href="/services" class="cta-button" style="max-width: 250px; margin-bottom: 0; background: var(--white); color: var(--orange); border: 2px solid var(--orange);">Book Now</a>
+      </div>
+    </section>
+
+    <!-- Free Bonuses with Packages Section -->
+    <section class="bonus-section" style="background: linear-gradient(135deg, #1F2937 0%, #374151 100%); padding: 2rem 1rem; margin: 2rem auto; max-width: 1200px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); text-align: center; color: white; position: relative; overflow: hidden;" data-aos="fade-up" data-aos-duration="900">
+      <!-- Decorative background elements - smaller for mobile -->
+      <div style="position: absolute; top: -50px; right: -50px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
+      <div style="position: absolute; bottom: -40px; left: -40px; width: 80px; height: 80px; background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
+      
+      <div style="position: relative; z-index: 2;">
+        <h2 style="color: white; font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 1rem; text-shadow: 0 4px 8px rgba(0,0,0,0.3); line-height: 1.2;" data-aos="fade-up" data-aos-delay="100">
+          🎁 Free Bonuses Included with Every Package
+        </h2>
+        <p style="color: rgba(255, 255, 255, 0.9); font-size: clamp(1rem, 2.5vw, 1.3rem); margin-bottom: 2rem; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto; padding: 0 1rem;" data-aos="fade-up" data-aos-delay="200">
+          When you book any of our detailing packages, you don't just get the service—you get incredible bonus value that makes every dollar count.
+        </p>
+        
+        <!-- Package Bonuses Grid - Mobile Optimized -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 1.5rem; margin-bottom: 2rem;" data-aos="fade-up" data-aos-delay="300">
+          
+          <!-- Exterior Refresh Bonuses -->
+          <div style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.3); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="background: linear-gradient(135deg, var(--orange), #ff8c3a); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);">
+              <h3 style="color: white; font-size: clamp(1.1rem, 3vw, 1.4rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2;">Exterior Refresh ($150)</h3>
+              <div style="color: white; opacity: 0.9; font-size: clamp(0.9rem, 2.5vw, 1rem); font-weight: 600;">🎁 FREE Bonus: $15 Value</div>
+            </div>
+            <ul style="text-align: left; list-style: none; padding: 0; margin: 0;">
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>Quick Interior Vacuum</strong><br><span style="opacity: 0.8; font-size: 0.9em;">(seats, floor, mats)</span></span></li>
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <strong>Dashboard Wipe-Down</strong></li>
+              <li style="margin-bottom: 0; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>Exterior Care Guide</strong><br><span style="opacity: 0.8; font-size: 0.9em;">(digital)</span></span></li>
+            </ul>
+          </div>
+          
+          <!-- Interior Revival Bonuses -->
+          <div style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.3); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="background: linear-gradient(135deg, #DC2626, #EF4444); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3); position: relative;">
+              <div style="position: absolute; top: -8px; right: -8px; background: #FCD34D; color: #92400E; padding: 0.3rem 0.5rem; border-radius: 8px; font-size: 0.7rem; font-weight: bold; line-height: 1;">👑 POPULAR</div>
+              <h3 style="color: white; font-size: clamp(1.1rem, 3vw, 1.4rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2;">Interior Revival ($270)</h3>
+              <div style="color: white; opacity: 0.9; font-size: clamp(0.9rem, 2.5vw, 1rem); font-weight: 600;">🔥 LIMITED-TIME BONUS: $140 Value</div>
+            </div>
+            <ul style="text-align: left; list-style: none; padding: 0; margin: 0;">
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>FREE Exterior Wash & Wax - Ends Friday at Midnight</strong><br><span style="opacity: 0.8; font-size: 0.9em;">(normally $150)</span></span></li>
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>Premium Air Freshener</strong><br><span style="opacity: 0.8; font-size: 0.9em;">(your choice)</span></span></li>
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <strong>Rain-X Windshield Treatment</strong></li>
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>Pet Hair Removal</strong><br><span style="opacity: 0.8; font-size: 0.9em;">(up to 20 minutes)</span></span></li>
+              <li style="margin-bottom: 0; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>$20 Credit</strong><br><span style="opacity: 0.8; font-size: 0.9em;">toward your next service</span></span></li>
+            </ul>
+          </div>
+          
+          <!-- Showroom Rebirth Bonuses -->
+          <div style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.3); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div style="background: linear-gradient(135deg, #7C3AED, #A855F7); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3); position: relative;">
+              <div style="position: absolute; top: -8px; right: -8px; background: #FCD34D; color: #92400E; padding: 0.3rem 0.5rem; border-radius: 8px; font-size: 0.7rem; font-weight: bold; line-height: 1;">🚀 VIP</div>
+              <h3 style="color: white; font-size: clamp(1.1rem, 3vw, 1.4rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2;">Showroom Rebirth ($480)</h3>
+              <div style="color: white; opacity: 0.9; font-size: clamp(0.9rem, 2.5vw, 1rem); font-weight: 600;">🚀 VIP BONUS PACKAGE: $150 Value</div>
+            </div>
+            <ul style="text-align: left; list-style: none; padding: 0; margin: 0;">
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>Engine Bay Detail</strong><br><span style="opacity: 0.8; font-size: 0.9em;">(clean and protected)</span></span></li>
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>Complete Car Care Guide</strong><br><span style="opacity: 0.8; font-size: 0.9em;">(interior + exterior)</span></span></li>
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <strong>6-Month Stain Guard Protection</strong></li>
+              <li style="margin-bottom: 0.8rem; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>$50 Loyalty Credit</strong><br><span style="opacity: 0.8; font-size: 0.9em;">toward next service</span></span></li>
+              <li style="margin-bottom: 0; color: white; display: flex; align-items: flex-start; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;"><span style="color: var(--orange); margin-right: 0.8rem; font-size: 1.1rem; margin-top: 0.1rem; flex-shrink: 0;">✅</span> <span><strong>Priority Booking Status</strong><br><span style="opacity: 0.8; font-size: 0.9em;">for future services</span></span></li>
+            </ul>
+          </div>
+          
+        </div>
+        
+        <!-- Call to Action -->
+        <div style="background: rgba(249, 115, 22, 0.1); border: 2px solid rgba(249, 115, 22, 0.3); border-radius: 16px; padding: 2rem; margin-top: 2rem;" data-aos="fade-up" data-aos-delay="400">
+          <h3 style="color: var(--orange); font-size: 1.8rem; margin-bottom: 1rem;">Ready to Get Maximum Value?</h3>
+          <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6;">
+            Every package includes significant bonus value that you won't find anywhere else. The more comprehensive your service, the more free extras you receive.
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="/packages" style="display: inline-block; background: var(--orange); color: white; font-weight: bold; font-size: 1.1rem; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 24px rgba(249, 115, 22, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(249, 115, 22, 0.3)'">
+              View All Packages & Bonuses
+            </a>
+            <a href="/services" style="display: inline-block; background: transparent; color: var(--orange); font-weight: bold; font-size: 1.1rem; padding: 1rem 2rem; border-radius: 12px; text-decoration: none; border: 2px solid var(--orange); transition: all 0.3s ease;" onmouseover="this.style.background='var(--orange)'; this.style.color='white'" onmouseout="this.style.background='transparent'; this.style.color='var(--orange)'">
+              Book Your Service Now
+            </a>
+          </div>
+        </div>
+        
+        <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-top: 2rem; margin-bottom: 0;">
+          💡 All bonuses are automatically included—no need to ask or remember to mention them. We include maximum value in every service.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Add AOS.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true
+    });
+  </script>
+  
+  <script>
+    // Hamburger menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.querySelector('.navbar-toggle');
+      const links = document.querySelector('.navbar-links');
+      if (toggle && links) {
+        toggle.addEventListener('click', function() {
+          links.classList.toggle('active');
+        });
+      }
+    });
+    
+    // Form toggle functionality
+    function toggleForm(formId) {
+      const form = document.getElementById(formId);
+      const allForms = document.querySelectorAll('.lead-form');
+      
+      // Close all other forms
+      allForms.forEach(f => {
+        if (f.id !== formId) {
+          f.classList.remove('active');
+        }
+      });
+      
+      // Toggle the clicked form
+      form.classList.toggle('active');
+    }
+    
+    // Handle Formspree form submissions
+    document.addEventListener('DOMContentLoaded', function() {
+      const formspreeHanlder = function(event) {
+        event.preventDefault();
+        const form = event.target;
+        const button = form.querySelector('button[type="submit"]');
+        const formId = form.closest('.lead-form').id;
+        
+        // Disable button and show loading state
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = 'Sending...';
+        
+        // Submit to Formspree
+        fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(response => {
+          if (response.ok) {
+            // Show success message
+            const successMessage = form.parentElement.querySelector('.success-message');
+            form.style.display = 'none';
+            successMessage.style.display = 'block';
+            
+            // Reset form
+            form.reset();
+          } else {
+            throw new Error('Form submission failed');
+          }
+        }).catch(error => {
+          // Show error message
+          alert('Oops! There was a problem submitting your form. Please try again.');
+          console.error('Form submission error:', error);
+        }).finally(() => {
+          // Re-enable button
+          button.disabled = false;
+          button.textContent = originalText;
+        });
+      };
+      
+      // Attach handler to all Formspree forms
+      document.querySelectorAll('.formspree-form').forEach(form => {
+        form.addEventListener('submit', formspreeHanlder);
+      });
+      
+      // Handle Assessment Formspree form
+      const assessmentForm = document.getElementById('assessment-formspree');
+      if (assessmentForm) {
+        assessmentForm.addEventListener('submit', async function(event) {
+          event.preventDefault();
+          
+          const form = event.target;
+          const button = form.querySelector('button[type="submit"]');
+          const originalText = button.textContent;
+          
+          // Disable button and show loading state
+          button.disabled = true;
+          button.textContent = 'Sending...';
+          
+          try {
+            const response = await fetch(form.action, {
+              method: 'POST',
+              body: new FormData(form),
+              headers: {
+                'Accept': 'application/json'
+              }
+            });
+            
+            if (response.ok) {
+              // Show success message
+              document.getElementById('assessment-success').classList.add('active');
+              form.style.display = 'none';
+            } else {
+              throw new Error('Form submission failed');
+            }
+          } catch (error) {
+            alert('There was an error submitting the form. Please try again.');
+            button.disabled = false;
+            button.textContent = originalText;
+          }
+        });
+      }
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+/* ===========================
+   GrandVista • Services (v2)
+   Go-wild visual polish, same structure.
+   =========================== */
+
+/* ---------- Theme ---------- */
+:root{
+  --bg: #161616;
+  --panel: #222325;
+  --card: #0b0b0c;
+  --card-grad: radial-gradient(1200px 600px at 10% -10%, #1b1b1e 0%, #0b0b0c 55%);
+  --chip: #0f0f11;
+  --chip-hover: #1a1a1d;
+  --text: #f5f7fb;
+  --muted: #cdd2dd;
+  --muter: #9aa0ad;
+  --danger: #ff5a5a;
+
+  --gold: #f5b301;
+  --gold-2: #ff9800;
+  --gold-3: #ffcc66;
+
+  --ring: rgba(245,179,1,.55);
+  --ring-soft: rgba(245,179,1,.25);
+  --shadow: 0 10px 30px rgba(0,0,0,.45);
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-xs: 8px;
+  --blur: 16px;
+}
+
+/* ---------- Base ---------- */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 600px at 30% -10%, rgba(255,188,58,.08), transparent 60%),
+    radial-gradient(900px 500px at 120% 20%, rgba(255,152,0,.08), transparent 60%),
+    var(--bg);
+  color:var(--text);
+  font:16px/1.45 "Inter", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing:.2px;
+}
+
+/* subtle moving sparkle */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background: radial-gradient(1000px 400px at 80% -20%, rgba(255,206,102,.09), transparent 60%);
+  mix-blend-mode:screen; pointer-events:none;
+  animation: bgFloat 18s linear infinite alternate;
+}
+@keyframes bgFloat{from{transform:translate3d(0,0,0)}to{transform:translate3d(-2%,2%,0)}}
+
+/* ---------- Container & headings ---------- */
+.container{
+  max-width:920px;
+  margin:48px auto;
+  padding:28px;
+  background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 18%) , var(--panel);
+  border:1px solid #2c2d31;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,.02) inset;
+  backdrop-filter: blur(6px);
+}
+
+.title{
+  margin:18px 0 6px;
+  font-weight:800;
+  font-size: clamp(22px, 2.2vw, 32px);
+  letter-spacing:.3px;
+  background: linear-gradient(90deg, var(--text), #eee 40%, #d2d7e3);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow: 0 0 24px rgba(255,255,255,.05);
+}
+
+.subtitle{
+  margin:0 0 8px;
+  color:var(--muter);
+  font-size:.92rem;
+}
+
+/* section titles with gold accent */
+.section-title{
+  font-weight:800;
+  margin:20px 0 12px;
+  letter-spacing:.4px;
+  background: linear-gradient(90deg, #ffe7a2, var(--gold), var(--gold-2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  filter: drop-shadow(0 2px 12px rgba(245,179,1,.15));
+}
+.section-hint{color:#b8bdc9;font-size:.86rem;margin:-4px 0 14px}
+
+/* ---------- Package grid ---------- */
+#packagesGrid{display:grid; gap:16px}
+.package-card{
+  position:relative;
+  border-radius: var(--radius);
+  border:1px solid #202127;
+  background: var(--card-grad);
+  overflow:hidden; cursor:pointer;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+.package-card::after{
+  content:"";
+  position:absolute; inset:-1px;
+  border-radius: inherit;
+  background: radial-gradient(120% 120% at 10% 0%, rgba(245,179,1,.12), transparent 35%);
+  opacity:.0; transition:opacity .25s ease;
+  pointer-events:none;
+}
+.package-card:hover{ transform: translateY(-2px); box-shadow: 0 20px 40px rgba(0,0,0,.5) }
+.package-card:hover::after{ opacity:1 }
+.package-card.selected{
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--ring) inset, 0 18px 40px rgba(0,0,0,.55), 0 0 24px var(--ring-soft);
+}
+.package-card input{display:none}
+
+.card-body{ padding:18px 18px 16px }
+.card-head{ display:flex; align-items:center; justify-content:space-between; gap:12px }
+.card-title{ font-weight:800; font-size:1.03rem }
+.price{
+  font-weight:900;
+  color: var(--gold);
+  padding:6px 10px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(245,179,1,.18), rgba(245,179,1,.05));
+  border:1px solid rgba(245,179,1,.35);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 0 3px rgba(245,179,1,.08);
+  animation: priceRise .6s ease both;
+}
+@keyframes priceRise{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:translateY(0)}}
+
+.desc{ color:#cbd1dc; margin:10px 0 6px; font-size:.95rem }
+.meta{ color:#aeb4c2; font-size:.88rem }
+
+.details-btn{
+  margin-top:10px; padding:8px 12px;
+  background:#121316; color:#fff;
+  border:1px solid #2e3036; border-radius: 10px;
+  font-weight:700; font-size:.85rem; letter-spacing:.3px;
+  transition: border-color .2s ease, background .2s ease, transform .15s ease, color .2s ease, box-shadow .2s ease;
+}
+.details-btn:hover{
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+  color:#111; border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(245,179,1,.35);
+}
+
+/* ---------- Chip groups (sizes, hair, severity) ---------- */
+.size-list{ display:flex; flex-wrap:wrap; gap:10px }
+.chip{
+  display:inline-flex; align-items:center; gap:8px;
+  background: linear-gradient(180deg, #0c0d10, #0a0a0c);
+  color:#e9ecf5;
+  padding:9px 14px; border-radius: 999px;
+  border:1px solid #2a2c33;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+  user-select:none; cursor:pointer;
+}
+.chip:hover{ background: #15161a; border-color:#3a3d46; transform:translateY(-1px) }
+.chip.selected{
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+  color:#0e0e10;
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(245,179,1,.25), 0 10px 26px rgba(245,179,1,.35);
+  animation: selectPulse 1.2s ease-out 1;
+}
+@keyframes selectPulse{
+  0%{ box-shadow: 0 0 0 0 rgba(245,179,1,.5) }
+  100%{ box-shadow: 0 0 0 8px rgba(245,179,1,0) }
+}
+.chip .chip-fee{ color:#ffd78a; font-weight:700 }
+.chip.selected .chip-fee{ color:#101010 }
+
+.validation{ color:var(--danger); font-size:.86rem; margin:6px 0 }
+
+/* ---------- Add-ons list ---------- */
+.addons-list{ display:flex; flex-direction:column; gap:10px }
+.addon-row{
+  display:flex; align-items:center; gap:12px;
+  background: linear-gradient(180deg, #0b0c0f, #0a0a0c);
+  border:1px solid #24262c; border-radius: var(--radius-sm);
+  padding:12px 14px;
+  transition: border-color .2s ease, background .2s ease, box-shadow .25s ease;
+}
+.addon-row:hover{ background:#121317; border-color:#363942 }
+.addon-row.selected{
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(245,179,1,.2), 0 10px 26px rgba(245,179,1,.25);
+}
+.addon-row input{ accent-color: var(--gold) }
+.addon-name{ flex:1; color:#e7ebf4; font-weight:600; letter-spacing:.2px }
+.addon-price{ color:var(--gold); font-weight:900 }
+
+/* ---------- Price note ---------- */
+.price-note{
+  font-size:.9rem; color:#d8d2bd; font-style:italic;
+  background: linear-gradient(180deg, rgba(255,207,96,.08), rgba(0,0,0,0));
+  border:1px dashed rgba(245,179,1,.35);
+  padding:10px 12px; border-radius: var(--radius-sm);
+}
+
+/* ---------- Summary panel ---------- */
+.summary{
+  background: linear-gradient(180deg, #0b0c0e, #0a0a0c 60%);
+  border:1px solid #22242a;
+  border-radius: var(--radius);
+  padding:18px 16px; margin-top:22px;
+  box-shadow: var(--shadow);
+}
+.summary-row{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:8px 2px; font-size:.97rem; color:#e9edf6;
+}
+.summary-row.total{
+  margin-top:6px; padding-top:12px;
+  border-top:1px solid #2d2f36; font-weight:900; font-size:1.12rem;
+  color:#fff;
+}
+
+/* ---------- Actions / Buttons ---------- */
+.actions{ display:flex; justify-content:space-between; gap:10px; margin-top:16px }
+.btn{
+  padding:12px 18px; border-radius: 12px; border:0; font-weight:900; letter-spacing:.3px;
+  cursor:pointer; transition: transform .15s ease, box-shadow .25s ease, opacity .15s ease, background .2s ease;
+}
+.btn-secondary{
+  background:#25262b; color:#fff; border:1px solid #343740;
+}
+.btn-secondary:hover{ background:#2f3137; transform:translateY(-1px) }
+
+.btn-primary{
+  background: linear-gradient(90deg, var(--gold), var(--gold-2));
+  color:#121212;
+  box-shadow: 0 14px 30px rgba(245,179,1,.35);
+}
+.btn-primary:hover{
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(245,179,1,.45);
+}
+.btn-primary:disabled{
+  opacity:.45; cursor:not-allowed; transform:none; box-shadow:none;
+}
+
+/* ---------- Modal ---------- */
+.modal.hidden{ display:none }
+.modal{
+  position:fixed; inset:0; display:grid; place-items:center; z-index:1000;
+}
+.modal-backdrop{
+  position:absolute; inset:0; background: rgba(0,0,0,.6);
+  backdrop-filter: blur(2px);
+  animation: fadeIn .18s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.modal-card{
+  position:relative; width:min(780px, calc(100vw - 36px));
+  max-height:82vh; overflow:auto;
+  background: linear-gradient(180deg, #0e0f12, #0a0a0c);
+  border:1px solid #2b2d34; border-radius: 18px;
+  box-shadow: 0 30px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset;
+  padding:22px 22px 18px;
+  animation: modalUp .22s ease both;
+}
+@keyframes modalUp{from{transform:translateY(10px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.modal-close{
+  position:absolute; top:10px; right:10px;
+  width:34px; height:34px; border-radius:50%;
+  border:1px solid #3a3d46; background:#0c0d10; color:#fff;
+  cursor:pointer; font-size:18px; line-height:32px;
+  transition: background .2s ease, border-color .2s ease, transform .12s ease;
+}
+.modal-close:hover{ background:#14161a; border-color:#4a4e59; transform:translateY(-1px) }
+
+.modal-title{
+  margin:2px 0 8px; font-size:1.24rem; font-weight:900;
+  letter-spacing:.3px;
+  background: linear-gradient(90deg, #fff, #e7eaf2);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.modal-meta{ display:flex; gap:10px; align-items:center; margin-bottom:8px }
+.modal-price{
+  color:var(--gold); font-weight:900;
+  padding:6px 10px; border-radius: 999px;
+  border:1px solid rgba(245,179,1,.35);
+  background: linear-gradient(180deg, rgba(245,179,1,.18), rgba(245,179,1,.05));
+}
+.modal-duration{ color:#cfd5e2; font-size:.92rem }
+.modal-desc{ color:#dfe3ee; font-size:.98rem; margin:10px 0 6px }
+
+.modal-list-wrap{ margin-top:10px }
+.modal-list-title{
+  font-weight:800; color:#fff; margin:14px 0 8px;
+  position:relative; padding-bottom:6px;
+}
+.modal-list-title::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background: linear-gradient(90deg, rgba(245,179,1,.45), transparent);
+}
+.modal-list{ margin:6px 0 0; padding-left:22px }
+.modal-list li{ color:#d1d6e2; margin:6px 0; }
+.modal-list li::marker{ color:#ffd37c }
+
+/* ---------- Utilities ---------- */
+.hidden{display:none}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 680px){
+  .container{ padding:18px }
+  .card-body{ padding:14px }
+  .details-btn{ width:100%; text-align:center }
+  .actions{ flex-direction:column }
+}
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important }
+}
+
+/* ===== Center Step 2 Heading ===== */
+.header {
+  text-align: center;
+}
+
+/* ===== Best Value Card Styling ===== */
+/* Restore original look but ONLY show the gold frame when selected */
+.package-card.best-value {
+  position: relative;
+  overflow: hidden;
+}
+.package-card.best-value.selected {
+  border: 2px solid rgba(245, 179, 1, 0.9);
+  box-shadow: 0 0 12px rgba(245, 179, 1, 0.4);
+}
+
+/* Remove old gold tab */
+.package-card.best-value::before {
+  display: none;
+}
+
+/* Starfield background */
+.package-card.best-value .card-body {
+  background-image:
+    radial-gradient(rgba(255, 215, 0, 0.15) 1px, transparent 1px),
+    radial-gradient(rgba(255, 215, 0, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px, 40px 40px;
+  background-position: 0 0, 10px 10px;
+  animation: starTwinkle 5s infinite linear;
+}
+@keyframes starTwinkle {
+  from { background-position: 0 0, 10px 10px; }
+  to { background-position: 20px 20px, 30px 30px; }
+}
+
+/* Best value badge */
+.best-value-badge {
+  background: linear-gradient(90deg, #f5b301, #ff9800);
+  color: black;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  text-align: center;
+  margin: 0 auto 10px;
+  display: inline-block;
+  box-shadow: 0 0 10px rgba(245, 179, 1, 0.7);
+}
