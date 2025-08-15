@@ -31,6 +31,9 @@ function valToText(v) {
   return String(v);
 }
 
+// ====== BACKEND BASE (fix for 503) ======
+const API_BASE = 'https://dashboard-299729627197.us-central1.run.app'.replace(/\/+$/,'');
+
 // ====== LOAD SELECTIONS ======
 function loadSelections() {
   let selection = null, appointment = null;
@@ -106,9 +109,10 @@ async function estimateFromServer() {
   if (!address && !zip) return false;
 
   try {
-    const res = await fetch('/api/estimate', {
+    const res = await fetch(`${API_BASE}/api/estimate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      // public endpoint → no credentials needed
       body: JSON.stringify({ address, zip, subtotal })
     });
     if (!res.ok) throw new Error(`estimate failed ${res.status}`);
@@ -156,6 +160,8 @@ async function handleSubmit(e) {
       date: appointment?.date || appointment?.dateISO || "",
       time: appointment?.time || appointment?.timeLabel || "",
       tz:   appointment?.tz   || Intl.DateTimeFormat().resolvedOptions().timeZone || 'local'
+      // Optional: endTime if you calculate duration client-side
+      // endTime: "16:30"
     },
     customer: {
       name,
@@ -179,9 +185,10 @@ async function handleSubmit(e) {
   };
 
   try {
-    const res = await fetch('/api/confirm-booking', {
+    const res = await fetch(`${API_BASE}/api/confirm-booking`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      // public endpoint → no credentials needed
       body: JSON.stringify(payload)
     });
 
