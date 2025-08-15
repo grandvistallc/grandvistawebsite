@@ -6,6 +6,10 @@ const { google } = require('googleapis');
 
 const app = express();
 
+app.get('/healthz', (req, res) => {
+  res.status(200).send('ok');
+});
+
 /* ========= ENV ========= */
 const {
   GOOGLE_SHEET_ID,
@@ -543,4 +547,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
 
