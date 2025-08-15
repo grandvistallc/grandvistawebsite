@@ -210,7 +210,7 @@ function capacityMapForDateFromSnapshot(dateISO, snap) {
     if (!(active === 'TRUE' || active === '1')) continue;
 
     const start    = r[3] || '';
-       const end      = r[4] || '';
+    const end      = r[4] || '';
     const slotMins = Math.max(5, Number(r[5] || 30));
     const capacity = Math.max(0, Number(r[6] || 1));
 
@@ -542,10 +542,11 @@ app.get('/fleet',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'fleet.ht
 app.get('/freestuff',  (req, res) => res.sendFile(path.join(VIEWS_DIR, 'freestuff.html')));
 app.get('/mobile',     (req, res) => res.sendFile(path.join(VIEWS_DIR, 'mobile.html')));
 
+// 🔁 Aliases to catch mixed-case or .html requests and send users to the canonical route
+app.get(['/Contact', '/Contact.html'], (req, res) => res.redirect(301, '/contact'));
+
 /* ========= Start ========= */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
-
-
