@@ -5,6 +5,9 @@
 // - localStorage.flashMsg = { type, text } (optional)
 
 (() => {
+  /* ---------- API BASE (NEW) ---------- */
+  const API_BASE = 'https://dashboard-299729627197.us-central1.run.app'.replace(/\/+$/,'');
+
   /* ---------- DOM ---------- */
   const calendarEl = document.getElementById("calendar");
   const monthYearEl = document.getElementById("monthYear");
@@ -188,7 +191,7 @@
   async function refreshSlotsForDate(dateISO) {
     clearSlots();
     try {
-      const r = await fetch(`/api/availability?date=${encodeURIComponent(dateISO)}`);
+      const r = await fetch(`${API_BASE}/api/availability?date=${encodeURIComponent(dateISO)}`);
       if (!r.ok) throw new Error("availability_failed");
       const { slots = [] } = await r.json();
       renderSlots(slots);
@@ -256,7 +259,7 @@
   }
 
   async function loadAvailableDates(y, m1to12) {
-    const r = await fetch(`/api/available-dates?year=${y}&month=${m1to12}`);
+    const r = await fetch(`${API_BASE}/api/available-dates?year=${y}&month=${m1to12}`);
     if (!r.ok) throw new Error("available_dates_failed");
     const { dates = [] } = await r.json();
     availableDateSet = new Set(dates);
