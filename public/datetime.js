@@ -42,6 +42,10 @@
     const h = ((H + 11) % 12) + 1;
     return `${h}:${String(M).padStart(2, "0")} ${ampm}`;
   }
+  const timeToMinutes = (hhmm) => {
+    const [h,m] = String(hhmm||"").split(":").map(Number);
+    return Number.isFinite(h) && Number.isFinite(m) ? h*60 + m : 0;
+  };
 
   /* ---------- Toast ---------- */
   function ensureToastStyles() {
@@ -117,11 +121,23 @@
       const p = document.createElement("p"); p.className = "muted"; p.textContent = "No times available for this date.";
       slotsGrid.appendChild(p); return;
     }
-    slots.forEach(s => {
+
+    // Safety: sort client-side by actual time value
+    const sorted = [...slots].sort((a,b) => timeToMinutes(a.time) - timeToMinutes(b.time));
+
+    sorted.forEach(s => {
       const btn = document.createElement("button");
       btn.type = "button"; btn.className = "slot-btn";
       btn.textContent = to12h(s.time); btn.dataset.time = s.time;
-      if (!s.capacity || s.capacity <= 0) { btn.disabled = true; btn.classList.add("full"); }
+
+      const isFull = !s.capacity || s.capacity <= 0;
+      if (isFull) {
+        btn.disabled = true;
+        btn.classList.add("full");
+        btn.setAttribute("aria-disabled", "true");
+        btn.title = "Booked / Unavailable";
+      }
+
       if (activeTime && s.time === activeTime) btn.classList.add("selected");
       btn.addEventListener("click", () => onSlotClick(s.time));
       slotsGrid.appendChild(btn);
@@ -139,14 +155,15 @@
   async function refreshSlotsForDate(dateISO) {
     clearSlots();
     try {
+      const bust = `_=${Date.now()}`;
       // Try primary route, then fallback
-      let r = await fetch(`${API_BASE}/api/availability?date=${encodeURIComponent(dateISO)}`);
-      if (r.status === 404) r = await fetch(`${API_BASE}/api/day-slots?date=${encodeURIComponent(dateISO)}`);
+      let r = await fetch(`${API_BASE}/api/availability?date=${encodeURIComponent(dateISO)}&${bust}`);
+      if (r.status === 404) r = await fetch(`${API_BASE}/api/day-slots?date=${encodeURIComponent(dateISO)}&${bust}`);
       if (!r.ok) throw new Error(`slots_http_${r.status}`);
       const data = await r.json();
       const slots = Array.isArray(data?.slots) ? data.slots : (Array.isArray(data) ? data : []);
       renderSlots(slots);
-      if (activeTime && slots.some(s => s.time === activeTime)) { markActiveTime(activeTime); enableContinue(); }
+      if (activeTime && slots.some(s => s.time === activeTime && s.capacity > 0)) { markActiveTime(activeTime); enableContinue(); }
       else { activeTime = null; disableContinue(); }
     } catch (e) {
       console.error("availability error", e);
@@ -188,12 +205,13 @@
   }
 
   async function loadAvailableDates(y, m1to12) {
+    const bust = `_=${Date.now()}`;
     // Try /api/available-dates, accept either {dates:[...]} or {days:[...]}
-    let r = await fetch(`${API_BASE}/api/available-dates?year=${y}&month=${m1to12}`);
+    let r = await fetch(`${API_BASE}/api/available-dates?year=${y}&month=${m1to12}&${bust}`);
     if (!r.ok && r.status !== 404) throw new Error(`available_dates_http_${r.status}`);
     if (r.status === 404) {
       // fallback route names if your backend uses camelCase or different path
-      r = await fetch(`${API_BASE}/api/availableDates?year=${y}&month=${m1to12}`);
+      r = await fetch(`${API_BASE}/api/availableDates?year=${y}&month=${m1to12}&${bust}`);
       if (!r.ok) throw new Error(`available_dates_http_${r.status}`);
     }
     const data = await r.json().catch(() => ({}));
