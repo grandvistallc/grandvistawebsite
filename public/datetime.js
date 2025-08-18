@@ -37,7 +37,7 @@
   }
   function to12h(hhmm) {
     const [H, M] = String(hhmm || "").split(":").map(Number);
-    if (!Number.isFinite(H) || !Number.isFinite(M)) return hhmm || "";
+    if (!Number.isFinite(H) || !Number.isFinite(M)) return "";
     const ampm = H >= 12 ? "PM" : "AM";
     const h = ((H + 11) % 12) + 1;
     return `${h}:${String(M).padStart(2, "0")} ${ampm}`;
@@ -52,7 +52,7 @@
     if (document.getElementById("toastStyles")) return;
     const css = `
       .toast-bubble { position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
-        max-width: 680px; padding: 12px 16px; border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.25);
+      max-width: 680px; padding: 12px 16px; border-radius: 12px; box-shadow: 0 10px 24px rgba(0,0,0,.25);
         font-size: 14px; line-height: 1.35; z-index: 9999; opacity: 0; transition: opacity .25s, transform .25s;
         color: #111; background: #FFE9B3; border: 1px solid rgba(0,0,0,.08); }
       .toast-bubble.error { background: #ffd0d0; } .toast-bubble.info { background: #d7ecff; }
@@ -71,111 +71,21 @@
     document.body.appendChild(div);
     requestAnimationFrame(() => div.classList.add('show'));
     const close = () => { div.classList.remove('show'); setTimeout(() => div.remove(), 250); };
-    div.querySelector('.toast-close').addEventListener('click', close); setTimeout(close, ms);
+    div.addEventListener('click', close); setTimeout(close, ms);
   }
 
   /* ---------- State ---------- */
   const today = todayISO();
-  let viewYear, viewMonth;
-  let availableDateSet = new Set();
-  let selectedDate = null; // YYYY-MM-DD
-  let activeTime   = null; // "HH:MM" (24h)
-
-  /* ---------- Buttons ---------- */
-  function disableContinue() { if (continueBtn) continueBtn.disabled = true; }
-  function enableContinue()  { if (continueBtn) continueBtn.disabled = false; }
-  disableContinue();
-
-  if (continueBtn) {
-    continueBtn.addEventListener("click", () => {
-      if (!selectedDate || !activeTime) return;
-      writeJSON(LS_APPT, { date: selectedDate, time: activeTime });
-      window.location.href = "/checkout";
-    });
-  }
-
-  if (prevBtn) prevBtn.addEventListener("click", async () => {
-    const d = new Date(viewYear, viewMonth - 2, 1);
-    viewYear = d.getFullYear(); viewMonth = d.getMonth() + 1;
-    await refreshMonth();
-  });
-  if (nextBtn) nextBtn.addEventListener("click", async () => {
-    const d = new Date(viewYear, viewMonth, 1);
-    viewYear = d.getFullYear(); viewMonth = d.getMonth() + 1;
-    await refreshMonth();
-  });
-
-  /* ---------- Flash-from-redirect ---------- */
-  (function showFlashIfAny() {
-    const urlMsg = new URLSearchParams(window.location.search).get('msg');
-    let f = readJSON(LS_FLASH);
-    if (urlMsg) { showToast(urlMsg, 'warn'); localStorage.removeItem(LS_FLASH); return; }
-    if (f?.text) { showToast(f.text, f.type || 'info'); localStorage.removeItem(LS_FLASH); }
-  })();
-
-  /* ---------- Slots ---------- */
-  function clearSlots() { slotsGrid.innerHTML = ""; }
-  function renderSlots(slots) {
-    clearSlots();
-    if (!slots || !slots.length) {
-      const p = document.createElement("p"); p.className = "muted"; p.textContent = "No times available for this date.";
-      slotsGrid.appendChild(p); return;
-    }
-
-    // Safety: sort client-side by actual time value
-    const sorted = [...slots].sort((a,b) => timeToMinutes(a.time) - timeToMinutes(b.time));
-
-    sorted.forEach(s => {
-      const btn = document.createElement("button");
-      btn.type = "button"; btn.className = "slot-btn";
-      btn.textContent = to12h(s.time); btn.dataset.time = s.time;
-
-      const isFull = !s.capacity || s.capacity <= 0;
-      if (isFull) {
-        btn.disabled = true;
-        btn.classList.add("full");
-        btn.setAttribute("aria-disabled", "true");
-        btn.title = "Booked / Unavailable";
-      }
-
-      if (activeTime && s.time === activeTime) btn.classList.add("selected");
-      btn.addEventListener("click", () => onSlotClick(s.time));
-      slotsGrid.appendChild(btn);
-    });
-  }
-  function markActiveTime(hh) {
-    Array.from(slotsGrid.querySelectorAll(".slot-btn")).forEach(b => b.classList.toggle("selected", b.dataset.time === hh));
-  }
-  async function onSlotClick(timeHHMM) {
-    if (!selectedDate) return;
-    activeTime = timeHHMM; markActiveTime(timeHHMM);
-    writeJSON(LS_APPT, { date: selectedDate, time: activeTime }); enableContinue();
-  }
-
-  async function refreshSlotsForDate(dateISO) {
-    clearSlots();
-    try {
-      const bust = `_=${Date.now()}`;
-      // Try primary route, then fallback
-      let r = await fetch(`${API_BASE}/api/availability?date=${encodeURIComponent(dateISO)}&${bust}`);
-      if (r.status === 404) r = await fetch(`${API_BASE}/api/day-slots?date=${encodeURIComponent(dateISO)}&${bust}`);
-      if (!r.ok) throw new Error(`slots_http_${r.status}`);
-      const data = await r.json();
-      const slots = Array.isArray(data?.slots) ? data.slots : (Array.isArray(data) ? data : []);
-      renderSlots(slots);
-      if (activeTime && slots.some(s => s.time === activeTime && s.capacity > 0)) { markActiveTime(activeTime); enableContinue(); }
-      else { activeTime = null; disableContinue(); }
-    } catch (e) {
-      console.error("availability error", e);
-      showToast("Times failed to load. Please try another date.", "error");
-      disableContinue(); renderSlots([]);
-    }
-  }
+  let viewYear,
+      viewMonth,
+      selectedDate = null,
+      activeTime   = null,
+      availableDateSet = new Set();
 
   /* ---------- Calendar ---------- */
   function setMonthLabel(y, m1to12) {
-    const date = new Date(y, m1to12 - 1, 1);
-    monthYearEl.textContent = date.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+    const d = new Date(y, m1to12 - 1, 1);
+    monthYearEl.textContent = d.toLocaleString(undefined, { month: "long", year: "numeric" });
   }
   function renderCalendarGrid(y, m1to12) {
     calendarEl.innerHTML = "";
@@ -189,9 +99,12 @@
     for (let d = 1; d <= last; d++) {
       const cell = document.createElement("div"); cell.className = "calendar-cell"; cell.textContent = d;
       const iso = isoFor(y, m1to12, d);
-      const enabled = availableDateSet.has(iso);
+      // BLOCK PAST DATES: must be an available date AND not earlier than today
+      const enabled = availableDateSet.has(iso) && iso >= today;
       if (!enabled) cell.classList.add("inactive");
-      if (iso === selectedDate) cell.classList.add("selected");
+
+      if (selectedDate === iso) cell.classList.add("selected");
+
       if (enabled) {
         cell.addEventListener("click", async () => {
           selectedDate = iso; activeTime = null;
@@ -221,6 +134,67 @@
     availableDateSet = new Set(arr);
   }
 
+  /* ---------- Slots ---------- */
+  function clearSlots() { slotsGrid.innerHTML = ""; }
+  function disableContinue() { continueBtn?.setAttribute("disabled","disabled"); }
+  function enableContinue() { continueBtn?.removeAttribute("disabled"); }
+
+  async function refreshSlotsForDate(dateISO) {
+    clearSlots(); disableContinue();
+
+    const bust = `_=${Date.now()}`;
+    let r = await fetch(`${API_BASE}/api/availability?date=${encodeURIComponent(dateISO)}&${bust}`);
+    if (!r.ok && r.status !== 404) throw new Error(`availability_http_${r.status}`);
+    if (r.status === 404) {
+      r = await fetch(`${API_BASE}/api/slots?date=${encodeURIComponent(dateISO)}&${bust}`);
+      if (!r.ok) throw new Error(`availability_http_${r.status}`);
+    }
+    const data = await r.json().catch(() => ({}));
+    const slots = Array.isArray(data?.slots) ? data.slots : [];
+
+    // Render slots
+    if (!Array.isArray(slots) || slots.length === 0) {
+      const empty = document.createElement("div");
+      empty.className = "no-slots";
+      empty.textContent = "No times available for this date.";
+      slotsGrid.appendChild(empty);
+      return;
+    }
+
+    slots.forEach((s) => {
+      const btn = document.createElement("button");
+      btn.className = "slot-btn";
+      btn.textContent = to12h(s.time || s);
+      btn.disabled = !(s.capacity > 0 || s.remaining > 0 || s > "");
+      btn.addEventListener("click", () => {
+        activeTime = s.time || s;
+        Array.from(slotsGrid.querySelectorAll(".slot-btn")).forEach(b => b.classList.toggle("active", b === btn));
+        enableContinue();
+      });
+      slotsGrid.appendChild(btn);
+    });
+  }
+
+  /* ---------- Navigation ---------- */
+  if (continueBtn) {
+    continueBtn.addEventListener("click", () => {
+      if (!selectedDate || !activeTime) return;
+      writeJSON(LS_APPT, { date: selectedDate, time: activeTime });
+      window.location.href = "/checkout";
+    });
+  }
+
+  if (prevBtn) prevBtn.addEventListener("click", async () => {
+    const d = new Date(viewYear, viewMonth - 2, 1);
+    viewYear = d.getFullYear(); viewMonth = d.getMonth() + 1;
+    await refreshMonth();
+  });
+  if (nextBtn) nextBtn.addEventListener("click", async () => {
+    const d = new Date(viewYear, viewMonth, 1);
+    viewYear = d.getFullYear(); viewMonth = d.getMonth() + 1;
+    await refreshMonth();
+  });
+
   async function refreshMonth() {
     setMonthLabel(viewYear, viewMonth);
     await loadAvailableDates(viewYear, viewMonth);
@@ -228,7 +202,8 @@
 
     if (!selectedDate ||
         !selectedDate.startsWith(`${viewYear}-${String(viewMonth).padStart(2,"0")}`) ||
-        !availableDateSet.has(selectedDate)) {
+        !availableDateSet.has(selectedDate) ||
+        selectedDate < today) {
       selectedDate = null; activeTime = null; clearSlots(); disableContinue();
     } else {
       await refreshSlotsForDate(selectedDate);
