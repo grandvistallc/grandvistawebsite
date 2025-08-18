@@ -100,8 +100,7 @@
       const cell = document.createElement("div"); cell.className = "calendar-cell"; cell.textContent = d;
       const iso = isoFor(y, m1to12, d);
 
-      // *** ONLY CHANGE NEEDED: block past dates ***
-      // Enable a day only if it's in the backend's available set AND not earlier than today.
+      // Block past dates: enable only if in available set AND not before today
       const enabled = availableDateSet.has(iso) && iso >= today;
 
       if (!enabled) cell.classList.add("inactive");
@@ -127,7 +126,7 @@
     let r = await fetch(`${API_BASE}/api/available-dates?year=${y}&month=${m1to12}&${bust}`);
     if (!r.ok && r.status !== 404) throw new Error(`available_dates_http_${r.status}`);
     if (r.status === 404) {
-      // fallback route names if your backend uses camelCase or different path
+      // fallback
       r = await fetch(`${API_BASE}/api/availableDates?year=${y}&month=${m1to12}&${bust}`);
       if (!r.ok) throw new Error(`available_dates_http_${r.status}`);
     }
@@ -168,25 +167,34 @@
     slots.forEach((s) => {
       const btn = document.createElement("button");
       btn.className = "slot-btn";
-      const timeLabel = s?.time ?? s;             // supports object {time,...} or string
+      const timeLabel = s?.time ?? s;
       const remaining = s?.remaining;
       const capacity  = s?.capacity;
 
-      // Enable if remaining>0 OR capacity>0; if both missing, assume selectable.
+      // enable if remaining>0 OR capacity>0; if both missing, assume selectable
       const qty = Number.isFinite(remaining) ? remaining
                 : Number.isFinite(capacity)  ? capacity
                 : 1;
       btn.disabled = !(qty > 0);
 
       btn.textContent = to12h(timeLabel);
+
+      // >>> UPDATED: add both .active and .selected + aria-selected for CSS/themes
       btn.addEventListener("click", () => {
         if (btn.disabled) return;
         activeTime = timeLabel;
-        Array.from(slotsGrid.querySelectorAll(".slot-btn")).forEach(b =>
-          b.classList.toggle("active", b === btn)
-        );
+
+        Array.from(slotsGrid.querySelectorAll(".slot-btn")).forEach(b => {
+          b.classList.remove("active", "selected");
+          b.setAttribute("aria-selected", "false");
+        });
+
+        btn.classList.add("active", "selected");
+        btn.setAttribute("aria-selected", "true");
+
         enableContinue();
       });
+
       slotsGrid.appendChild(btn);
     });
   }
