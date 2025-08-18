@@ -164,10 +164,20 @@
     slots.forEach((s) => {
       const btn = document.createElement("button");
       btn.className = "slot-btn";
-      btn.textContent = to12h(s.time || s);
-      btn.disabled = !(s.capacity > 0 || s.remaining > 0 || s > "");
+      const timeLabel = s?.time ?? s;             // supports either object {time,...} or plain string
+      const remaining = s?.remaining;             // may be undefined
+      const capacity  = s?.capacity;              // may be undefined
+
+      // NEW: be permissive — enable if remaining>0 OR capacity>0; if both missing, allow click
+      const qty = Number.isFinite(remaining) ? remaining
+                : Number.isFinite(capacity)  ? capacity
+                : 1;
+      btn.disabled = !(qty > 0);
+
+      btn.textContent = to12h(timeLabel);
       btn.addEventListener("click", () => {
-        activeTime = s.time || s;
+        if (btn.disabled) return;
+        activeTime = timeLabel;
         Array.from(slotsGrid.querySelectorAll(".slot-btn")).forEach(b => b.classList.toggle("active", b === btn));
         enableContinue();
       });
