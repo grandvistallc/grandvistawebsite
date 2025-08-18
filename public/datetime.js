@@ -99,16 +99,20 @@
     for (let d = 1; d <= last; d++) {
       const cell = document.createElement("div"); cell.className = "calendar-cell"; cell.textContent = d;
       const iso = isoFor(y, m1to12, d);
-      // BLOCK PAST DATES: must be an available date AND not earlier than today
-      const enabled = availableDateSet.has(iso) && iso >= today;
-      if (!enabled) cell.classList.add("inactive");
 
+      // *** ONLY CHANGE NEEDED: block past dates ***
+      // Enable a day only if it's in the backend's available set AND not earlier than today.
+      const enabled = availableDateSet.has(iso) && iso >= today;
+
+      if (!enabled) cell.classList.add("inactive");
       if (selectedDate === iso) cell.classList.add("selected");
 
       if (enabled) {
         cell.addEventListener("click", async () => {
           selectedDate = iso; activeTime = null;
-          Array.from(calendarEl.querySelectorAll(".calendar-cell")).forEach(c => c.classList.toggle("selected", c === cell));
+          Array.from(calendarEl.querySelectorAll(".calendar-cell")).forEach(c =>
+            c.classList.toggle("selected", c === cell)
+          );
           writeJSON(LS_APPT, { date: selectedDate, time: null });
           await refreshSlotsForDate(selectedDate);
         });
@@ -164,11 +168,11 @@
     slots.forEach((s) => {
       const btn = document.createElement("button");
       btn.className = "slot-btn";
-      const timeLabel = s?.time ?? s;             // supports either object {time,...} or plain string
-      const remaining = s?.remaining;             // may be undefined
-      const capacity  = s?.capacity;              // may be undefined
+      const timeLabel = s?.time ?? s;             // supports object {time,...} or string
+      const remaining = s?.remaining;
+      const capacity  = s?.capacity;
 
-      // NEW: be permissive — enable if remaining>0 OR capacity>0; if both missing, allow click
+      // Enable if remaining>0 OR capacity>0; if both missing, assume selectable.
       const qty = Number.isFinite(remaining) ? remaining
                 : Number.isFinite(capacity)  ? capacity
                 : 1;
@@ -178,7 +182,9 @@
       btn.addEventListener("click", () => {
         if (btn.disabled) return;
         activeTime = timeLabel;
-        Array.from(slotsGrid.querySelectorAll(".slot-btn")).forEach(b => b.classList.toggle("active", b === btn));
+        Array.from(slotsGrid.querySelectorAll(".slot-btn")).forEach(b =>
+          b.classList.toggle("active", b === btn)
+        );
         enableContinue();
       });
       slotsGrid.appendChild(btn);
