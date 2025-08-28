@@ -3,20 +3,21 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const { google } = require('googleapis');
+const finalhandler = require('finalhandler');
 
 const app = express();
 
-app.get('/healthz', (req, res) => {
-  res.status(200).send('ok');
-});
+app.get('/healthz', (req, res) => res.status(200).send('ok'));
 
 /* ========= ENV ========= */
 const {
   GOOGLE_SHEET_ID,
   GOOGLE_SERVICE_ACCOUNT_EMAIL,
   GOOGLE_PRIVATE_KEY,
+
   SHEET_AVAIL_TAB = 'Availability',
   SHEET_BOOKINGS_TAB = 'Bookings',
+  SHEET_BLACKOUTS_TAB = 'Blackouts', // NEW
 
   MIN_LEAD_MINUTES = '0',
   SAME_DAY_CUTOFF_MIN = '0',
@@ -96,7 +97,11 @@ async function appendValues(range, rows) {
 
 /* ========= Cache ========= */
 const SNAPSHOT_TTL_MS = 30_000;
-let snapshot = { ts: 0, availRows: null, bookingRows: null };
+
+// snapshot.availRows: Availability!A2:I
+// snapshot.bookingRows: Bookings!A2:N
+// snapshot.blackoutSet: Set<YYYY-MM-DD>  // NEW
+let snapshot = { ts: 0, availRows: null, bookingRows: null, blackoutSet: new Set() };
 let inflight = null;
 
 async function loadSnapshot(force = false) {
@@ -106,11 +111,21 @@ async function loadSnapshot(force = false) {
 
   inflight = (async () => {
     try {
-      const [availRows, bookingRows] = await Promise.all([
+      const [availRows, bookingRows, blackoutRows] = await Promise.all([
         getValues(`${SHEET_AVAIL_TAB}!A2:I`),
-        getValues(`${SHEET_BOOKINGS_TAB}!A2:N`)
+        getValues(`${SHEET_BOOKINGS_TAB}!A2:N`),
+        getValues(`${SHEET_BLACKOUTS_TAB}!A2:B`).catch(() => []) // NEW: tab optional
       ]);
-      snapshot = { ts: Date.now(), availRows, bookingRows };
+
+      // Build blackout set (Date + Active TRUE)
+      const blackoutSet = new Set();
+      for (const r of (blackoutRows || [])) {
+        const iso = parseSheetDateToISO(r[0] || '');
+        const active = String(r[1] || '').trim().toUpperCase();
+        if (iso && (active === 'TRUE' || active === '1' || active === 'YES')) blackoutSet.add(iso);
+      }
+
+      snapshot = { ts: Date.now(), availRows, bookingRows, blackoutSet };
       return snapshot;
     } catch (err) {
       if (snapshot.availRows) {
@@ -175,6 +190,24 @@ function parseSheetDateToISO(cell) {
   }
   return null;
 }
+
+// NEW: parse DayOfWeek cell → 0..6 (Sun..Sat)
+function parseDOW(cell) {
+  const s = String(cell || '').trim().toLowerCase();
+  if (!s) return null;
+  const map = {
+    sun:0, sunday:0, '0':0,
+    mon:1, monday:1, '1':1,
+    tue:2, tues:2, tuesday:2, '2':2,
+    wed:3, weds:3, wednesday:3, '3':3,
+    thu:4, thur:4, thurs:4, thursday:4, '4':4,
+    fri:5, friday:5, '5':5,
+    sat:6, saturday:6, '6':6
+  };
+  return (s in map) ? map[s] : null;
+}
+
+// Check time-window constraints
 function withinWindow(dateStr, timeStr) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return false;
   const now = new Date();
@@ -197,20 +230,39 @@ function withinWindow(dateStr, timeStr) {
   return true;
 }
 
-/* ========= Capacity (subtract across full booking window) ========= */
+/* ========= Capacity (subtract across full booking window) =========
+   Backward-compatible:
+   - If Availability row has a specific Date, use it for that date only.
+   - If Date is blank but DayOfWeek is set, treat row as recurring weekly.
+   - Multiple rows per day support split blocks (e.g., 10–14, 17–20).
+*/
 function capacityMapForDateFromSnapshot(dateISO, snap) {
-  const { availRows = [], bookingRows = [] } = snap || {};
+  const { availRows = [], bookingRows = [], blackoutSet = new Set() } = snap || {};
   const cap = new Map();
 
-  // Availability rows
-  for (const r of availRows) {
-    const rowDateISO = parseSheetDateToISO(r[2] || '');
-    const active  = String(r[7] || '').toUpperCase();
-    if (rowDateISO !== dateISO) continue;
-    if (!(active === 'TRUE' || active === '1')) continue;
+  // Hard block if blackout
+  if (blackoutSet.has(dateISO)) return cap;
 
-    const start    = r[3] || '';
-    const end      = r[4] || '';
+  const dow = new Date(`${dateISO}T00:00:00`).getDay();
+
+  // Build availability-derived capacity
+  for (const r of availRows) {
+    // Columns assumed: [A,B,C,D,E,F,G,H, I?]
+    // B: DayOfWeek (Mon/Tue/… or 0..6)   C: Date (mm/dd/yyyy or ISO)
+    // D: Start  E: End  F: SlotMins  G: Capacity  H: Active
+    const rowDateISO = parseSheetDateToISO(r[2] || '');
+    const rowDOW = parseDOW(r[1] || '');
+    const active  = String(r[7] || '').toUpperCase();
+    if (!(active === 'TRUE' || active === '1' || active === 'YES')) continue;
+
+    // Decide if this row applies:
+    const applies =
+      (rowDateISO && rowDateISO === dateISO) ||
+      (!rowDateISO && rowDOW !== null && rowDOW === dow);
+    if (!applies) continue;
+
+    const start = parseSheetTimeToHHMM(r[3] || '');
+    const end   = parseSheetTimeToHHMM(r[4] || '');
     const slotMins = Math.max(5, Number(r[5] || 30));
     const capacity = Math.max(0, Number(r[6] || 1));
 
@@ -230,7 +282,7 @@ function capacityMapForDateFromSnapshot(dateISO, snap) {
     if (bDateISO !== dateISO) continue;
 
     const rawStart = b[7] || '';
-       const rawEnd   = b[8] || '';
+    const rawEnd   = b[8] || '';
     const startHH  = parseSheetTimeToHHMM(rawStart);
     const endHH    = parseSheetTimeToHHMM(rawEnd);
 
@@ -312,7 +364,7 @@ function hasCapacityForRange(capMap, startM, endM) {
 
 /* ========= APIs ========= */
 
-// Month -> open dates (Sundays allowed)
+// Month -> open dates (includes weekly schedule, excludes blackouts)
 app.get('/api/available-dates', async (req, res) => {
   try {
     const y = parseInt(req.query.year, 10);
@@ -327,6 +379,8 @@ app.get('/api/available-dates', async (req, res) => {
     for (let d = 1; d <= lastDay; d++) {
       const dt = new Date(y, m - 1, d);
       const iso = dt.toISOString().slice(0,10);
+
+      // Capacity computed from weekly rows + specific rows, minus bookings
       const capMap = capacityMapForDateFromSnapshot(iso, snap);
       const hasOpen = [...capMap.entries()].some(([t, c]) => c > 0 && withinWindow(iso, t));
       if (hasOpen) openDates.push(iso);
@@ -339,7 +393,7 @@ app.get('/api/available-dates', async (req, res) => {
   }
 });
 
-// Date -> open slots (capacity > 0)
+// Date -> open slots (capacity > 0) with weekly + blackouts applied
 app.get('/api/availability', async (req, res) => {
   try {
     const date = String(req.query.date || '');
@@ -363,7 +417,7 @@ app.get('/api/availability', async (req, res) => {
   }
 });
 
-// Confirm booking (full guard; includes travel if address provided)
+// Confirm booking (same logic as your current version)
 app.post('/api/confirm-booking', async (req, res) => {
   try {
     const { selection, appointment, customer, pricing } = req.body || {};
@@ -372,7 +426,6 @@ app.post('/api/confirm-booking', async (req, res) => {
     }
     const date = String(appointment.date || '');
     const startTime = String(appointment.time || '');
-    // ✅ FIXED: correct date regex
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(startTime))
       return res.status(400).json({ error: 'Bad date/time' });
 
@@ -450,7 +503,7 @@ app.post('/api/confirm-booking', async (req, res) => {
       customer.address?.state, customer.address?.zip
     ].filter(Boolean).join(', ');
 
-    // ⬇️ CHANGE HERE: write status 'open' and crew '[]'
+    // write status 'open' and crew '[]'
     await appendValues(`${SHEET_BOOKINGS_TAB}!A2`, [[
       jobId, date, customerName, pkg, size, addons, total,
       startDisplay, endDisplay, heard, email, phone, addressStr2,
@@ -467,59 +520,7 @@ app.post('/api/confirm-booking', async (req, res) => {
   }
 });
 
-/* ========= Estimate ========= */
-app.post('/api/estimate', async (req, res) => {
-  try {
-    const { address = '', zip = '', subtotal = 0 } = req.body || {};
-    const sub = Number(subtotal) || 0;
-
-    let miles = 0;
-    let minutes = 0;
-    if (GMAPS_KEY && HOME_BASE_ADDRESS && address) {
-      const params = new URLSearchParams({
-        origins: HOME_BASE_ADDRESS,
-        destinations: address,
-        key: GMAPS_KEY,
-        units: 'imperial',
-        departure_time: 'now',
-        traffic_model: 'best_guess'
-      });
-      const url = `https://maps.googleapis.com/maps/api/distancematrix/json?${params.toString()}`;
-      const r = await fetch(url);
-      if (r.ok) {
-        const j = await r.json();
-        const el = j?.rows?.[0]?.elements?.[0];
-        if (el?.status === 'OK') {
-          const txt = el.distance?.text || '';
-          miles = parseFloat(String(txt).replace(/[^\d.]/g, '')) || 0;
-          const durSec = (el.duration_in_traffic?.value ?? el.duration?.value) || 0;
-          minutes = Math.round(durSec / 60);
-        }
-      }
-    }
-    const billable = Math.max(0, miles - FREE_MILES);
-    const mileageFee = billable * MILE_RATE;
-    const taxAmount = Math.max(0, sub + mileageFee) * TAX_RATE;
-    const total = sub + mileageFee + taxAmount;
-
-    res.json({
-      miles: Math.round(miles * 100) / 100,
-      driveMinutesOneWay: minutes,
-      billableMiles: Math.round(billable * 100) / 100,
-      mileageFee: Math.round(mileageFee * 100) / 100,
-      taxRate: TAX_RATE,
-      taxAmount: Math.round(taxAmount * 100) / 100,
-      total: Math.round(total * 100) / 100
-    });
-  } catch (e) {
-    const sub = Number(req.body?.subtotal || 0);
-    const tax = Math.max(0, sub) * TAX_RATE;
-    res.json({ miles: 0, driveMinutesOneWay: 0, billableMiles: 0, mileageFee: 0, taxRate: TAX_RATE, taxAmount: tax, total: sub + tax });
-  }
-});
-
 /* ========= Aliases & Routes ========= */
-const finalhandler = require('finalhandler');
 app.get('/api/slots', (req, res) => {
   req.url = '/api/availability' + (req._parsedUrl.search || '');
   app._router.handle(req, res, finalhandler(req, res));
@@ -544,7 +545,7 @@ app.get('/fleet',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'fleet.ht
 app.get('/freestuff',  (req, res) => res.sendFile(path.join(VIEWS_DIR, 'freestuff.html')));
 app.get('/mobile',     (req, res) => res.sendFile(path.join(VIEWS_DIR, 'mobile.html')));
 
-// 🔁 Aliases to catch mixed-case or .html requests and send users to the canonical route
+// Aliases to catch mixed-case or .html requests
 app.get(['/Contact', '/Contact.html'], (req, res) => res.redirect(301, '/contact'));
 
 /* ========= Start ========= */
