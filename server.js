@@ -230,7 +230,7 @@ function capacityMapForDateFromSnapshot(dateISO, snap) {
     if (bDateISO !== dateISO) continue;
 
     const rawStart = b[7] || '';
-    const rawEnd   = b[8] || '';
+       const rawEnd   = b[8] || '';
     const startHH  = parseSheetTimeToHHMM(rawStart);
     const endHH    = parseSheetTimeToHHMM(rawEnd);
 
@@ -450,9 +450,11 @@ app.post('/api/confirm-booking', async (req, res) => {
       customer.address?.state, customer.address?.zip
     ].filter(Boolean).join(', ');
 
+    // ⬇️ CHANGE HERE: write status 'open' and crew '[]'
     await appendValues(`${SHEET_BOOKINGS_TAB}!A2`, [[
       jobId, date, customerName, pkg, size, addons, total,
-      startDisplay, endDisplay, heard, email, phone, addressStr2, '', ''
+      startDisplay, endDisplay, heard, email, phone, addressStr2,
+      'open', '[]'
     ]]);
 
     // Invalidate cache after write
