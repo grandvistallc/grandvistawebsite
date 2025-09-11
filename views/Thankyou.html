@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You | GrandVista Mobile Detailing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      color: #fff;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .thankyou-container {
+      background: rgba(255,255,255,0.10);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(249, 115, 22, 0.18);
+      padding: 3rem 2rem;
+      max-width: 420px;
+      text-align: center;
+      margin: 2rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      text-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    }
+    .checkmark {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      color: #10B981;
+      display: block;
+    }
+    p {
+      font-size: 1.15rem;
+      color: #fff;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #fff;
+      color: #F97316;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 1rem 2.2rem;
+      border-radius: 14px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      transition: all 0.2s;
+      border: none;
+    }
+    .cta-button:hover {
+      background: #FED7AA;
+      color: #EA580C;
+      transform: translateY(-2px);
+    }
+    @media (max-width: 600px) {
+      .thankyou-container {
+        padding: 2rem 0.7rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7EN0J08D8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7EN0J08D8');
+  </script>
+<body>
+  <div class="thankyou-container">
+    <span class="checkmark">✅</span>
+    <h1>Thank You for Booking!</h1>
+    <p>Your appointment has been received. We’re excited to help your vehicle look its absolute best.<br><br>
+    You’ll receive a confirmation email or text soon with all the details. If you have any questions, feel free to <a href="Contact.html" style="color:#FED7AA;text-decoration:underline;">contact us</a>.<br><br>
+    See you soon!</p>
+    <a href="index.html" class="cta-button">Back to Home</a>
+  </div>
+</body>
+  <script src="confetti.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.navbar-links a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          if (typeof confetti === 'function') confetti();
+        });
+      });
+    });
+  </script>
+</html>
