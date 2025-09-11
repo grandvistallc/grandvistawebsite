@@ -3,61 +3,738 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>Car Detailing Packages & Pricing | GrandVista Mobile Detailing</title>
-  <meta name="description" content="Professional mobile car detailing packages from $85–$400. Choose from Quick Refresh, Premium Detail, Showroom Rebirth. Free quotes, satisfaction guaranteed.">
+  <meta name="description" content="Professional mobile car detailing packages from $85-$400. Choose from Quick Refresh, Premium Detail, Showroom Rebirth. Free quotes, satis    .navbar-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+    .navbar-links li a {
+      color: var(--headline);
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }eed.">
   <meta name="keywords" content="car detailing prices, mobile detailing packages, auto detailing cost, car wash pricing, Twin Cities detailing packages">
-  <meta name="author" content="GrandVista Mobile Detailing">
-  <meta name="robots" content="index, follow">
+  <!-- Modern, clean sans-serif font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Add AOS.js CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --orange: #F97316;
+      --orange-dark: #EA580C;
+      --gray-dark: #1E1E1E;
+      --gray-darker: #121212;
+      --gray-medium: #2A2A2A;
+      --gray-border: #333;
+      --headline: #F9F9F9;
+      --body: #CFCFCF;
+    }
+    html {
+      font-size: 18px;
+      box-sizing: border-box;
+      background: var(--gray-darker);
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      background: var(--gray-darker);
+      color: var(--body);
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      font-size: 1rem;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-top: 0;
+      margin-bottom: 0.7em;
+      line-height: 1.2;
+      color: var(--headline);
+    }
+    h1 { font-size: 2.25rem; margin-bottom: 1.2em; }
+    h2 { font-size: 1.56rem; margin-bottom: 1em; }
+    h3 { font-size: 1.17rem; margin-bottom: 0.7em; }
+    p, li, blockquote, a, small {
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      letter-spacing: 0.01em;
+      color: var(--body);
+    }
+    p { font-size: 1rem; margin-bottom: 1.2em; }
+    header, section {
+      padding: 3.5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto 3.5rem auto;
+      background: linear-gradient(180deg, var(--gray-dark) 0%, var(--gray-medium) 100%);
+      border-radius: 18px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.18);
+    }
+    .intro {
+      text-align: center;
+      margin-bottom: 3.5rem;
+      background: none;
+      box-shadow: none;
+    }
+    .intro h1 {
+      color: var(--orange);
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 1.2em;
+      line-height: 1.2;
+      text-shadow: 0 2px 16px rgba(255,127,17,0.10);
+    }
+    .intro p {
+      margin-top: 0.5rem;
+      color: var(--body);
+      font-size: 1rem;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      margin-bottom: 2em;
+    }
+    .trust-points {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .trust-points div {
+      flex: 1 1 250px;
+      background-color: var(--gray-medium);
+      color: var(--body);
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: center;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin: 0 0.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      border: 1px solid var(--gray-border);
+    }
+    .scroll-btn {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 1.08rem;
+      letter-spacing: 0.02em;
+      box-shadow: 0 0 16px 2px rgba(255,127,17,0.18), 0 4px 24px rgba(255,127,17,0.13);
+      transition: all 0.3s ease-in-out;
+      outline: none;
+      position: relative;
+      border: 2px solid var(--orange);
+      box-shadow: 0 0 16px 2px rgba(255,127,17,0.18), 0 4px 24px rgba(255,127,17,0.13);
+    }
+    .scroll-btn:hover {
+      background: var(--orange-dark);
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 24px 4px rgba(255,127,17,0.25), 0 6px 32px rgba(255,127,17,0.18);
+      filter: brightness(0.95);
+      border-color: var(--orange-dark);
+    }
+    .packages {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: start;
+      justify-content: center;
+      margin: 0 auto;
+      max-width: 500px;
+      padding: 0 1rem;
+    }
+    .package-card {
+      background: linear-gradient(180deg, #181818 0%, #232323 100%);
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(255,127,17,0.07), 0 2px 24px rgba(0,0,0,0.18);
+      padding: 2.2rem 2rem 2rem 2rem;
+      line-height: 1.8;
+      max-width: 700px;
+      width: 100%;
+      margin: 0 auto;
+      min-width: 0;
+      border: 1px solid var(--gray-border);
+      color: var(--body);
+      transition: box-shadow 0.3s ease-in-out, border-color 0.3s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: auto;
+    }
+    .package-card h2 {
+      color: var(--orange);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1em;
+      line-height: 1.2;
+      text-shadow: 0 4px 16px rgba(255,165,0,0.6), 0 2px 8px rgba(255,140,0,0.4), 0 0 20px rgba(255,200,100,0.3);
+      background: linear-gradient(135deg, #FFB366 0%, #FF9933 50%, #FF8A3D 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(255,165,0,0.3);
+    }
+    .package-card ul {
+      padding-left: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .package-card .bonus {
+      margin-top: auto;
+    }
+    .bonus {
+      background-color: #232323;
+      border-left: 4px solid var(--orange);
+      padding: 1.2rem 1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      border-radius: 7px;
+      color: var(--body);
+      box-shadow: 0 2px 12px rgba(255,127,17,0.05);
+    }
+    .book-btn {
+      display: inline-block;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.08rem;
+      letter-spacing: 0.02em;
+      margin-top: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3); /* Increased visibility */
+      transition: all 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+      outline: none;
+      border: 2px solid var(--orange);
+      position: relative;
+      min-height: 48px; /* Large enough for mobile tapping */
+    }
+    .book-btn:hover,
+    .book-btn:focus {
+      background: var(--orange-dark);
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 24px 4px rgba(255,127,17,0.25), 0 6px 32px rgba(255,127,17,0.18);
+      filter: brightness(0.95);
+      border-color: var(--orange-dark);
+    }
+    /* Add or update in your <style> block for premium interactive effects */
+    .book-btn,
+    .scroll-btn,
+    a {
+      transition: all 0.3s ease-in-out;
+    }
 
-  <!-- Open Graph / Facebook -->
-  <meta property="og:title" content="Car Detailing Packages & Pricing | GrandVista Mobile Detailing">
-  <meta property="og:description" content="Compare our detailing packages and pricing. Exterior, interior, and full detailing services in the Twin Cities metro area.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://grandvistamobiledetailing.com/packages">
-  <meta property="og:image" content="https://grandvistamobiledetailing.com/Images/2025_logo_white_bg-removebg-preview.png">
+    .book-btn:hover,
+    .scroll-btn:hover {
+      transform: scale(1.05);
+      filter: brightness(1.05);
+      box-shadow: 0 4px 18px rgba(255,165,0,0.10);
+    }
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Car Detailing Packages & Pricing | GrandVista Mobile Detailing">
-  <meta name="twitter:description" content="Explore our mobile detailing services and transparent pricing. Book your perfect car detail today.">
+    a:hover {
+      color: var(--orange);
+      opacity: 0.85;
+    }
 
+    img,
+    .package-card img,
+    .trust-points img {
+      transition: all 0.3s ease-in-out;
+    }
+
+    img:hover,
+    .package-card img:hover,
+    .trust-points img:hover {
+      box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+      opacity: 0.92;
+      transform: scale(1.03);
+    }
+
+    .package-card {
+      transition: box-shadow 0.3s ease-in-out, border-color 0.3s;
+    }
+
+    .package-card:hover {
+      box-shadow: 0 12px 36px rgba(255,165,0,0.13);
+      border-color: var(--orange);
+    }
+
+    @media (min-width: 901px) {
+      .packages {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        max-width: 1200px;
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 900px) {
+      html { font-size: 16px; }
+      header, section {
+        padding: 1.5rem 0.7rem;
+        max-width: 100vw;
+        margin: 0 0 2rem 0;
+        border-radius: 0;
+      }
+      .intro {
+        margin-bottom: 2rem;
+      }
+      .packages {
+        gap: 1.5rem !important;
+        padding: 0 0.5rem;
+      }
+      .package-card {
+        max-width: 98vw;
+        min-width: 0;
+        padding: 1.2rem 0.7rem;
+      }
+      .trust-points {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .book-btn,
+      .scroll-btn {
+        width: 100%;
+        min-width: 0;
+        font-size: 1.15rem;
+        padding: 1.2rem 0;
+        margin: 0.7rem 0;
+        border-radius: 14px;
+      }
+      
+      /* Still Deciding Section - Tablet */
+      .still-deciding-section {
+        padding: 2.5rem 1rem !important;
+        margin: 2rem auto !important;
+        max-width: 98vw !important;
+        border-radius: 16px !important;
+      }
+      
+      /* Upcharges Section - Tablet */
+      .upcharges-section {
+        padding: 3rem 1rem !important;
+        margin: 2rem auto !important;
+        max-width: 98vw !important;
+        border-radius: 1rem !important;
+      }
+      .upcharges-section div[style*="grid-template-columns"] {
+        gap: 1.5rem !important;
+      }
+      .upcharges-section div[style*="background: linear-gradient"] {
+        padding: 2rem 1.5rem !important;
+      }
+      
+      .cta-buttons {
+        flex-direction: column !important;
+        gap: 1rem !important;
+        max-width: 350px !important;
+      }
+      .contact-btn, .book-now-btn {
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+    }
+
+    /* Still Deciding Section Button Hover Effects */
+    .contact-btn:hover {
+      background: #F97316 !important;
+      color: #fff !important;
+      transform: scale(1.02);
+      box-shadow: 0 4px 16px rgba(249,115,22,0.2);
+    }
+    
+    .book-now-btn:hover {
+      background: #EA580C !important;
+      transform: scale(1.02);
+      box-shadow: 0 4px 16px rgba(249,115,22,0.3);
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.4rem; }
+      h2 { font-size: 1.1rem; }
+      .intro h1 { font-size: 1.3rem; }
+      .intro p { font-size: 1rem; }
+      .package-card h2 { font-size: 1.08rem; }
+      .package-card { padding: 1rem 0.5rem; }
+      .bonus { font-size: 0.98rem; }
+      .book-btn,
+      .scroll-btn {
+        font-size: 1.18rem;
+        padding: 1.3rem 0;
+      }
+    }
+
+    /* Ensure images are responsive */
+    img,
+    .package-card img,
+    .trust-points img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Sticky Navbar Styles */
+    .navbar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(90deg, var(--gray-dark) 80%, var(--gray-medium) 100%);
+      z-index: 1000;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      padding: 0;
+    }
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.2rem 1.5rem;
+      flex-wrap: nowrap;
+    }
+    .navbar-logo img {
+      height: 36px;
+      vertical-align: middle;
+      margin-left: 0;
+    }
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar-links li a {
+      color: var(--headline);
+      font-weight: 500;
+      font-size: 1.08rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 0.5rem 0;
+    }
+    .navbar-links li a:hover,
+    .navbar-book-link:hover {
+      color: var(--orange);
+    }
+    
+    /* Special Free Stuff Button Styling */
+    .free-stuff-btn {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+      color: white !important;
+      padding: 0.6rem 1.2rem !important;
+      border-radius: 25px !important;
+      font-weight: 600 !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
+      animation: pulse-glow 2s infinite !important;
+    }
+
+    .free-stuff-btn:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+      color: white !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6) !important;
+    }
+
+    .free-stuff-btn::before {
+      content: '🎁' !important;
+      margin-right: 0.5rem !important;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+      }
+      50% {
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.7);
+      }
+    }
+    .navbar-book-btn {
+      margin-left: 2rem;
+      padding: 0.7rem 1.7rem;
+      font-size: 1.08rem;
+      border-radius: 10px;
+      font-weight: bold;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      box-shadow: 0 0 8px 0 rgba(255,127,17,0.18), 0 2px 16px rgba(255,127,17,0.10);
+      transition: all 0.3s;
+    }
+    .navbar-book-btn:hover {
+      background: var(--orange-dark);
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .navbar-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 1rem;
+      padding: 0.5rem;
+    }
+    .navbar-toggle span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--headline);
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    @media (max-width: 900px) {
+      .navbar-container {
+        padding: 0.5rem 0.7rem;
+      }
+      .navbar-links {
+        gap: 1.2rem;
+      }
+      .navbar-book-btn {
+        margin-left: 1rem;
+        padding: 0.7rem 1rem;
+        font-size: 1rem;
+      }
+      .navbar-phone {
+        display: none;
+      }
+    }
+    @media (max-width: 700px) {
+      .navbar-container {
+        flex-wrap: wrap;
+      }
+      .navbar-links {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--gray-dark);
+        flex-direction: column;
+        gap: 0;
+        display: none;
+        padding: 1.2rem 0;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      }
+      .navbar-links.active {
+        display: flex;
+      }
+      .navbar-links li {
+        text-align: center;
+        margin: 0.7rem 0;
+      }
+      
+      /* Mobile Free Stuff Button */
+      .free-stuff-btn {
+        display: block !important;
+        text-align: center !important;
+        margin: 1rem auto !important;
+        padding: 0.8rem 1.5rem !important;
+        border-radius: 30px !important;
+        font-size: 1.1rem !important;
+        width: fit-content !important;
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.5) !important;
+      }
+      .navbar-book-btn {
+        display: none;
+      }
+      .navbar-toggle {
+        display: flex;
+      }
+    }
+
+    /* Highlight the Interior Reset Package as "Most Popular" with a modern badge */
+    .most-popular {
+      position: relative;
+      z-index: 2;
+    }
+    .badge {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: linear-gradient(to right, #f8b500, #f7a828);
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      padding: 6px 14px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      letter-spacing: 0.06em;
+      animation: popIn 0.3s ease-in-out;
+      cursor: pointer;
+      transition: box-shadow 0.2s, filter 0.2s;
+    }
+    .badge-icon {
+      margin-right: 6px;
+      font-size: 1.1em;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,0.12));
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.8) translateX(-50%); opacity: 0; }
+      100% { transform: scale(1) translateX(-50%); opacity: 1; }
+    }
+    .badge:hover {
+      box-shadow: 0 0 18px 4px #f8b50088;
+      filter: brightness(1.08);
+    }
+    
+    /* Price Anchoring Styles */
+    .price-anchor {
+      background: linear-gradient(135deg, #2A2A2A 0%, #1E1E1E 100%);
+      border: 1px solid var(--orange);
+      border-radius: 10px;
+      padding: 1rem 1.2rem;
+      margin: 1rem 0 1.5rem 0;
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.4;
+      box-shadow: 0 2px 16px rgba(255,127,17,0.1);
+    }
+    .original-value {
+      text-decoration: line-through;
+      color: #888;
+      font-weight: normal;
+    }
+    .sale-price {
+      color: var(--orange);
+      font-weight: bold;
+      text-shadow: 0 2px 8px rgba(255,127,17,0.2);
+    }
+    
+    @media (max-width: 600px) {
+      .badge {
+        font-size: 12px;
+        padding: 4px 10px;
+      }
+      .badge-icon {
+        margin-right: 4px;
+        font-size: 1em;
+      }
+      .price-anchor {
+        font-size: 1rem;
+        padding: 0.8rem 1rem;
+        margin: 0.8rem 0 1.2rem 0;
+      }
+      
+      /* Still Deciding Section - Mobile */
+      .still-deciding-section {
+        padding: 2rem 1rem !important;
+        margin: 1.5rem auto !important;
+        max-width: 98vw !important;
+        border-radius: 16px !important;
+      }
+      .still-deciding-section h2 {
+        font-size: 1.3rem !important;
+      }
+      
+      /* Upcharges Section - Mobile */
+      .upcharges-section {
+        padding: 2.5rem 1rem !important;
+        margin: 1.5rem auto !important;
+        max-width: 98vw !important;
+        border-radius: 1rem !important;
+      }
+      .upcharges-section h2 {
+        font-size: 1.5rem !important;
+      }
+      .upcharges-section h3 {
+        font-size: 1.2rem !important;
+      }
+      .upcharges-section div[style*="background: linear-gradient"] {
+        padding: 1.5rem 1rem !important;
+      }
+      .upcharges-section ul li {
+        font-size: 1rem !important;
+        gap: 0.5rem !important;
+      }
+      .upcharges-section ul li span:first-child {
+        margin-right: 0 !important;
+      }
+      
+      .trust-checkmarks {
+        margin: 1rem 0 1.5rem 0 !important;
+      }
+      .trust-checkmarks div {
+        font-size: 1rem !important;
+      }
+      .cta-buttons {
+        flex-direction: column !important;
+        gap: 1rem !important;
+      }
+      .contact-btn, .book-now-btn {
+        flex: none !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        font-size: 1.1rem !important;
+        padding: 1.2rem 1rem !important;
+      }
+    }
+  </style>
+</head>
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWCX8FXK49"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7EN0J08D8"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-SWCX8FXK49');
+    gtag('config', 'G-H7EN0J08D8');
   </script>
-
-  <!-- Preload and Fonts -->
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" as="style">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- AOS Animations -->
-  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="/public/packages.css">
-</head>
-
 <body>
   <!-- Sticky Navbar -->
   <nav class="navbar">
     <div class="navbar-container">
-      <a href="/" class="navbar-logo">
-        <img src="Images/2025_logo_white_bg-removebg-preview.png" alt="GrandVista Logo" height="36" />
+      <a href="index.html" class="navbar-logo">
+  <img src="Images/balls.png" alt="GrandVista Logo" height="60" style="height:60px; width:auto;" />
       </a>
       <ul class="navbar-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/packages">Packages</a></li>
-        <li><a href="/freestuff" class="free-stuff-btn">Free Stuff</a></li>
-        <li><a href="/blogs">Blogs</a></li>
-        <li><a href="/fleet">Fleet</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="Freestuff.html" class="free-stuff-btn">Free Stuff</a></li>
+  <li><a href="Main.html">Plans</a></li>
+        <li><a href="fleet.html">Fleet</a></li>
+        <li><a href="Contact.html">Contact</a></li>
       </ul>
-      <a href="/services" class="btn btn-book navbar-book-btn">Book Now</a>
+      <a href="booking.html" class="btn btn-book navbar-book-btn">Book Now</a>
       <button class="navbar-toggle" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
@@ -72,33 +749,27 @@
       
       <h1 data-aos="fade-up" data-aos-delay="100" style="position: relative; z-index: 2;">Transform Your Vehicle Into a Masterpiece</h1>
       <p data-aos="fade-up" data-aos-delay="200" style="position: relative; z-index: 2; font-size: 1.1rem; max-width: 800px; margin: 0 auto; color: var(--body); line-height: 1.8;">
-        Premium mobile detailing that delivers showroom-quality results right to your location. No shortcuts, no compromises—just automotive perfection that saves you time.
+        <span style="font-size:1.15em;">🟧</span> <strong>Exterior Refresh:</strong> Fast, thorough exterior clean and shine—perfect for regular upkeep or a quick boost.<br>
+        <span style="font-size:1.15em;">🟥</span> <strong>Interior Renew:</strong> Deep interior cleaning and sanitizing for a fresh, like-new feel—ideal for families, pet owners, or anyone who wants a spotless cabin.<br>
+        <span style="font-size:1.15em;">🟪</span> <strong>Complete Rebirth:</strong> The ultimate inside-and-out transformation, including premium extras—best for special occasions, selling your car, or treating yourself to the best.
       </p>
     </div>
     
-    <div class="trust-points" style="margin: 3rem 0;">
-      <div data-aos="zoom-in" data-aos-delay="100" style="background: linear-gradient(135deg, var(--gray-medium) 0%, #2D2D2D 100%); border: 1px solid rgba(249,115,22,0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.borderColor='rgba(249,115,22,0.4)'; this.style.boxShadow='0 8px 25px rgba(249,115,22,0.15)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.borderColor='rgba(249,115,22,0.2)'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.10)'">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🧼</div>
-        <strong style="color: var(--orange); font-size: 1.1rem;">Expert Quality</strong><br>
-        <span style="color: var(--body);">100% Hand-done, no shortcuts</span>
-      </div>
-      <div data-aos="zoom-in" data-aos-delay="200" style="background: linear-gradient(135deg, var(--gray-medium) 0%, #2D2D2D 100%); border: 1px solid rgba(249,115,22,0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.borderColor='rgba(249,115,22,0.4)'; this.style.boxShadow='0 8px 25px rgba(249,115,22,0.15)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.borderColor='rgba(249,115,22,0.2)'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.10)'">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🧳</div>
-        <strong style="color: var(--orange); font-size: 1.1rem;">Mobile Convenience</strong><br>
-        <span style="color: var(--body);">We come to you – home, work, or campus</span>
-      </div>
-      <div data-aos="zoom-in" data-aos-delay="300" style="background: linear-gradient(135deg, var(--gray-medium) 0%, #2D2D2D 100%); border: 1px solid rgba(249,115,22,0.2); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px) scale(1.02)'; this.style.borderColor='rgba(249,115,22,0.4)'; this.style.boxShadow='0 8px 25px rgba(249,115,22,0.15)'" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.borderColor='rgba(249,115,22,0.2)'; this.style.boxShadow='0 2px 12px rgba(0,0,0,0.10)'">
-        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">💸</div>
-        <strong style="color: var(--orange); font-size: 1.1rem;">Real Value</strong><br>
-        <span style="color: var(--body);">Transparent pricing + limited-time bonuses included</span>
-      </div>
+
+  <!-- Big Fall Deal Banner (moved above packages) -->
+  <section class="fall-deal-banner" style="background: linear-gradient(180deg, #FFE6B0 0%, #FFB347 60%, #FF7E5F 100%); color: #fff; text-align: center; padding: 2.5rem 1.2rem 2.7rem 1.2rem; border-radius: 18px; margin: 2rem auto 1.5rem auto; max-width: 900px; box-shadow: 0 6px 24px rgba(255,127,17,0.15); overflow:hidden;">
+    <h2 style="font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow:0 2px 8px #FF7E5F55; margin-bottom:0.3rem;letter-spacing:0.01em;z-index:1;position:relative;">Big Fall Deal!</h2>
+    <div style="font-size:1.18rem;font-weight:600;color:#7C3F00;background:rgba(255,255,255,0.85);display:inline-block;padding:0.4em 1.2em;border-radius:10px;margin:0.7em 0 1em 0;box-shadow:0 2px 8px #FFB34733;z-index:1;position:relative;">
+      <span style="color:#F59E00;font-weight:800;background:linear-gradient(90deg,#FFF7D6 60%,#FFE6B0 100%);padding:0 0.3em;border-radius:5px;">FREE</span> Exterior Refresh
+      <span style="font-weight:400;color:#7C3F00;">with the purchase of the <span style="font-weight:600;">Interior Renew</span> package</span>
     </div>
-    
-    <a href="#packages" class="scroll-btn" data-aos="fade-up" data-aos-delay="350" style="background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%); box-shadow: 0 0 20px 3px rgba(255,127,17,0.25), 0 6px 30px rgba(255,127,17,0.15); position: relative; overflow: hidden;" onmouseover="this.style.boxShadow='0 0 30px 5px rgba(255,127,17,0.35), 0 8px 40px rgba(255,127,17,0.25)'" onmouseout="this.style.boxShadow='0 0 20px 3px rgba(255,127,17,0.25), 0 6px 30px rgba(255,127,17,0.15)'">
-      <span style="position: relative; z-index: 2;">View Packages ↓</span>
-      <!-- Button shine effect -->
-      <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); animation: shine 3s infinite;"></div>
-    </a>
+    <div style="font-size:1.08rem; color:#fff; margin-bottom:0.7em; font-weight:600; text-shadow:0 1px 4px #FF7E5F55;">Get your car protected <span style='color:#F59E00;font-weight:700;'>before winter hits</span>—lock in shine and shield against salt, snow, and road grime.</div>
+    <div style="margin:0.9em 0 1.3em 0;font-size:1.13rem;font-weight:500;color:#fff;text-shadow:0 1px 4px #FF7E5F55;z-index:1;position:relative;">
+      <span style="background:rgba(249,115,22,0.13);padding:0.25em 0.9em;border-radius:7px;display:inline-block;">⏳ Ends Sept. 30th!</span>
+    </div>
+  <a href="falldeal.html" class="cta-button" style="background: #F97316; color: #fff; border: none; font-weight: 700; font-size: 1.18rem; max-width: 280px; margin: 0 auto; display: inline-block; border-radius: 12px; padding: 1.1em 1.7em; box-shadow:0 4px 18px #F9731633,0 1.5px 0 #EA580C; transition:box-shadow 0.2s;z-index:1;position:relative;">Learn More</a>
+    <div style="margin-top: 1.3rem; font-size: 1.05rem; color:#fff;opacity:0.93;z-index:1;position:relative;">No code needed—bonus applied automatically!</div>
+  </section>
   </section>
 
   <style>
@@ -133,112 +804,97 @@
   <section id="packages" class="packages" data-aos="fade-up" data-aos-duration="900">
     <div class="package-card" data-aos="zoom-in" data-aos-delay="100" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: clamp(1.5rem, 4vw, 2rem); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.3); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
       <div style="background: linear-gradient(135deg, var(--orange), #ff8c3a); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);">
-        <h2 style="color: white; font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Gloss & Shield Exterior Refresh</h2>
+  <h2 style="color: white; font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Exterior Refresh</h2>
         <div style="color: white; opacity: 0.9; font-size: clamp(1rem, 3vw, 1.2rem); font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">$150</div>
       </div>
       <div style="background: linear-gradient(135deg, #2A2A2A 0%, #1E1E1E 100%); border: 1px solid var(--orange); border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0 1.5rem 0; text-align: center; font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.4; box-shadow: 0 2px 16px rgba(255,127,17,0.1);">
-        💸 <strong>Gloss & Shield = <span style="text-decoration: line-through; color: #888; font-weight: normal;">$180+ value</span> → Yours today for <span style="color: var(--orange); font-weight: bold; text-shadow: 0 2px 8px rgba(255,127,17,0.2);">$150</span></strong>
+  💸 <strong>Exterior Refresh = <span style="text-decoration: line-through; color: #888; font-weight: normal;">$180+ value</span> → Yours today for <span style="color: var(--orange); font-weight: bold; text-shadow: 0 2px 8px rgba(255,127,17,0.2);">$150</span></strong>
       </div>
       <p style="font-size: clamp(0.9rem, 2.2vw, 1rem); color: #E5E7EB; line-height: 1.5; margin-bottom: 1.2rem;"><strong style="color: #FED7AA;">Perfect for:</strong> Quick refreshes, date nights, or weekly maintenance</p>
       <ul style="text-align: left; list-style: disc; padding-left: 1.2rem; margin: 0 0 1.5rem 0; color: #D1D5DB;">
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Premium foam bath to lift dirt safely</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Hand wash technique – no automated car washes here</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Carnauba wax application for that deep, wet shine</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Wheels and tires cleaned inside and out</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Hand-dried with microfiber – zero water spots</li>
-        <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Tire protection applied for that showroom look</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Hand-washed with gentle, premium soap—no machines, ever.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Expert care removes dirt and road grime safely.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Glossy carnauba wax for a deep, mirror-like shine.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Wheels and tires cleaned to perfection.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Soft microfiber towels for a spotless, swirl-free finish.</li>
+  <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Tire dressing for that fresh-from-the-showroom look.</li>
       </ul>
-      <div style="background-color: rgba(35, 35, 35, 0.8); border-left: 4px solid var(--orange); padding: 1.2rem 1rem; margin: 1.5rem 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.6; border-radius: 7px; color: #E5E7EB; box-shadow: 0 2px 12px rgba(255,127,17,0.05);">
-        <strong style="color: #FED7AA; font-size: clamp(1rem, 2.5vw, 1.1rem);">🎁 FREE Bonus ($15 Value):</strong>
-        <ul style="text-align: left; list-style: disc; padding-left: 1.2rem; margin: 0.5rem 0 0 0; color: #D1D5DB;">
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Quick Interior Vacuum (seats, floor, mats)</li>
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Dashboard Wipe-Down</li>
-          <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Exterior Care Guide (digital)</li>
-        </ul>
-      </div>
       <p style="font-style: italic; color: #FCD34D; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5; margin-bottom: 1.5rem; text-align: center; opacity: 0.9;">"Get that weekend-fresh feeling without the weekend time commitment."</p>
-      <a href="/services" style="display: inline-block; background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: clamp(1rem, 2.5vw, 1.08rem); letter-spacing: 0.02em; margin-top: 1rem; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3); transition: all 0.3s ease; outline: none; border: 2px solid var(--orange); position: relative; min-height: 48px; width: 100%; text-align: center;" onmouseover="this.style.background='linear-gradient(135deg, var(--orange-dark) 0%, #D97706 100%)'; this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(249, 115, 22, 0.4)'" onmouseout="this.style.background='linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%)'; this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(249, 115, 22, 0.3)'">Book Exterior Refresh – $150</a>
+  <a href="booking.html" style="display: inline-block; background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: clamp(1rem, 2.5vw, 1.08rem); letter-spacing: 0.02em; margin-top: 1rem; box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3); transition: all 0.3s ease; outline: none; border: 2px solid var(--orange); position: relative; min-height: 48px; width: 100%; text-align: center;" onmouseover="this.style.background='linear-gradient(135deg, var(--orange-dark) 0%, #D97706 100%)'; this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(249, 115, 22, 0.4)'" onmouseout="this.style.background='linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%)'; this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(249, 115, 22, 0.3)'">Book Exterior Refresh – $150</a>
     </div>
 
     <div class="package-card most-popular" data-aos="zoom-in" data-aos-delay="200" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: clamp(1.5rem, 4vw, 2rem); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.3); transition: transform 0.3s ease; position: relative;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
       <div class="badge" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); z-index: 10; background: linear-gradient(to right, #f8b500, #f7a828); color: #fff; font-weight: bold; text-transform: uppercase; font-size: clamp(11px, 2.5vw, 14px); font-family: 'Poppins', Arial, Helvetica, sans-serif; padding: 6px 14px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); display: flex; align-items: center; letter-spacing: 0.06em; animation: popIn 0.3s ease-in-out; cursor: pointer; transition: box-shadow 0.2s, filter 0.2s;">
         <span class="badge-icon" style="margin-right: 6px; font-size: 1.1em; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.12));">👑</span> MOST POPULAR
       </div>
+  <!-- Fall Deal badge removed as requested -->
       <div style="background: linear-gradient(135deg, #DC2626, #EF4444); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3); position: relative;">
-        <h2 style="color: white; font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">The Interior Revival Package</h2>
+  <h2 style="color: white; font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Interior Renew</h2>
         <div style="color: white; opacity: 0.9; font-size: clamp(1rem, 3vw, 1.2rem); font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">$270</div>
       </div>
       <div style="background: linear-gradient(135deg, #2A2A2A 0%, #1E1E1E 100%); border: 1px solid var(--orange); border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0 1.5rem 0; text-align: center; font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.4; box-shadow: 0 2px 16px rgba(255,127,17,0.1);">
-        💸 <strong>Interior Reset = <span style="text-decoration: line-through; color: #888; font-weight: normal;">$470+ value</span> → Yours today for <span style="color: var(--orange); font-weight: bold; text-shadow: 0 2px 8px rgba(255,127,17,0.2);">$270</span></strong>
+  💸 <strong>Interior Renew = <span style="text-decoration: line-through; color: #888; font-weight: normal;">$470+ value</span> → Yours today for <span style="color: var(--orange); font-weight: bold; text-shadow: 0 2px 8px rgba(255,127,17,0.2);">$270</span></strong>
       </div>
       <p style="font-size: clamp(0.9rem, 2.2vw, 1rem); color: #E5E7EB; line-height: 1.5; margin-bottom: 1.2rem;"><strong style="color: #FECACA;">Perfect for:</strong> Deep cleaning, pet owners, families, or anyone who spends serious time in their car</p>
       <ul style="text-align: left; list-style: disc; padding-left: 1.2rem; margin: 0 0 1.5rem 0; color: #D1D5DB;">
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Complete vacuum system – seats, carpets, trunk, crevices</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Carpet shampoo + extraction to remove embedded dirt</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Steam cleaning for stubborn stains and sanitization</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">All surfaces degreased and sanitized</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">UV protectant application on plastics and vinyl</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Leather cleaning + conditioning (keeps it supple)</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Interior windows + mirrors crystal clear</li>
-        <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Door jambs cleaned + protected</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Full vacuum of seats, carpets, and trunk—no crumb left behind.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Carpets shampooed and deep-cleaned for a fresh feel.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Steam cleaning lifts tough stains and germs.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">All surfaces wiped, sanitized, and left spotless.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">UV protectant keeps your dash and doors looking new.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Leather seats cleaned and conditioned for softness.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Windows and mirrors polished crystal clear.</li>
+  <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Door edges detailed for a complete finish.</li>
       </ul>
-      <div style="background-color: rgba(35, 35, 35, 0.8); border-left: 4px solid var(--orange); padding: 1.2rem 1rem; margin: 1.5rem 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.6; border-radius: 7px; color: #E5E7EB; box-shadow: 0 2px 12px rgba(255,127,17,0.05);">
-        <strong style="color: #FECACA; font-size: clamp(1rem, 2.5vw, 1.1rem);">🔥 LIMITED-TIME BONUS STACK ($140 Value) - Ends Friday at Midnight:</strong>
-        <ul style="text-align: left; list-style: disc; padding-left: 1.2rem; margin: 0.5rem 0 0 0; color: #D1D5DB;">
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">FREE Exterior Wash & Wax (normally $120)</li>
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Premium Air Freshener (your choice of scent)</li>
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Rain-X Windshield Treatment</li>
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Pet Hair Removal (up to 20 minutes)</li>
-          <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">$20 Credit toward your next service</li>
-        </ul>
-      </div>
       <p style="font-style: italic; color: #FCD34D; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5; margin-bottom: 1.5rem; text-align: center; opacity: 0.9;">"Walk into a car that feels brand new again. This is where the magic happens."</p>
-      <a href="/services" style="display: inline-block; background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: clamp(1rem, 2.5vw, 1.08rem); letter-spacing: 0.02em; margin-top: 1rem; box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3); transition: all 0.3s ease; outline: none; border: 2px solid #DC2626; position: relative; min-height: 48px; width: 100%; text-align: center;" onmouseover="this.style.background='linear-gradient(135deg, #B91C1C 0%, #DC2626 100%)'; this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(220, 38, 38, 0.4)'" onmouseout="this.style.background='linear-gradient(135deg, #DC2626 0%, #EF4444 100%)'; this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(220, 38, 38, 0.3)'">Book Interior Revival – $270</a>
+  <a href="booking.html" style="display: inline-block; background: linear-gradient(135deg, #DC2626 0%, #EF4444 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: clamp(1rem, 2.5vw, 1.08rem); letter-spacing: 0.02em; margin-top: 1rem; box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3); transition: all 0.3s ease; outline: none; border: 2px solid #DC2626; position: relative; min-height: 48px; width: 100%; text-align: center;" onmouseover="this.style.background='linear-gradient(135deg, #B91C1C 0%, #DC2626 100%)'; this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(220, 38, 38, 0.4)'" onmouseout="this.style.background='linear-gradient(135deg, #DC2626 0%, #EF4444 100%)'; this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(220, 38, 38, 0.3)'">Book Interior Renew – $270</a>
     </div>
 
     <div class="package-card" data-aos="zoom-in" data-aos-delay="300" style="background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: clamp(1.5rem, 4vw, 2rem); backdrop-filter: blur(10px); border: 1px solid rgba(249, 115, 22, 0.3); transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
       <div style="background: linear-gradient(135deg, #7C3AED, #A855F7); color: white; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3); position: relative;">
         <div style="position: absolute; top: -8px; right: -8px; background: #FCD34D; color: #92400E; padding: 0.3rem 0.5rem; border-radius: 8px; font-size: clamp(10px, 2vw, 12px); font-weight: bold; line-height: 1;">🚀 VIP</div>
-        <h2 style="color: white; font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Showroom Rebirth – Full Reset</h2>
+  <h2 style="color: white; font-size: clamp(1.2rem, 4vw, 1.6rem); margin-bottom: 0.5rem; font-weight: 600; line-height: 1.2; text-shadow: 1px 1px 2px rgba(0,0,0,0.7);">Complete Rebirth</h2>
         <div style="color: white; opacity: 0.9; font-size: clamp(1rem, 3vw, 1.2rem); font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">$480</div>
       </div>
       <div style="background: linear-gradient(135deg, #2A2A2A 0%, #1E1E1E 100%); border: 1px solid var(--orange); border-radius: 10px; padding: 1rem 1.2rem; margin: 1rem 0 1.5rem 0; text-align: center; font-size: clamp(0.9rem, 2.5vw, 1.1rem); line-height: 1.4; box-shadow: 0 2px 16px rgba(255,127,17,0.1);">
-        💸 <strong>Complete Correction = <span style="text-decoration: line-through; color: #888; font-weight: normal;">$750+ value</span> → Yours for <span style="color: var(--orange); font-weight: bold; text-shadow: 0 2px 8px rgba(255,127,17,0.2);">$480</span></strong>
+  💸 <strong>Complete Rebirth = <span style="text-decoration: line-through; color: #888; font-weight: normal;">$750+ value</span> → Yours for <span style="color: var(--orange); font-weight: bold; text-shadow: 0 2px 8px rgba(255,127,17,0.2);">$480</span></strong>
       </div>
       <p style="font-size: clamp(0.9rem, 2.2vw, 1rem); color: #E5E7EB; line-height: 1.5; margin-bottom: 1.2rem;"><strong style="color: #E9D5FF;">Perfect for:</strong> Special occasions, car enthusiasts, selling your vehicle, or the ultimate "treat yourself" experience</p>
       
       <p style="font-size: clamp(1rem, 2.5vw, 1.1rem); color: #E9D5FF; font-weight: 600; margin-bottom: 1rem;">🏠 Complete Interior Transformation:</p>
       <ul style="text-align: left; list-style: disc; padding-left: 1.2rem; margin: 0 0 1.5rem 0; color: #D1D5DB;">
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Everything from Interior Revival Package</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Premium scent selection (5 luxury options)</li>
-        <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Fabric protection treatment (stain resistance)</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Includes everything in the Interior Revival Package.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Choose a luxury scent to make your car smell amazing.</li>
+  <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Premium fabric protection keeps seats looking great.</li>
       </ul>
       
       <p style="font-size: clamp(1rem, 2.5vw, 1.1rem); color: #E9D5FF; font-weight: 600; margin-bottom: 1rem;">✨ Full Exterior Restoration:</p>
       <ul style="text-align: left; list-style: disc; padding-left: 1.2rem; margin: 0 0 1.5rem 0; color: #D1D5DB;">
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Premium foam bath + hand wash</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Wheels, tires, and undercarriage deep clean</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Clay bar treatment (removes embedded contaminants)</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Bug and tar removal</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Single-step machine polish (removes swirl marks)</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Ceramic wax application (12+ months protection)</li>
-        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Window and wheel ceramic coating</li>
-        <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Tire shine application (that glossy, wet look)</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Hand wash with rich, gentle soap for a flawless finish.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Wheels, tires, and undercarriage cleaned with expert care.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Clay bar treatment removes stuck-on dirt for smooth paint.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Bugs and sticky spots gently removed.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Machine polish brings out a brilliant, glossy shine.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Ceramic wax for long-lasting, luxury protection.</li>
+  <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Windows and wheels detailed to perfection.</li>
+  <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Tires finished with a high-gloss, premium shine.</li>
       </ul>
       
+      <ul style="text-align: left; list-style: disc; padding-left: 1.2rem; margin: 0 0 1.5rem 0; color: #D1D5DB;">
+        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Engine bay cleaned and protected</li>
+        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Complete car care guide (interior + exterior)</li>
+        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">6-month stain guard protection</li>
+        <li style="margin-bottom: 0.6rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5;">Priority booking status for future appointments</li>
+      </ul>
       <div style="background-color: rgba(35, 35, 35, 0.8); border-left: 4px solid var(--orange); padding: 1.2rem 1rem; margin: 1.5rem 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.6; border-radius: 7px; color: #E5E7EB; box-shadow: 0 2px 12px rgba(255,127,17,0.05);">
-        <strong style="color: #E9D5FF; font-size: clamp(1rem, 2.5vw, 1.1rem);">🚀 VIP BONUS PACKAGE ($150 Value):</strong>
+        <strong style="color: #E9D5FF; font-size: clamp(1rem, 2.5vw, 1.1rem);">🚀 BONUS:</strong>
         <ul style="text-align: left; list-style: disc; padding-left: 1.2rem; margin: 0.5rem 0 0 0; color: #D1D5DB;">
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Engine Bay Detail (clean and protected)</li>
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Complete Car Care Guide (interior + exterior)</li>
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">6-Month Stain Guard Protection</li>
-          <li style="margin-bottom: 0.4rem; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">$50 Loyalty Credit toward next service</li>
-          <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">Priority Booking Status for future appointments</li>
+          <li style="margin-bottom: 0; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.4;">$50 Loyalty Credit toward next service</li>
         </ul>
       </div>
       
-      <p style="font-style: italic; color: #FCD34D; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5; margin-bottom: 1.5rem; text-align: center; opacity: 0.9;">"This isn't just detailing—it's a complete vehicle transformation. Your car will look better than the day you bought it."</p>
-      <a href="/services" style="display: inline-block; background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: clamp(1rem, 2.5vw, 1.08rem); letter-spacing: 0.02em; margin-top: 1rem; box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3); transition: all 0.3s ease; outline: none; border: 2px solid #7C3AED; position: relative; min-height: 48px; width: 100%; text-align: center;" onmouseover="this.style.background='linear-gradient(135deg, #6D28D9 0%, #9333EA 100%)'; this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(124, 58, 237, 0.4)'" onmouseout="this.style.background='linear-gradient(135deg, #7C3AED 0%, #A855F7 100%)'; this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(124, 58, 237, 0.3)'">Book Showroom Rebirth – $480</a>
+  <p style="font-style: italic; color: #FCD34D; font-size: clamp(0.9rem, 2.2vw, 1rem); line-height: 1.5; margin-bottom: 1.5rem; text-align: center; opacity: 0.9;">"This isn't just detailing—it's a complete rebirth. Your car will look better than the day you bought it."</p>
+  <a href="booking.html" style="display: inline-block; background: linear-gradient(135deg, #7C3AED 0%, #A855F7 100%); color: white; border: none; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: clamp(1rem, 2.5vw, 1.08rem); letter-spacing: 0.02em; margin-top: 1rem; box-shadow: 0 4px 16px rgba(124, 58, 237, 0.3); transition: all 0.3s ease; outline: none; border: 2px solid #7C3AED; position: relative; min-height: 48px; width: 100%; text-align: center;" onmouseover="this.style.background='linear-gradient(135deg, #6D28D9 0%, #9333EA 100%)'; this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(124, 58, 237, 0.4)'" onmouseout="this.style.background='linear-gradient(135deg, #7C3AED 0%, #A855F7 100%)'; this.style.transform='scale(1)'; this.style.boxShadow='0 4px 16px rgba(124, 58, 237, 0.3)'">Book Complete Rebirth – $480</a>
     </div>
   </section>
 
@@ -330,7 +986,7 @@
           </li>
         </ul>
         <p style="color: #6b7280; font-size: 0.95rem; margin-top: 2rem; text-align: center; font-style: italic;">
-          Not sure about your distance? <a href="/contact" style="color: var(--orange); text-decoration: underline; font-weight: 500;">Contact us</a> and we'll let you know!
+          Not sure about your distance? <a href="Contact.html" style="color: var(--orange); text-decoration: underline; font-weight: 500;">Contact us</a> and we'll let you know!
         </p>
       </div>
 
@@ -368,13 +1024,23 @@
     </div>
 
     <div class="cta-buttons" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; max-width: 500px; margin: 0 auto;" data-aos="fade-up" data-aos-delay="400">
-      <a href="/contact" class="contact-btn" style="flex: 1 1 200px; min-width: 200px; background: #fff; color: #F97316; border: 2px solid #F97316; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.08rem; transition: all 0.3s; text-align: center;">Contact Us</a>
-      <a href="/services" class="book-now-btn" style="flex: 1 1 200px; min-width: 200px; background: #F97316; color: #fff; border: 2px solid #F97316; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.08rem; transition: all 0.3s; text-align: center;">Book Now →</a>
+      <a href="Contact.html" class="contact-btn" style="flex: 1 1 200px; min-width: 200px; background: #fff; color: #F97316; border: 2px solid #F97316; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.08rem; transition: all 0.3s; text-align: center;">Contact Us</a>
+      <a href="booking.html" class="book-now-btn" style="flex: 1 1 200px; min-width: 200px; background: #F97316; color: #fff; border: 2px solid #F97316; padding: 1rem 2rem; border-radius: 10px; font-weight: bold; text-decoration: none; font-size: 1.08rem; transition: all 0.3s; text-align: center;">Book Now →</a>
     </div>
   </section>
 
   <!-- Add AOS.js library before closing body tag -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="confetti.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.navbar-links a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          if (typeof confetti === 'function') confetti();
+        });
+      });
+    });
+  </script>
   <script>
     AOS.init({
       once: true
