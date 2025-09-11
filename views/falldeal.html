@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fall Deal – Free Exterior Refresh!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <style>
+    :root {
+      --orange: #F97316;
+      --orange-dark: #EA580C;
+      --gray-dark: #1E1E1E;
+      --gray-darker: #121212;
+      --gray-medium: #2A2A2A;
+      --gray-border: #333;
+      --headline: #F9F9F9;
+      --body: #CFCFCF;
+    }
+    html {
+      font-size: 18px;
+      box-sizing: border-box;
+      background: var(--gray-darker);
+    }
+    *, *:before, *:after { box-sizing: inherit; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #FFE6B0 0%, #FFB347 60%, #FF7E5F 100%) fixed;
+      color: #1E1E1E;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      font-size: 1rem;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      margin-top: 0;
+      margin-bottom: 0.7em;
+      line-height: 1.2;
+      color: var(--headline);
+    }
+    h1 { font-size: 2.25rem; margin-bottom: 1.2em; }
+    h2 { font-size: 1.56rem; margin-bottom: 1em; }
+    h3 { font-size: 1.17rem; margin-bottom: 0.7em; }
+    p, li, blockquote, a, small {
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      letter-spacing: 0.01em;
+      color: var(--body);
+    }
+    p { font-size: 1rem; margin-bottom: 1.2em; }
+    header, section.fall-deal-section {
+      padding: 3.5rem 1.5rem;
+      max-width: 700px;
+      margin: 2.5rem auto 3.5rem auto;
+      background: rgba(255,255,255,0.97);
+      border: 2px solid #FFB347;
+      box-shadow: 0 6px 32px #FFB34733, 0 2px 24px #FF7E5F22;
+      border-radius: 20px;
+      color: #1E1E1E;
+    }
+    .fall-deal-section h1 {
+      color: #EA580C;
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 1.2em;
+      line-height: 1.2;
+      text-shadow: 0 2px 8px #FFB34788;
+    }
+    .fall-deal-section .deal-details {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: #F9F9F9;
+      background: rgba(249,115,22,0.08);
+      display: inline-block;
+      padding: 0.7em 1.5em;
+      border-radius: 10px;
+      margin: 0.7em 0 1.2em 0;
+      box-shadow: 0 2px 8px #FFB34733;
+    }
+    .fall-deal-section .bonus {
+      background-color: #FFF7E0;
+      border-left: 5px solid #FFB347;
+      padding: 1.2rem 1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.02rem;
+      line-height: 1.7;
+      border-radius: 7px;
+      color: #7C3F00;
+      box-shadow: 0 2px 12px rgba(255,127,17,0.05);
+    }
+    .fall-deal-section ul {
+      padding-left: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .fall-deal-section li {
+      margin-bottom: 0.85rem;
+      line-height: 1.6;
+      color: var(--body);
+    }
+    .fall-deal-section .expires {
+      font-size: 1.13rem;
+      color: #F9F9F9;
+      margin-bottom: 2.2rem;
+      letter-spacing: 0.01em;
+    }
+    .book-btn {
+      display: inline-block;
+      background: linear-gradient(90deg, #FFB347 0%, #FF7E5F 100%);
+      color: #fff;
+      border: 2px solid #FFB347;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.08rem;
+      letter-spacing: 0.02em;
+      margin-top: 1rem;
+      box-shadow: 0 0 16px 2px #FFB34755, 0 4px 24px #FF7E5F33;
+      transition: all 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+      outline: none;
+      position: relative;
+      min-height: 48px;
+    }
+    .book-btn:hover, .book-btn:focus {
+      background: linear-gradient(90deg, #FF7E5F 0%, #EA580C 100%);
+      border-color: #EA580C;
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 24px 4px rgba(255,127,17,0.25), 0 6px 32px rgba(255,127,17,0.18);
+      filter: brightness(0.95);
+    }
+    .testimonial {
+      background: #FFF7E0;
+      color: #7C3F00;
+      border-radius: 12px;
+      padding: 1.1rem 1.3rem;
+      margin: 2.5rem auto 0 auto;
+      max-width: 500px;
+      font-style: italic;
+      font-size: 1.08rem;
+      box-shadow: 0 2px 10px #ffb34722;
+    }
+    .faq-section {
+      max-width: 600px;
+      margin: 2.5rem auto 0 auto;
+    }
+    .faq-section h2 {
+      color: var(--orange);
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+    .faq {
+      background: #232323;
+      border-radius: 10px;
+      margin-bottom: 1.1rem;
+      padding: 0.9rem 1.1rem;
+      box-shadow: 0 1px 6px #ffb34722;
+      color: var(--body);
+    }
+    .faq strong { color: var(--orange); }
+    /* Ensure text is visible on the fall gradient background */
+    body, main, .fall-deal-section, .faq-section, .testimonial, .fall-deal-section .bonus {
+      color: #1E1E1E !important;
+    }
+
+    .fall-deal-section h1, .fall-deal-section .deal-details, .fall-deal-section .expires {
+      color: #B45309 !important;
+      text-shadow: 0 2px 8px #FFF7E0cc, 0 1px 2px #fff;
+    }
+
+    .fall-deal-section ul li, .faq, .book-btn {
+      color: #7C3F00 !important;
+    }
+
+    .book-btn {
+      text-shadow: 0 1px 2px #FFB34799;
+    }
+
+    /* Sticky Navbar Styles (copied from packages.html) */
+    .navbar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(90deg, var(--gray-dark) 80%, var(--gray-medium) 100%);
+      z-index: 1000;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      padding: 0;
+    }
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.2rem 1.5rem;
+      flex-wrap: nowrap;
+    }
+    .navbar-logo img {
+      height: 36px;
+      vertical-align: middle;
+      margin-left: 0;
+    }
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar-links li a {
+      color: var(--headline);
+      font-weight: 500;
+      font-size: 1.08rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 0.5rem 0;
+    }
+    .navbar-links li a:hover,
+    .navbar-book-link:hover {
+      color: var(--orange);
+    }
+    /* Special Free Stuff Button Styling */
+    .free-stuff-btn {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+      color: white !important;
+      padding: 0.6rem 1.2rem !important;
+      border-radius: 25px !important;
+      font-weight: 600 !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
+      animation: pulse-glow 2s infinite !important;
+    }
+    .free-stuff-btn:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+      color: white !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6) !important;
+    }
+    .free-stuff-btn::before {
+      content: '🎁' !important;
+      margin-right: 0.5rem !important;
+    }
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+      }
+      50% {
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.7);
+      }
+    }
+    .navbar-book-btn {
+      margin-left: 2rem;
+      padding: 0.7rem 1.7rem;
+      font-size: 1.08rem;
+      border-radius: 10px;
+      font-weight: bold;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      box-shadow: 0 0 8px 0 rgba(255,127,17,0.18), 0 2px 16px rgba(255,127,17,0.10);
+      transition: all 0.3s;
+    }
+    .navbar-book-btn:hover {
+      background: var(--orange-dark);
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .navbar-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 1rem;
+      padding: 0.5rem;
+    }
+    .navbar-toggle span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--headline);
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    @media (max-width: 900px) {
+      .navbar-container {
+        padding: 0.5rem 0.7rem;
+      }
+      .navbar-links {
+        gap: 1.2rem;
+      }
+      .navbar-book-btn {
+        margin-left: 1rem;
+        padding: 0.7rem 1rem;
+        font-size: 1rem;
+      }
+      .navbar-phone {
+        display: none;
+      }
+    }
+    @media (max-width: 700px) {
+      .navbar-container {
+        flex-wrap: wrap;
+      }
+      .navbar-links {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        right: 0;
+        background: var(--gray-dark);
+        flex-direction: column;
+        gap: 0;
+        display: none;
+        padding: 1.2rem 0;
+        box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      }
+      .navbar-links.active {
+        display: flex;
+      }
+      .navbar-links li {
+        text-align: center;
+        margin: 0.7rem 0;
+      }
+      /* Mobile Free Stuff Button */
+      .free-stuff-btn {
+        display: block !important;
+        text-align: center !important;
+        margin: 1rem auto !important;
+        padding: 0.8rem 1.5rem !important;
+        border-radius: 30px !important;
+        font-size: 1.1rem !important;
+        width: fit-content !important;
+        background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.5) !important;
+      }
+      .navbar-book-btn {
+        display: none;
+      }
+      .navbar-toggle {
+        display: flex;
+      }
+    }
+    /* End Sticky Navbar Styles */
+  </style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7EN0J08D8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7EN0J08D8');
+  </script>
+</head>
+<body>
+  <!-- Sticky Navbar -->
+<nav class="navbar">
+  <div class="navbar-container">
+    <a href="index.html" class="navbar-logo">
+      <img src="Images/balls.png" alt="GrandVista Logo" height="60" style="height:60px; width:auto;" />
+    </a>
+    <ul class="navbar-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="packages.html">Packages</a></li>
+      <li><a href="Freestuff.html" class="free-stuff-btn">Free Stuff</a></li>
+      <li><a href="Main.html">Plans</a></li>
+      <li><a href="fleet.html">Fleet</a></li>
+      <li><a href="Contact.html">Contact</a></li>
+    </ul>
+    <a href="booking.html" class="btn btn-book navbar-book-btn">Book Now</a>
+    <button class="navbar-toggle" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+  <main>
+    <section class="fall-deal-section">
+      <h1>🍁 Fall Deal: Free Exterior Refresh!</h1>
+      <div class="deal-details">
+        Buy an <strong>Interior Renewal</strong> for <strong>$270</strong> and get an <strong>Exterior Refresh</strong> <span style="color:var(--orange);font-weight:bold;">FREE</span>!<br>
+        <span style="font-size:1.1rem; color:var(--body);">($150 value – yours for $0!)</span>
+      </div>
+      <div class="bonus">Bonus: Your car will look, feel, and smell amazing—inside and out!</div>
+      <ul>
+        <li>🧹 <strong>Interior Renewal:</strong> Deep clean inside your car – seats, carpets, doors, cupholders, and more. We remove dirt, dust, and stains for a fresh, healthy ride.</li>
+        <li>🚗 <strong>Exterior Refresh:</strong> Hand wash, shine, and protect your car’s outside. Tires, wheels, and windows included. (Free with this deal!)</li>
+        <li>✨ <strong>Showroom Ready:</strong> We use pro products and careful attention to make your car sparkle.</li>
+        <li>⏰ <strong>Fast & Easy:</strong> We come to you—no waiting, no hassle. Just book and relax!</li>
+      </ul>
+      <div class="expires">Hurry! Deal ends <strong>September 30</strong>. Don’t miss out!</div>
+      <a href="booking.html" class="book-btn">Book Your Fall Deal Now</a>
+    </section>
+  </main>
+  <!-- Add AOS.js library before closing body tag -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="confetti.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.navbar-links a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          if (typeof confetti === 'function') confetti();
+        });
+      });
+    });
+  </script>
+  <script>
+    AOS.init({
+      once: true
+    });
+  </script>
+  <script>
+    // Hamburger menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.querySelector('.navbar-toggle');
+      const links = document.querySelector('.navbar-links');
+      if (toggle && links) {
+        toggle.addEventListener('click', function() {
+          links.classList.toggle('active');
+        });
+      }
+      // Smooth scroll for Book Now
+      document.querySelectorAll('.navbar-book-link, .navbar-book-btn').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+          const target = document.querySelector('#booking');
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+            if (links.classList.contains('active')) links.classList.remove('active');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
