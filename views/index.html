@@ -12,15 +12,6 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://grandvistamobiledetailing.com">
   <meta name="twitter:card" content="summary_large_image">
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SWCX8FXK49"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SWCX8FXK49');
-  </script>
   
   <!-- Preload critical resources -->
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" as="style">
@@ -28,7 +19,6 @@
   
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link rel="stylesheet" href="/public/index.css">
   
   <!-- Google Analytics (replace GA_MEASUREMENT_ID with your actual ID) -->
   <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
@@ -97,29 +87,962 @@
     }
   }
   </script>
-  </head>
+  
+  <style>
+    :root {
+      --orange: #F97316;
+      --orange-dark: #EA580C;
+      --gray-dark: #1E1E1E;
+      --gray-darker: #121212;
+      --gray-medium: #2A2A2A;
+      --gray-border: #333;
+      --headline: #F9F9F9;
+      --body: #CFCFCF;
+    }
+    html, body {
+      font-size: 18px;
+      background: var(--gray-darker);
+      margin: 0;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif;
+      color: var(--body);
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+    h1, h2, h3 {
+      color: var(--headline);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.15rem; }
+    section, header, footer {
+      padding: 3rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto 3rem auto;
+      background: linear-gradient(180deg, var(--gray-dark) 0%, var(--gray-medium) 100%);
+      border-radius: 24px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.18);
+    }
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(90deg, var(--gray-dark) 80%, var(--gray-medium) 100%);
+      z-index: 1000;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      padding: 0;
+    }
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.2rem 1.5rem;
+      flex-wrap: nowrap;
+    }
+    .navbar-logo img {
+      height: 60px;
+      width: auto;
+      filter: drop-shadow(0 2px 6px #000);
+    }
+    .navbar-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+    }
+    .navbar-links li a {
+      color: var(--headline);
+      font-weight: 500;
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap; /* Prevent text wrapping */
+    }
+    .navbar-links li a:hover {
+      color: var(--orange);
+    }
+    
+    /* Special Free Stuff Button Styling */
+    .free-stuff-btn {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+      color: white !important;
+      padding: 0.6rem 1.2rem !important;
+      border-radius: 25px !important;
+      font-weight: 600 !important;
+      position: relative !important;
+      overflow: hidden !important;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
+      animation: pulse-glow 2s infinite !important;
+    }
 
-  <body>
-  <!-- Sticky Navbar -->
+    .free-stuff-btn:hover {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+      color: white !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6) !important;
+    }
+
+    .free-stuff-btn::before {
+      content: '🎁' !important;
+      margin-right: 0.5rem !important;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+      }
+      50% {
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.7);
+      }
+    }
+    .navbar-book-btn {
+      margin-left: 1rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 12px;
+      font-weight: bold;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      box-shadow: 0 0 8px 0 rgba(249,115,22,0.18), 0 2px 16px rgba(249,115,22,0.10);
+      transition: all 0.3s;
+    }
+    .navbar-book-btn:hover {
+      background: var(--orange-dark);
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .navbar-toggle { display: none; }
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: 520px;
+      width: 100vw;
+      left: 50%;
+      right: 50%;
+      margin-left: -50vw;
+      margin-right: -50vw;
+      max-width: 100vw;
+      overflow: hidden;
+      border-radius: 0 0 48px 48px;
+      box-shadow: 0 6px 32px rgba(0,0,0,0.25);
+      background: linear-gradient(90deg, #181818 60%, #232323 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: left;
+      padding: 0;
+      margin-bottom: 3rem;
+    }
+    .hero-bg, .hero-overlay { display: none; }
+    .hero-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-side-image {
+      max-width: 340px;
+      height: auto;
+      display: block;
+      flex-shrink: 0;
+      border-radius: 24px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.10);
+      background: transparent;
+    }
+    .hero-content {
+      flex: 1 1 400px;
+      max-width: 540px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 2;
+    }
+    .hero-content h1 {
+      color: #F9F9F9;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.18);
+      text-align: left;
+    }
+    .hero-content p {
+      color: #CFCFCF;
+      font-size: 1.25rem;
+      margin-bottom: 2.2rem;
+      line-height: 1.6;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      text-align: left;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .hero-cta-btn {
+      background: #F97316;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      box-shadow: 0 0 16px 2px rgba(249,115,22,0.18), 0 4px 24px rgba(249,115,22,0.13);
+      padding: 1.15rem 2.7rem;
+      border-radius: 14px;
+      font-size: 1.25rem;
+      transition: all 0.3s cubic-bezier(.4,0,.2,1);
+      cursor: pointer;
+      margin-top: 0.5rem;
+      letter-spacing: 0.02em;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .hero-cta-btn:hover, .hero-cta-btn:focus {
+      background: #EA580C;
+      color: #fff;
+      transform: scale(1.05);
+      box-shadow: 0 0 24px 4px rgba(249,115,22,0.25), 0 6px 32px rgba(249,115,22,0.18);
+      outline: none;
+    }
+    .btn-services.hero-cta-btn {
+      background: #fff;
+      color: var(--orange);
+      border: 2px solid var(--orange);
+      font-weight: bold;
+    }
+    .btn-services.hero-cta-btn:hover {
+      background: var(--orange-dark);
+      color: #fff;
+      border-color: var(--orange-dark);
+    }
+    /* Trust Section */
+    .trust-section {
+      background: #232323;
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      margin-bottom: 2.5rem;
+      max-width: 1200px;
+    }
+    .trust-grid {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      flex: 1 1 220px;
+      min-width: 220px;
+      max-width: 340px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem 1.2rem 1.2rem 1.2rem;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto;
+    }
+    .trust-icon {
+      display: block;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+    .trust-label {
+      font-weight: 700;
+      color: #1E1E1E;
+      font-size: 1.13rem;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.01em;
+    }
+    .trust-caption {
+      color: #555;
+      font-size: 0.98rem;
+      margin-top: 0.1rem;
+      line-height: 1.5;
+    }
+    /* What is Detailing */
+    #what-is-detailing {
+      background: #fefefe;
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      margin-bottom: 2.5rem;
+      max-width: 1200px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      text-align: center;
+    }
+    #what-is-detailing h2 {
+      color: var(--orange);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    #what-is-detailing h3 {
+      color: var(--orange);
+      margin-bottom: 0.25rem;
+      font-size: 1.18rem;
+      text-align: left;
+    }
+    #what-is-detailing p {
+      color: #666;
+      font-size: 1.08rem;
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+    #what-is-detailing .detail-icons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+    #what-is-detailing .detail-icons div {
+      background: transparent;
+      border-radius: 8px;
+      padding: 0.7rem 0.2rem;
+      font-size: 1.2rem;
+      color: var(--orange);
+      box-shadow: none;
+      text-align: center;
+    }
+    /* Gallery */
+    #gallery {
+      background: #fff;
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      max-width: 1200px;
+    }
+    #gallery h2 {
+      color: var(--orange);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.3rem;
+    }
+    #car-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    #car-gallery > div {
+      flex: 1 1 300px;
+      max-width: 350px;
+      text-align: center;
+    }
+    #car-gallery img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      margin: 0 auto;
+      display: block;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    #car-gallery img:hover {
+      box-shadow: 0 6px 24px rgba(249,115,22,0.13);
+      transform: scale(1.03);
+    }
+    /* Testimonials */
+    .testimonials {
+      background: linear-gradient(180deg, #232323 0%, #181818 100%);
+      text-align: center;
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      border-radius: 24px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.18);
+      max-width: 1200px;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .testimonial-grid blockquote {
+      background: #181818;
+      padding: 2.2rem 1.7rem 1.7rem 3.2rem;
+      border-radius: 16px;
+      box-shadow: 0 6px 32px rgba(255,127,17,0.07);
+      border: 1px solid var(--gray-border);
+      position: relative;
+      font-style: italic;
+      margin: 0;
+      min-height: 140px;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      color: var(--body);
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+    .testimonial-grid blockquote::before {
+      content: "“";
+      font-size: 3.2rem;
+      color: var(--orange);
+      position: absolute;
+      left: 1.1rem;
+      top: 0.7rem;
+      line-height: 1;
+      font-family: serif;
+      opacity: 0.7;
+      text-shadow: 0 2px 8px rgba(255,127,17,0.13);
+    }
+    .testimonial-grid blockquote strong {
+      display: block;
+      margin-top: 1.2rem;
+      font-style: normal;
+      color: var(--headline);
+      font-size: 1.08rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .testimonial-grid blockquote:hover {
+      box-shadow: 0 12px 36px rgba(249,115,22,0.13);
+      border-color: var(--orange);
+    }
+    /* Ready to Choose Your Detail Section */
+    .view-packages-section {
+      background: linear-gradient(180deg, #232323 0%, #181818 100%);
+      border-radius: 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      padding: 2.5rem 1.5rem;
+      margin: 2.5rem auto;
+      max-width: 900px;
+      text-align: center;
+    }
+    .view-packages-section h2 {
+      color: var(--orange);
+      font-size: 1.7rem;
+      margin-bottom: 0.7rem;
+    }
+    .view-packages-section p {
+      color: #CFCFCF;
+      font-size: 1.08rem;
+      margin-bottom: 1.5rem;
+    }
+    .view-packages-section a {
+      background: var(--orange);
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.15rem;
+      padding: 1rem 2.5rem;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(249,115,22,0.13);
+      border: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    /* Still Thinking It Over Section */
+    .thinking-section {
+      background: #F9FAFB;
+      padding: 2.5rem 1.5rem;
+      margin: 2.5rem auto;
+      max-width: 1000px;
+      border-radius: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .thinking-section .final-cta:hover {
+      background: var(--orange-dark);
+      transform: scale(1.05);
+      box-shadow: 0 6px 32px rgba(249,115,22,0.3);
+    }
+    /* Center all text content on the page */
+    body, h1, h2, h3, h4, h5, h6, p, .hero-content, .hero-content h1, .hero-content p, 
+    section, .trust-label, .trust-caption, .view-packages-section, .testimonial-grid, .testimonial-grid blockquote, #gallery, #what-is-detailing {
+      text-align: center !important;
+    }
+    /* Responsive adjustments */
+    @media (max-width: 1100px) {
+      .navbar-links {
+        gap: 1.2rem;
+      }
+      .navbar-links li a {
+        font-size: 1rem;
+        padding: 0.5rem 0.6rem;
+      }
+    }
+    @media (max-width: 1200px) {
+      section, header, footer, .trust-section, #what-is-detailing, #gallery, .testimonials {
+        max-width: 98vw;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .hero-container {
+        gap: 30px;
+        padding: 3rem 1rem;
+      }
+      .hero-side-image {
+        max-width: 220px;
+      }
+    }
+    @media (max-width: 900px) {
+      html { font-size: 16px; }
+      body {
+        overflow-x: hidden;
+      }
+      .hero-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 2rem 1rem;
+        margin: 0 auto;
+      }
+      .hero-side-image {
+        max-width: 100vw;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+      }
+      .hero-content {
+        align-items: center;
+        text-align: center;
+        max-width: 100%;
+        padding: 0 1rem;
+      }
+      .hero-content h1,
+      .hero-content p {
+        text-align: center;
+      }
+      .hero-cta {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+        max-width: 320px;
+        align-items: center;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      .hero-cta-btn {
+        width: 100%;
+        max-width: 280px;
+        min-width: 0;
+        font-size: 1.1rem;
+        padding: 1.1rem 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        margin: 0 auto;
+      }
+      .trust-grid {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: stretch;
+      }
+      .trust-item {
+        max-width: 100%;
+        width: 100%;
+        padding: 1.5rem 1rem;
+        margin: 0 auto;
+      }
+      #what-is-detailing {
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        text-align: center;
+      }
+      #what-is-detailing > div {
+        max-width: 100%;
+        margin: 1.5rem auto;
+        padding: 0 1rem;
+        text-align: center;
+      }
+      #what-is-detailing h3 {
+        text-align: center;
+        margin-bottom: 0.5rem;
+      }
+      #what-is-detailing p {
+        text-align: center;
+        margin-bottom: 1.2rem;
+      }
+      #what-is-detailing .detail-icons {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 400px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+      }
+      .detail-icons {
+        grid-template-columns: repeat(2, 1fr) !important;
+        max-width: 400px !important;
+        margin: 2rem auto !important;
+        padding: 0 1rem !important;
+      }
+      #car-gallery {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+    @media (max-width: 950px) {
+  /* Navbar - Earlier collapse for better spacing */
+  .navbar-container {
+    flex-wrap: nowrap;
+    padding: 0.8rem 1rem;
+    min-height: 56px;
+  }
+  .navbar-logo img {
+    height: 45px;
+  }
+  .navbar-links {
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: #1E1E1E;
+    flex-direction: column;
+    gap: 0;
+    display: none;
+    padding: 1.2rem 0;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+    z-index: 1001;
+  }
+  .navbar-links.active {
+    display: flex;
+  }
+  
+  /* Ensure mobile navbar items are properly spaced */
+  .navbar-links.active li {
+    text-align: center;
+    margin: 0.7rem 0;
+  }
+  
+  /* Override any default link styles in mobile */
+  .navbar-links.active li a:not(.free-stuff-btn) {
+    color: var(--headline);
+    background: none;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+  }
+  .navbar-links li a {
+    font-size: 1.1rem;
+    padding: 0.8rem 1rem;
+  }
+  
+  /* Mobile Free Stuff Button */
+  .navbar-links .free-stuff-btn {
+    display: block !important;
+    text-align: center !important;
+    margin: 1rem auto !important;
+    padding: 0.8rem 1.5rem !important;
+    border-radius: 30px !important;
+    font-size: 1.1rem !important;
+    width: fit-content !important;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.5) !important;
+    color: white !important;
+    font-weight: 600 !important;
+  }
+  
+  .navbar-links .free-stuff-btn:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6) !important;
+  }
+  
+  .navbar-links .free-stuff-btn::before {
+    content: '🎁' !important;
+    margin-right: 0.5rem !important;
+  }
+  
+  /* Force mobile free stuff button styling on small screens */
+  @media (max-width: 950px) {
+    .navbar-links a.free-stuff-btn {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+      color: white !important;
+      border-radius: 30px !important;
+      padding: 0.8rem 1.5rem !important;
+      font-weight: 600 !important;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.5) !important;
+      margin: 0.5rem auto !important;
+      width: auto !important;
+      display: inline-block !important;
+    }
+  }
+  .navbar-book-btn {
+    display: none;
+  }
+  .navbar-toggle {
+    display: flex;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  .navbar-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--headline);
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+  }
+    }
+    @media (max-width: 700px) {
+  /* Smaller screens - just logo adjustment */
+  .navbar-logo img {
+    height: 40px !important;
+  }
+
+  /* Hero Section */
+  .hero {
+    min-height: 340px;
+    border-radius: 0 0 24px 24px;
+    margin-bottom: 2rem;
+    padding: 0;
+  }
+  .hero-container {
+    flex-direction: column;
+    gap: 1.2rem;
+    padding: 2rem 0.5rem;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-side-image {
+    display: none !important;
+  }
+  .hero-content {
+    align-items: center !important;
+    text-align: center !important;
+    width: 100%;
+  }
+  .hero-content h1 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .hero-content p {
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+  .hero-cta {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    align-items: center;
+  }
+  .hero-cta-btn {
+    width: 100%;
+    min-width: 0;
+    font-size: 1.1rem;
+    padding: 1.1rem 0;
+    border-radius: 12px;
+  }
+
+  /* Section Spacing */
+  section, header, footer, .trust-section, #what-is-detailing, #gallery, .testimonials, .view-packages-section {
+    padding: 1.5rem 0.5rem !important;
+    margin: 0.7rem auto 1.5rem auto !important;
+    max-width: 98vw !important;
+    border-radius: 16px !important;
+  }
+
+  /* Still Thinking It Over - Mobile */
+  .thinking-section {
+    padding: 1.5rem 0.5rem !important;
+    margin: 1.5rem auto !important;
+    max-width: 98vw !important;
+    border-radius: 16px !important;
+  }
+  .thinking-section .trust-points-mini {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    text-align: center !important;
+  }
+  .thinking-section .faq-section {
+    padding: 0 0.5rem;
+  }
+  .thinking-section .final-cta {
+    width: 100% !important;
+    max-width: 280px !important;
+    font-size: 1.1rem !important;
+    padding: 1.1rem 1rem !important;
+  }
+
+  /* Trust Section */
+  .trust-grid {
+    flex-direction: column;
+    gap: 1.2rem;
+    align-items: stretch;
+  }
+  .trust-item {
+    max-width: 100%;
+    width: 100%;
+    padding: 1.2rem 0.7rem;
+  }
+
+  /* What is Detailing */
+  #what-is-detailing .detail-icons {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin: 1.2rem auto;
+  }
+
+  /* Gallery */
+  #car-gallery {
+    flex-direction: column;
+    gap: 1.2rem;
+    max-width: 100vw;
+  }
+  #car-gallery > div {
+    max-width: 100vw;
+    padding: 0;
+  }
+  #car-gallery img {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+
+  /* Testimonials */
+  .testimonial-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin-top: 1.2rem;
+  }
+  .testimonial-grid blockquote {
+    font-size: 1rem;
+    padding: 1.2rem 0.7rem 1rem 1.5rem;
+    min-height: 80px;
+  }
+
+  /* View Packages Section */
+  .view-packages-section {
+    padding: 1.5rem 0.5rem !important;
+    margin: 1.5rem auto !important;
+    max-width: 98vw !important;
+    border-radius: 16px !important;
+  }
+  .view-packages-section h2 {
+    font-size: 1.2rem;
+  }
+  .view-packages-section a {
+    width: 100%;
+    font-size: 1rem;
+    padding: 1rem 0;
+    border-radius: 10px;
+  }
+}
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.1rem; }
+      .hero h1 { font-size: 1.4rem; }
+      .hero p { font-size: 1rem; }
+      .hero-cta {
+        padding: 0 1rem;
+        max-width: 100%;
+      }
+      .hero-cta-btn {
+        font-size: 1.15rem;
+        padding: 1.2rem 1rem;
+        max-width: 100%;
+      }
+      .btn,
+      .btn-book,
+      .btn-services,
+      .book-btn,
+      .scroll-btn {
+        font-size: 1.15rem;
+        padding: 1.2rem 1rem;
+        text-align: center;
+      }
+      .testimonial-grid blockquote {
+        font-size: 0.98rem;
+      }
+      .package-card h2 {
+        font-size: 1.15rem;
+      }
+      .package-card {
+        padding: 1rem 0.5rem;
+      }
+      #what-is-detailing {
+        padding: 2rem 1rem;
+      }
+      #what-is-detailing > div {
+        padding: 0 0.5rem;
+      }
+      #what-is-detailing .detail-icons {
+        max-width: 320px;
+        padding: 0 0.5rem;
+      }
+      .detail-icons {
+        max-width: 320px !important;
+        padding: 0 0.5rem !important;
+      }
+    }
+    /* Ensure images are responsive */
+    img,
+    #car-gallery img,
+    .testimonial-grid img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    /* Smooth scroll for anchors */
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Performance optimization */
+    * {
+      box-sizing: border-box;
+    }
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+  </style>
+</head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7EN0J08D8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7EN0J08D8');
+  </script>
+<body>
+  <!-- Sticky Navbar (EXACT COPY from packages.html) -->
   <nav class="navbar">
     <div class="navbar-container">
-      <a href="/" class="navbar-logo">
-        <img src="Images/2025_logo_white_bg-removebg-preview.png" alt="GrandVista Logo" height="36" />
+      <a href="index.html" class="navbar-logo">
+        <img src="Images/balls.png" alt="GrandVista Logo" height="60" style="height:60px; width:auto;" />
       </a>
       <ul class="navbar-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/packages">Packages</a></li>
-        <li><a href="/freestuff" class="free-stuff-btn">Free Stuff</a></li>
-        <li><a href="/blogs">Blogs</a></li>
-        <li><a href="/fleet">Fleet</a></li>
-        <li><a href="/contact">Contact</a></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="Freestuff.html" class="free-stuff-btn">Free Stuff</a></li>
+        <li><a href="Main.html">Plans</a></li>
+        <li><a href="fleet.html">Fleet</a></li>
+        <li><a href="Contact.html">Contact</a></li>
       </ul>
-      <a href="/services" class="btn btn-book navbar-book-btn">Book Now</a>
+      <a href="booking.html" class="btn btn-book navbar-book-btn">Book Now</a>
       <button class="navbar-toggle" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
+
 
   <header class="hero" style="position:relative; min-height:420px; width:100vw; left:50%; right:50%; margin-left:-50vw; margin-right:-50vw; max-width:100vw; overflow:hidden; border-radius:0 0 32px 32px; box-shadow:0 6px 32px rgba(0,0,0,0.25);">
     <div class="hero-bg"></div>
@@ -130,13 +1053,28 @@
         <h1>Premium Mobile Car Detailing in the Twin Cities</h1>
         <p>We bring showroom-quality detailing right to your driveway.</p>
         <div class="hero-cta">
-          <a href="/services" class="btn btn-book hero-cta-btn">Book Now</a>
-          <a href="/packages" class="btn btn-services hero-cta-btn" style="background:#fff; color:var(--orange); border:2px solid var(--orange); font-weight:bold;">See Services</a>
+          <a href="booking.html" class="btn btn-book hero-cta-btn">Book Now</a>
+          <a href="packages.html" class="btn btn-services hero-cta-btn" style="background:#fff; color:var(--orange); border:2px solid var(--orange); font-weight:bold;">See Services</a>
         </div>
       </div>
       <img src="Images/right-hero.png" alt="Detailing Right Image" class="hero-side-image" loading="lazy" />
     </div>
   </header>
+
+  <!-- Big Fall Deal Banner -->
+  <section class="fall-deal-banner" style="position:relative; background: linear-gradient(180deg, #FFE6B0 0%, #FFB347 60%, #FF7E5F 100%); color: #fff; text-align: center; padding: 2.5rem 1.2rem 2.7rem 1.2rem; border-radius: 18px; margin: 2rem auto 1.5rem auto; max-width: 900px; box-shadow: 0 6px 24px rgba(255,127,17,0.15); overflow:hidden;">
+    <h2 style="font-size: 2.2rem; font-weight: 800; color: #fff; text-shadow:0 2px 8px #FF7E5F55; margin-bottom:0.3rem;letter-spacing:0.01em;z-index:1;position:relative;">Big Fall Deal!</h2>
+    <div style="font-size:1.18rem;font-weight:600;color:#7C3F00;background:rgba(255,255,255,0.85);display:inline-block;padding:0.4em 1.2em;border-radius:10px;margin:0.7em 0 1em 0;box-shadow:0 2px 8px #FFB34733;z-index:1;position:relative;">
+  <span style="color:#F59E00;font-weight:800;background:linear-gradient(90deg,#FFF7D6 60%,#FFE6B0 100%);padding:0 0.3em;border-radius:5px;">FREE</span> Exterior Refresh
+  <span style="font-weight:400;color:#7C3F00;">with the purchase of the <span style="font-weight:600;">Interior Renew</span> package</span>
+    </div>
+    <div style="font-size:1.08rem; color:#fff; margin-bottom:0.7em; font-weight:600; text-shadow:0 1px 4px #FF7E5F55;">Get your car protected <span style='color:#F59E00;font-weight:700;'>before winter hits</span>—lock in shine and shield against salt, snow, and road grime.</div>
+    <div style="margin:0.9em 0 1.3em 0;font-size:1.13rem;font-weight:500;color:#fff;text-shadow:0 1px 4px #FF7E5F55;z-index:1;position:relative;">
+      <span style="background:rgba(249,115,22,0.13);padding:0.25em 0.9em;border-radius:7px;display:inline-block;">⏳ Ends Sept. 30th!</span>
+    </div>
+  <a href="falldeal.html" class="cta-button" style="background: #F97316; color: #fff; border: none; font-weight: 700; font-size: 1.18rem; max-width: 280px; margin: 0 auto; display: inline-block; border-radius: 12px; padding: 1.1em 1.7em; box-shadow:0 4px 18px #F9731633,0 1.5px 0 #EA580C; transition:box-shadow 0.2s;z-index:1;position:relative;">Learn More</a>
+    <div style="margin-top: 1.3rem; font-size: 1.05rem; color:#fff;opacity:0.93;z-index:1;position:relative;">No code needed—bonus applied automatically!</div>
+  </section>
 
   <!-- Trust Section -->
   <section class="trust-section" data-aos="fade-up" data-aos-duration="900">
@@ -168,100 +1106,17 @@
     </div>
   </section>
 
-    <section id="what-is-detailing" style="background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #fafafa 100%); padding: 4rem 2rem; text-align: center; margin: 0 auto; max-width: 1200px; position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-radius: 20px;" data-aos="fade-up" data-aos-duration="900">
-    
-    <!-- Subtle background elements -->
-    <div style="position: absolute; top: -100px; right: -100px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(249, 115, 22, 0.03) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
-    <div style="position: absolute; bottom: -80px; left: -80px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(249, 115, 22, 0.02) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
-    
-    <div style="position: relative; z-index: 1;">
-      <!-- Enhanced main heading with emotional micro-headline -->
-      <div style="margin-bottom: 3rem;" data-aos="fade-up" data-aos-delay="100">
-        <h2 style="color: var(--orange); font-size: 2.8rem; font-weight: bold; margin-bottom: 0.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">What is Mobile Detailing?</h2>
-        <p style="font-size: 1.3rem; color: #555; margin-bottom: 1rem; font-weight: 500;">More than a car wash — it's full restoration and protection.</p>
-        
-        <!-- Trust trigger element -->
-        <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 0.75rem 1.5rem; border-radius: 25px; border: 2px solid rgba(249, 115, 22, 0.1); margin-bottom: 1rem;" data-aos="zoom-in" data-aos-delay="200">
-          <span style="color: #f59e0b; font-size: 1.2rem;">⭐</span>
-          <span style="color: var(--orange); font-weight: 600; font-size: 1rem;">5-Star Google Rated</span>
-          <span style="color: #666; margin: 0 0.5rem;">|</span>
-          <span style="color: #555; font-weight: 500;">100+ Happy Customers</span>
-        </div>
-        
-        <!-- Emotional micro-headline -->
-        <p style="color: var(--orange); font-size: 1.1rem; font-weight: 600; font-style: italic; margin: 0;">Save Time • Protect Value • Love Your Car Again</p>
+
+    <section id="what-is-detailing" style="background: linear-gradient(135deg, #fafafa 0%, #ffffff 50%, #fafafa 100%); padding: 3rem 1rem; text-align: center; margin: 0 auto; max-width: 700px; position: relative; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-radius: 20px;" data-aos="fade-up" data-aos-duration="900">
+      <h2 style="color: var(--orange); font-size: 2.2rem; font-weight: bold; margin-bottom: 1.5rem;">What is Mobile Detailing?</h2>
+      <div style="font-size: 1.25rem; color: #555; text-align: left; max-width: 500px; margin: 0 auto; font-weight: 500;">
+        <div style="margin-bottom: 1rem;"><span style="font-weight: bold; color: var(--orange);">🚗 We Come to You:</span> We drive to your house or work. You don’t have to go anywhere!</div>
+        <div style="margin-bottom: 1rem;"><span style="font-weight: bold; color: var(--orange);">🧼 Wash the Outside:</span> We wash your car so it shines and looks new.</div>
+        <div style="margin-bottom: 1rem;"><span style="font-weight: bold; color: var(--orange);">🧹 Clean the Inside:</span> We vacuum and wipe the seats, floors, and doors.</div>
+        <div style="margin-bottom: 1rem;"><span style="font-weight: bold; color: var(--orange);">✨ Make it Fresh:</span> Your car will smell nice and feel great to ride in.</div>
+        <div><span style="font-weight: bold; color: var(--orange);">👍 Super Easy:</span> You relax while we do all the work!</div>
       </div>
-
-      <!-- Enhanced 4-column card layout for desktop -->
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1200px; margin: 3rem auto 4rem auto; padding: 0 1rem;">
-        <style>
-          @media (max-width: 1024px) {
-            .detail-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          }
-          @media (max-width: 640px) {
-            .detail-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
-          }
-        </style>
-        
-        <!-- Card 1: We Come to You -->
-        <div style="background: white; padding: 2.5rem 2rem; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border-top: 4px solid var(--orange); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" data-aos="fade-up" data-aos-delay="150">
-          <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--orange), #ff8c3a); border-radius: 50%; margin: 0 auto 1.5rem auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);">
-            <span style="font-size: 2.5rem; color: white;">🏠</span>
-          </div>
-          <h3 style="color: var(--orange); font-size: 1.4rem; font-weight: bold; margin-bottom: 1rem;">We Come to You</h3>
-          <p style="color: #666; line-height: 1.7; font-size: 0.95rem; margin: 0;">
-            Mobile detailing is a professional-grade cleaning and restoration service — brought directly to your driveway. Instead of wasting time at a shop, our trained detailers come to you with everything needed to deep clean, protect, and restore your vehicle inside and out.
-          </p>
-          <div style="margin-top: 1rem; color: var(--orange); font-weight: 600; font-size: 0.9rem;">✓ Ultimate Convenience</div>
-        </div>
-
-        <!-- Card 2: More Than a Wash -->
-        <div style="background: white; padding: 2.5rem 2rem; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border-top: 4px solid var(--orange); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" data-aos="fade-up" data-aos-delay="250">
-          <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--orange), #ff8c3a); border-radius: 50%; margin: 0 auto 1.5rem auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);">
-            <span style="font-size: 2.5rem; color: white;">✨</span>
-          </div>
-          <h3 style="color: var(--orange); font-size: 1.4rem; font-weight: bold; margin-bottom: 1rem;">More Than a Wash</h3>
-          <p style="color: #666; line-height: 1.7; font-size: 0.95rem; margin: 0;">
-            From stain removal to ceramic waxing, every inch of your car gets the attention it deserves — with no shortcuts. We handle everything from deep interior cleaning to premium exterior protection.
-          </p>
-          <div style="margin-top: 1rem; color: var(--orange); font-weight: 600; font-size: 0.9rem;">✓ Premium Results</div>
-        </div>
-
-        <!-- Card 3: Why It's Worth It -->
-        <div style="background: white; padding: 2.5rem 2rem; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border-top: 4px solid var(--orange); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" data-aos="fade-up" data-aos-delay="350">
-          <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--orange), #ff8c3a); border-radius: 50%; margin: 0 auto 1.5rem auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);">
-            <span style="font-size: 2.5rem; color: white;">💎</span>
-          </div>
-          <h3 style="color: var(--orange); font-size: 1.4rem; font-weight: bold; margin-bottom: 1rem;">Why It's Worth It</h3>
-          <p style="color: #666; line-height: 1.7; font-size: 0.95rem; margin: 0;">
-            Many people think mobile detailing is overly expensive or only for luxury vehicles. In reality, it's the most efficient and cost-effective way to maintain your car's condition — and your time. At GrandVista, we've built our service to be fast, reliable, and premium — all without you ever having to leave your home.
-          </p>
-          <div style="margin-top: 1rem; color: var(--orange); font-weight: 600; font-size: 0.9rem;">✓ Smart Investment</div>
-        </div>
-
-        <!-- Card 4: Professional Grade -->
-        <div style="background: white; padding: 2.5rem 2rem; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.08); border-top: 4px solid var(--orange); text-align: center; transition: transform 0.3s ease, box-shadow 0.3s ease;" data-aos="fade-up" data-aos-delay="450">
-          <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--orange), #ff8c3a); border-radius: 50%; margin: 0 auto 1.5rem auto; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);">
-            <span style="font-size: 2.5rem; color: white;">🛡️</span>
-          </div>
-          <h3 style="color: var(--orange); font-size: 1.4rem; font-weight: bold; margin-bottom: 1rem;">Professional Grade</h3>
-          <p style="color: #666; line-height: 1.7; font-size: 0.95rem; margin: 0;">
-            We use commercial-grade equipment and premium products that aren't available to the general public. Our team is trained in the latest techniques to ensure your vehicle receives the same level of care as luxury dealerships — delivered right to your location.
-          </p>
-          <div style="margin-top: 1rem; color: var(--orange); font-weight: 600; font-size: 0.9rem;">✓ Expert Quality</div>
-        </div>
-      </div>
-
-      <!-- Strong call-to-action button -->
-      <div style="margin-top: 3rem;" data-aos="zoom-in" data-aos-delay="600">
-        <a href="/packages" style="display: inline-block; background: linear-gradient(135deg, var(--orange), #ff8c3a); color: white; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.2rem; box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4); transition: all 0.3s ease; border: none; cursor: pointer;" 
-           onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(249, 115, 22, 0.5)'"
-           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 6px 20px rgba(249, 115, 22, 0.4)'">
-          📅 See Our Packages
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
 
   <section class="testimonials" data-aos="fade-up" data-aos-duration="900">
     <div style="background: linear-gradient(135deg, #1E1E1E 0%, #2A2A2A 100%); padding: 4rem 2rem; border-radius: 24px; position: relative; overflow: hidden; margin: 0 auto; max-width: 1200px;">
@@ -324,52 +1179,43 @@
     <div style="position: absolute; top: -80px; right: -80px; width: 160px; height: 160px; background: rgba(255, 255, 255, 0.08); border-radius: 50%; z-index: 0;"></div>
     <div style="position: absolute; bottom: -60px; left: -60px; width: 120px; height: 120px; background: rgba(255, 255, 255, 0.06); border-radius: 50%; z-index: 0;"></div>
     <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 300px; background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0%, transparent 70%); border-radius: 50%; z-index: 0;"></div>
-    
     <div style="position: relative; z-index: 2;">
       <h2 style="color: white; font-size: 2.2rem; margin-bottom: 1rem; text-shadow: 0 4px 8px rgba(0,0,0,0.2);" data-aos="fade-up" data-aos-delay="100">
-        🎁 Free Resources & Expert Tips
+        🎁 Free Resources & Special Offers
       </h2>
       <p style="color: rgba(255, 255, 255, 0.95); font-size: 1.2rem; margin-bottom: 2.5rem; line-height: 1.6; max-width: 700px; margin-left: auto; margin-right: auto;" data-aos="fade-up" data-aos-delay="200">
-        Get expert car care tips, free virtual vehicle assessments, and exclusive discounts. No strings attached—just valuable resources from our professional detailing team.
+        Get expert car care tips, free virtual assessments, and exclusive discounts to keep your vehicle looking its absolute best. No strings attached—just valuable resources from the GrandVista team.
       </p>
-      
-      <!-- Free offers grid -->
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;" data-aos="fade-up" data-aos-delay="300">
-        
-        <!-- Free Guide Preview -->
+        <!-- Offer 1: Car Care Guide -->
         <div style="background: rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 2rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
           <div style="font-size: 3rem; margin-bottom: 1rem;">📚</div>
-          <h3 style="color: white; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Free Car Care Guide</h3>
+          <h3 style="color: white; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">7 Secrets to Keep Your Car Looking New</h3>
           <p style="color: rgba(255, 255, 255, 0.9); font-size: 1rem; line-height: 1.6; margin-bottom: 0;">
-            "7 Secrets to Keep Your Car Looking New" - Professional tips for paint protection, interior care, seasonal maintenance, and more.
+            Want your car to stay clean, protected, and shining between details? Our free guide shares expert tips on interior care, paint protection, seasonal upkeep, and more.
           </p>
         </div>
-        
-        <!-- Free Assessment Preview -->
+        <!-- Offer 2: Car Wash Damage Guide -->
         <div style="background: rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 2rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-          <h3 style="color: white; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Free Vehicle Assessment</h3>
+          <div style="font-size: 3rem; margin-bottom: 1rem;">🧽</div>
+          <h3 style="color: white; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">How the Automatic Car Wash is Ruining Your Paint</h3>
           <p style="color: rgba(255, 255, 255, 0.9); font-size: 1rem; line-height: 1.6; margin-bottom: 0;">
-            Virtual inspection to identify hidden wear, damage, and help you determine the best detailing option for your specific needs. No pressure, just expert guidance.
+            Discover the hidden dangers of automatic car washes! Learn how harsh brushes, recycled water, and strong chemicals can cause scratches, swirl marks, and dull your car’s finish. Get our free guide to protecting your paint and keeping your vehicle looking its best.
           </p>
         </div>
-        
-        <!-- Discount Preview -->
+        <!-- Offer 3: Referral Program -->
         <div style="background: rgba(255, 255, 255, 0.15); border-radius: 16px; padding: 2rem; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 40px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-          <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
-          <h3 style="color: white; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">$25 Off First Service</h3>
+          <div style="font-size: 3rem; margin-bottom: 1rem;">💸</div>
+          <h3 style="color: white; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 600;">Make Money with Our Referral Program</h3>
           <p style="color: rgba(255, 255, 255, 0.9); font-size: 1rem; line-height: 1.6; margin-bottom: 0;">
-            New customers get $25 off their first full detailing package. Join our email list for instant access to your discount code.
+            Love our service? Share it with friends and family! For every person you refer who books a detailing, you’ll earn cash rewards or free upgrades. Sign up below to get your unique referral link and start earning today!
           </p>
         </div>
-        
       </div>
-      
       <div data-aos="fade-up" data-aos-delay="400">
-        <a href="/freestuff" style="display: inline-block; background: white; color: var(--orange); font-weight: bold; font-size: 1.2rem; padding: 1.2rem 2.5rem; border-radius: 14px; text-decoration: none; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: all 0.3s ease; border: none; margin-bottom: 1rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)'">
+        <a href="freestuff.html" style="display: inline-block; background: white; color: var(--orange); font-weight: bold; font-size: 1.2rem; padding: 1.2rem 2.5rem; border-radius: 14px; text-decoration: none; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: all 0.3s ease; border: none; margin-bottom: 1rem;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.2)';">
           🎁 Get Your Free Resources Now
         </a>
-        
         <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; margin-top: 1rem; margin-bottom: 0;">
           ✨ No purchase required • Instant access • Expert advice • 100% free
         </p>
@@ -383,7 +1229,7 @@
     <p style="color: #CFCFCF; font-size: 1.08rem; margin-bottom: 1.5rem;">
       Check out our detailing packages to find the perfect fit for your vehicle.
     </p>
-    <a href="/packages" class="btn btn-book" style="background: var(--orange); color: #fff; font-weight: bold; font-size: 1.15rem; padding: 1rem 2.5rem; border-radius: 14px; box-shadow: 0 4px 24px rgba(255,127,17,0.13); border: none; display: inline-block; transition: background 0.2s;">
+    <a href="packages.html" class="btn btn-book" style="background: var(--orange); color: #fff; font-weight: bold; font-size: 1.15rem; padding: 1rem 2.5rem; border-radius: 14px; box-shadow: 0 4px 24px rgba(255,127,17,0.13); border: none; display: inline-block; transition: background 0.2s;">
       View Packages
     </a>
   </section>
@@ -435,21 +1281,31 @@
     </div>
 
     <p style="color: #666; font-size: 1rem; margin-bottom: 1.5rem;" data-aos="fade-up" data-aos-delay="600">
-      Have more questions? Feel free to <a href="/contact" style="color: var(--orange); text-decoration: underline;">reach out</a> or give us a call. We're here to help!
+      Have more questions? Feel free to <a href="Contact.html" style="color: var(--orange); text-decoration: underline;">reach out</a> or give us a call. We're here to help!
     </p>
 
-    <a href="/services" class="btn btn-book final-cta" style="background: var(--orange); color: #fff; font-weight: bold; font-size: 1.15rem; padding: 1.2rem 3rem; border-radius: 14px; box-shadow: 0 4px 24px rgba(249,115,22,0.2); border: none; display: inline-block; transition: all 0.3s; text-decoration: none;" data-aos="zoom-in" data-aos-delay="700">
+    <a href="booking.html" class="btn btn-book final-cta" style="background: var(--orange); color: #fff; font-weight: bold; font-size: 1.15rem; padding: 1.2rem 3rem; border-radius: 14px; box-shadow: 0 4px 24px rgba(249,115,22,0.2); border: none; display: inline-block; transition: all 0.3s; text-decoration: none;" data-aos="zoom-in" data-aos-delay="700">
       Book Your Detail Today
     </a>
   </section>
 
   <!-- Add AOS.js library before closing body tag -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script src="confetti.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.navbar-links a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          if (typeof confetti === 'function') confetti();
+        });
+      });
+    });
+  </script>
   <script>
     AOS.init();
   </script>
   <script>
-    // Hamburger menu toggle
+    // Hamburger menu toggle (EXACT COPY from packages.html)
     document.addEventListener('DOMContentLoaded', function() {
       const toggle = document.querySelector('.navbar-toggle');
       const links = document.querySelector('.navbar-links');
@@ -458,17 +1314,6 @@
           links.classList.toggle('active');
         });
       }
-      // Smooth scroll for Book Now - only on pages with booking section
-      document.querySelectorAll('.navbar-book-btn').forEach(function(el) {
-        el.addEventListener('click', function(e) {
-          const target = document.querySelector('#booking');
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth' });
-            if (links.classList.contains('active')) links.classList.remove('active');
-          }
-        });
-      });
     });
   </script>
   <script>
@@ -489,7 +1334,7 @@
     // Redirect to mobile version if on mobile device
     function redirectToMobile() {
       // Check if we're already on mobile.html to avoid redirect loop
-      if (window.location.pathname.includes('/mobile')) {
+      if (window.location.pathname.includes('mobile.html')) {
         return;
       }
       
@@ -503,7 +1348,7 @@
       if (isMobileDevice()) {
         // Preserve any URL parameters or hash
         const currentURL = new URL(window.location.href);
-        const mobileURL = new URL('/mobile', currentURL.origin + currentURL.pathname.substring(0, currentURL.pathname.lastIndexOf('/') + 1));
+        const mobileURL = new URL('mobile.html', currentURL.origin + currentURL.pathname.substring(0, currentURL.pathname.lastIndexOf('/') + 1));
         mobileURL.search = currentURL.search;
         mobileURL.hash = currentURL.hash;
         
