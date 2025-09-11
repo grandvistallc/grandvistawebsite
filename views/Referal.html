@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referral Program | GrandVista Mobile Detailing</title>
+  <link rel="stylesheet" href="grandvista-shared.css">
+  <style>
+  /* Responsive Navbar Styles (copied from index.html) */
+  .navbar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background: linear-gradient(90deg, var(--gray-dark) 80%, var(--gray-medium) 100%);
+    z-index: 1000;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+    padding: 0;
+  }
+  .navbar-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.2rem 1.5rem;
+    flex-wrap: nowrap;
+  }
+  .navbar-logo img {
+    height: 60px;
+    width: auto;
+    filter: drop-shadow(0 2px 6px #000);
+  }
+  .navbar-links {
+    display: flex;
+    gap: 1.8rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    position: static;
+    background: none;
+    box-shadow: none;
+    transition: none;
+  }
+  .navbar-links li {
+    text-align: left !important;
+    margin: 0;
+  }
+  .navbar-links li a {
+    font-size: 1.1rem;
+    padding: 0.8rem 1rem;
+  }
+  .navbar-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    margin-left: 1rem;
+  }
+  .navbar-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 5px 0;
+    background: var(--headline);
+    border-radius: 2px;
+  }
+  @media (max-width: 900px) {
+    .navbar-container {
+      flex-wrap: nowrap;
+      padding: 0.8rem 1rem;
+      min-height: 56px;
+    }
+    .navbar-logo img {
+      height: 45px;
+    }
+    .navbar-links {
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: #1E1E1E;
+      flex-direction: column;
+      gap: 0;
+      display: none;
+      padding: 1.2rem 0;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.13);
+      z-index: 1001;
+    }
+    .navbar-links.active {
+      display: flex;
+    }
+    .navbar-toggle {
+      display: flex;
+    }
+    .navbar-links li {
+      text-align: center !important;
+      margin: 0.7rem 0;
+    }
+    .navbar-links li a {
+      color: var(--headline);
+      background: none;
+      border-radius: 8px;
+      padding: 0.8rem 1rem;
+    }
+  }
+    .container {
+      max-width: 700px;
+      margin: 2.5rem auto;
+      background: #232323;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(255,152,0,0.10);
+      padding: 2.5rem 1.5rem 2rem 1.5rem;
+      text-align: center;
+    }
+    h1, h2, h3 { color: #ff9800; }
+    .referral-steps {
+      margin: 2rem 0 2.5rem 0;
+      text-align: left;
+      color: #ffd699;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      background: #181818;
+      border-radius: 14px;
+      box-shadow: 0 2px 16px rgba(255,152,0,0.08);
+      padding: 1.5rem 1.2rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .referral-cta {
+      margin-top: 2.2rem;
+      background: linear-gradient(135deg, #ff9800 0%, #ff6d00 100%);
+      color: #fff;
+      padding: 1.1rem 2.2rem;
+      border-radius: 25px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 1.15rem;
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.18);
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .referral-cta:hover {
+      background: linear-gradient(135deg, #ff6d00 0%, #ff9800 100%);
+    }
+    .referral-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+  </style>
+</head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H7EN0J08D8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H7EN0J08D8');
+  </script>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-logo">
+        <img src="Images/balls.png" alt="GrandVista Logo" height="60" style="height:60px; width:auto;" />
+      </a>
+      <ul class="navbar-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="packages.html">Packages</a></li>
+        <li><a href="Freestuff.html" class="free-stuff-btn">Free Stuff</a></li>
+        <li><a href="Main.html">Plans</a></li>
+        <li><a href="fleet.html">Fleet</a></li>
+        <li><a href="Contact.html">Contact</a></li>
+      </ul>
+      <a href="booking.html" class="btn btn-book navbar-book-btn">Book Now</a>
+      <button class="navbar-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="container">
+    <span class="referral-emoji">🎉</span>
+    <h1>Refer a Friend, Get Rewarded!</h1>
+    <p style="color:#CFCFCF; font-size:1.13rem; margin-bottom:2.2rem;">Love your GrandVista detail? Tell your friends and family! When you refer someone and they book a service, you BOTH get a reward. It’s our way of saying thank you for spreading the word!</p>
+    <div class="referral-steps">
+      <h2>How It Works:</h2>
+      <ol>
+        <li><strong>Share:</strong> Tell your friends, family, or coworkers about GrandVista Mobile Detailing.</li>
+        <li><strong>Book:</strong> When your friend books a service, make sure they mention your name at booking or checkout.</li>
+        <li><strong>Reward:</strong> After their service is complete, you BOTH get <strong>$20 off</strong> your next detail!</li>
+      </ol>
+      <ul style="margin-top:1.2rem; color:#ffb74d;">
+        <li>No limit—refer as many people as you want!</li>
+        <li>Rewards stack: refer 3 friends, get $60 off!</li>
+        <li>Valid for any full-service detail or package.</li>
+      </ul>
+    </div>
+    <a class="referral-cta" href="Contact.html">Start Referring Now</a>
+  </div>
+  <script>
+    // Mobile menu toggle for navbar
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.querySelector('.navbar-toggle');
+      const links = document.querySelector('.navbar-links');
+      if (toggle && links) {
+        toggle.addEventListener('click', function() {
+          links.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</body>
+  <script src="confetti.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.navbar-links a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          if (typeof confetti === 'function') confetti();
+        });
+      });
+    });
+  </script>
+</html>
