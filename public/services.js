@@ -436,33 +436,6 @@ function resetUISelections() {
   state.odorLevel = 'none';
 }
 
-/* Promo styles (red alert theme) */
-.promo-badge {
-  display: inline-block;
-  background: #dc2626;   /* crimson fill */
-  color: #fff;           /* white text */
-  font-weight: 700;
-  font-size: .8rem;
-  padding: .25rem .5rem;
-  border-radius: 6px;
-  margin-left: .5rem;
-  white-space: nowrap;
-}
-
-.promo-note {
-  margin-top: .4rem;
-  font-size: .9rem;
-  color: #fff;                 /* white text inside */
-  background: #f87171;         /* lighter red fill */
-  border: 1px solid #dc2626;   /* crimson border */
-  padding: .4rem .6rem;
-  border-radius: 6px;
-}
-
-.expires { font-weight: 600; }
-.muted { opacity: .9; }
-
-
 function init() {
   // read from static DOM
   bootstrapPackagesFromDOM();
@@ -484,4 +457,3 @@ function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
-
