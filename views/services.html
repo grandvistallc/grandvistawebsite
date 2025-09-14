@@ -16,6 +16,15 @@
   </script>
 
   <link rel="stylesheet" href="/services.css">
+
+  <!-- NEW: tiny inline helpers for promo badges (non-breaking if CSS exists) -->
+  <style>
+    .promo-badge { display:inline-block; background:#10B981; color:#fff; font-weight:700; font-size:.8rem; padding:.25rem .5rem; border-radius:6px; margin-left:.5rem; white-space:nowrap; }
+    .promo-note { margin-top:.4rem; font-size:.9rem; color:#065F46; background:#ECFDF5; border:1px solid #10B98133; padding:.4rem .6rem; border-radius:6px; }
+    .expires { font-weight:600; }
+    .muted { opacity:.8; }
+  </style>
+  <!-- /NEW -->
 </head>
 <body>
   <div id="page" class="page">
@@ -42,27 +51,35 @@
               </div>
               <p class="desc">Premium wash + protection.</p>
               <div class="meta">≈1–1.5 hrs</div>
+              <!-- NEW: cross-card note so shoppers see the promo right away -->
+              <div class="promo-note">🎁 <strong>FREE with Interior Revival</strong> <span class="muted">(Fall Deal)</span> — <span class="expires">Ends Sept 30</span>. Auto-applied.</div>
+              <!-- /NEW -->
               <button type="button" class="details-btn" data-open="gloss-shield">View details</button>
             </div>
           </label>
 
-<!-- Interior Revival -->
-<label class="card package-card best-value" data-pkg="interior-revival">
-  <input type="radio" name="package" value="interior-revival" class="radio visually-hidden">
-  <div class="best-value-badge">★ Best Value ★</div>
-  <div class="card-body">
-    <div class="card-head">
-      <h3 class="card-title">
-        The Interior Revival Package 
-        <span class="stars">★★★★★</span>
-      </h3>
-      <div class="price">$270</div>
-    </div>
-    <p class="desc">Deep interior reset.</p>
-    <div class="meta">≈2–3 hrs</div>
-    <button type="button" class="details-btn" data-open="interior-revival">View details</button>
-  </div>
-</label>
+          <!-- Interior Revival -->
+          <label class="card package-card best-value" data-pkg="interior-revival">
+            <input type="radio" name="package" value="interior-revival" class="radio visually-hidden">
+            <div class="best-value-badge">★ Best Value ★</div>
+            <div class="card-body">
+              <div class="card-head">
+                <h3 class="card-title">
+                  The Interior Revival Package 
+                  <span class="stars">★★★★★</span>
+                  <!-- NEW: headline badge to advertise the deal -->
+                  <span class="promo-badge">FREE Exterior Refresh</span>
+                </h3>
+                <div class="price">$270</div>
+              </div>
+              <p class="desc">Deep interior reset.</p>
+              <div class="meta">≈2–3 hrs</div>
+              <!-- NEW: clarify the rules inline -->
+              <div class="promo-note">Includes the <strong>Exterior Refresh ($150 value)</strong> at no extra cost. <span class="expires">Ends Sept 30</span>. No code needed.</div>
+              <!-- /NEW -->
+              <button type="button" class="details-btn" data-open="interior-revival">View details</button>
+            </div>
+          </label>
 
           <!-- Showroom Rebirth -->
           <label class="card package-card" data-pkg="showroom-rebirth">
@@ -185,6 +202,7 @@
     </div>
   </template>
 
+  <!-- CHANGED: Interior bonuses now reflect Fall Deal precisely -->
   <template id="tmpl-interior-revival" data-name="The Interior Revival Package" data-price="270" data-duration="≈2–3 hrs" data-desc="Deep interior reset.">
     <div class="includes">
       <li>Complete vacuum system — seats, carpets, trunk, crevices</li>
@@ -197,14 +215,13 @@
       <li>Door jambs cleaned + protected</li>
     </div>
     <div class="bonuses">
-      <li><strong>Limited-Time Bonus Stack ($140 value)</strong></li>
-      <li>FREE Exterior Wash &amp; Wax</li>
-      <li>Premium Air Freshener (your choice of scent)</li>
-      <li>Rain-X Windshield Treatment</li>
-      <li>Pet Hair Removal (up to 20 minutes)</li>
-      <li>$20 Credit toward next service</li>
+      <li><strong>Fall Deal Bonus ($150 value)</strong></li>
+      <li>🎁 <strong>FREE Exterior Refresh</strong> — auto-applied when you book Interior Revival</li>
+      <li><em>Limited time:</em> <strong>Ends Sept 30</strong></li>
+      <li>No code needed</li>
     </div>
   </template>
+  <!-- /CHANGED -->
 
   <template id="tmpl-showroom-rebirth" data-name="Showroom Rebirth – Full Reset" data-price="480" data-duration="≈4–5 hrs" data-desc="Complete transformation.">
     <div class="includes">
