@@ -17,6 +17,567 @@
 
   <link rel="stylesheet" href="/services.css">
 
+  <!-- Custom Clean Modern Light Mode Styling -->
+  <style>
+    /* Import modern font */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    /* Override with clean light mode styling */
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+      color: #1e293b !important;
+      line-height: 1.6 !important;
+      margin: 0 !important;
+      min-height: 100vh !important;
+    }
+
+    /* Clean page container */
+    .page {
+      background: transparent !important;
+      max-width: 1200px !important;
+      margin: 0 auto !important;
+      padding: 0 1rem !important;
+    }
+
+    /* Modern header */
+    .header {
+      background: white !important;
+      border-radius: 16px !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+      padding: 2.5rem 2rem !important;
+      margin: 2rem 0 !important;
+      text-align: center !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    .title {
+      color: #0f172a !important;
+      font-size: 2.5rem !important;
+      font-weight: 800 !important;
+      margin-bottom: 0.75rem !important;
+      letter-spacing: -0.025em !important;
+    }
+
+    .subtitle {
+      color: #64748b !important;
+      font-size: 1.125rem !important;
+      font-weight: 500 !important;
+      max-width: 600px !important;
+      margin: 0 auto !important;
+    }
+
+    /* Clean sections */
+    .section {
+      background: white !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 16px !important;
+      padding: 2rem !important;
+      margin-bottom: 1.5rem !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .section:hover {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 15px rgba(0, 0, 0, 0.1) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    .section-title {
+      color: #0f172a !important;
+      font-size: 1.75rem !important;
+      font-weight: 700 !important;
+      margin-bottom: 1.25rem !important;
+      padding-bottom: 0.75rem !important;
+      border-bottom: 2px solid #f1f5f9 !important;
+    }
+
+    .section-hint {
+      color: #64748b !important;
+      font-size: 0.95rem !important;
+      margin-bottom: 1.5rem !important;
+      font-style: italic !important;
+    }
+
+    /* Package cards */
+    .grid {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+      gap: 1.5rem !important;
+    }
+
+    .package-card {
+      background: white !important;
+      border: 2px solid #e2e8f0 !important;
+      border-radius: 12px !important;
+      padding: 0 !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+
+    .package-card:hover {
+      border-color: #f97316 !important;
+      box-shadow: 0 8px 25px rgba(249, 115, 22, 0.15) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    .package-card.best-value {
+      border-color: #f97316 !important;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
+    }
+
+    .card-body {
+      padding: 1.75rem !important;
+    }
+
+    .card-head {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: flex-start !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .card-title {
+      color: #0f172a !important;
+      font-size: 1.375rem !important;
+      font-weight: 700 !important;
+      margin: 0 !important;
+      line-height: 1.3 !important;
+    }
+
+    .price {
+      color: #f97316 !important;
+      font-size: 2rem !important;
+      font-weight: 800 !important;
+      line-height: 1 !important;
+    }
+
+    .desc {
+      color: #64748b !important;
+      font-size: 0.95rem !important;
+      margin: 0.5rem 0 !important;
+    }
+
+    .meta {
+      color: #94a3b8 !important;
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
+      margin-bottom: 1rem !important;
+    }
+
+    .best-value-badge {
+      position: absolute !important;
+      top: -8px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+      color: white !important;
+      padding: 0.5rem 1rem !important;
+      border-radius: 20px !important;
+      font-size: 0.75rem !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4) !important;
+    }
+
+    .promo-note {
+      background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%) !important;
+      border: 1px solid #86efac !important;
+      border-radius: 8px !important;
+      padding: 0.875rem !important;
+      margin: 1rem 0 !important;
+      color: #166534 !important;
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
+      line-height: 1.4 !important;
+    }
+
+    .details-btn {
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+      color: white !important;
+      border: none !important;
+      padding: 0.75rem 1.5rem !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      font-size: 0.875rem !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      width: 100% !important;
+    }
+
+    .details-btn:hover {
+      background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3) !important;
+    }
+
+    /* Form elements styling */
+    .size-list, .hair-list, .addons-list {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+      gap: 1rem !important;
+    }
+
+    .subgroup {
+      background: #f8fafc !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 12px !important;
+      padding: 1.5rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    .subgroup-title {
+      color: #0f172a !important;
+      font-size: 1.25rem !important;
+      font-weight: 600 !important;
+      margin-bottom: 1rem !important;
+      padding-bottom: 0.5rem !important;
+      border-bottom: 1px solid #e2e8f0 !important;
+    }
+
+    /* Summary section */
+    .summary {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+      color: white !important;
+      border: none !important;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2) !important;
+    }
+
+    .summary-row {
+      display: flex !important;
+      justify-content: space-between !important;
+      padding: 0.75rem 0 !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    .summary-row.total {
+      font-weight: 700 !important;
+      font-size: 1.25rem !important;
+      color: #fbbf24 !important;
+      border-bottom: none !important;
+      padding-top: 1rem !important;
+    }
+
+    .actions {
+      display: flex !important;
+      gap: 1rem !important;
+      margin-top: 2rem !important;
+    }
+
+    .btn {
+      padding: 0.875rem 2rem !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      font-size: 0.95rem !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      flex: 1 !important;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+      color: white !important;
+      border: none !important;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(135deg, #ea580c 0%, #dc2626 100%) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3) !important;
+    }
+
+    .btn-secondary {
+      background: white !important;
+      color: #374151 !important;
+      border: 2px solid #d1d5db !important;
+    }
+
+    .btn-secondary:hover {
+      background: #f9fafb !important;
+      border-color: #9ca3af !important;
+    }
+
+    .btn:disabled {
+      opacity: 0.5 !important;
+      cursor: not-allowed !important;
+    }
+
+    /* Validation messages */
+    .validation {
+      color: #dc2626 !important;
+      font-size: 0.875rem !important;
+      font-weight: 500 !important;
+      margin-top: 0.5rem !important;
+    }
+
+    /* Price note */
+    .price-note {
+      background: #fffbeb !important;
+      border: 1px solid #fbbf24 !important;
+      border-radius: 8px !important;
+      padding: 1rem !important;
+      color: #92400e !important;
+      font-size: 0.875rem !important;
+      text-align: center !important;
+      margin: 1.5rem 0 !important;
+    }
+
+    /* Modal styling for package details */
+    .modal {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 1000 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 1rem !important;
+    }
+
+    .modal.hidden {
+      display: none !important;
+    }
+
+    .modal-backdrop {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      background: rgba(0, 0, 0, 0.6) !important;
+      backdrop-filter: blur(8px) !important;
+      cursor: pointer !important;
+    }
+
+    .modal-card {
+      position: relative !important;
+      background: white !important;
+      border-radius: 16px !important;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+      max-width: 600px !important;
+      width: 100% !important;
+      max-height: 90vh !important;
+      overflow-y: auto !important;
+      padding: 2rem !important;
+      margin: 1rem !important;
+      animation: modalSlideIn 0.3s ease-out !important;
+      border: 1px solid #e2e8f0 !important;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-close {
+      position: absolute !important;
+      top: 1rem !important;
+      right: 1rem !important;
+      background: #f1f5f9 !important;
+      border: none !important;
+      border-radius: 50% !important;
+      width: 40px !important;
+      height: 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      cursor: pointer !important;
+      font-size: 1.5rem !important;
+      color: #64748b !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .modal-close:hover {
+      background: #e2e8f0 !important;
+      color: #374151 !important;
+      transform: scale(1.1) !important;
+    }
+
+    .modal-title {
+      color: #0f172a !important;
+      font-size: 2rem !important;
+      font-weight: 800 !important;
+      margin: 0 0 1rem 0 !important;
+      padding-right: 3rem !important;
+      line-height: 1.2 !important;
+    }
+
+    .modal-meta {
+      display: flex !important;
+      align-items: center !important;
+      gap: 1rem !important;
+      margin-bottom: 1.5rem !important;
+      padding-bottom: 1rem !important;
+      border-bottom: 2px solid #f1f5f9 !important;
+    }
+
+    .modal-price {
+      color: #f97316 !important;
+      font-size: 2.5rem !important;
+      font-weight: 900 !important;
+      line-height: 1 !important;
+    }
+
+    .modal-duration {
+      color: #64748b !important;
+      font-size: 1.125rem !important;
+      font-weight: 600 !important;
+      background: #f1f5f9 !important;
+      padding: 0.5rem 1rem !important;
+      border-radius: 20px !important;
+    }
+
+    .modal-desc {
+      color: #475569 !important;
+      font-size: 1.125rem !important;
+      line-height: 1.6 !important;
+      margin-bottom: 2rem !important;
+      font-weight: 500 !important;
+    }
+
+    .modal-list-wrap {
+      margin-bottom: 2rem !important;
+    }
+
+    .modal-list-title {
+      color: #0f172a !important;
+      font-size: 1.375rem !important;
+      font-weight: 700 !important;
+      margin-bottom: 1rem !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+    }
+
+    .modal-list-title:before {
+      content: "✨" !important;
+      font-size: 1.25rem !important;
+    }
+
+    .modal-list {
+      list-style: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: grid !important;
+      gap: 0.75rem !important;
+    }
+
+    .modal-list li {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
+      border: 1px solid #e2e8f0 !important;
+      border-radius: 8px !important;
+      padding: 1rem 1.25rem !important;
+      color: #374151 !important;
+      font-size: 0.95rem !important;
+      line-height: 1.5 !important;
+      position: relative !important;
+      padding-left: 2.5rem !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .modal-list li:hover {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important;
+      transform: translateX(4px) !important;
+    }
+
+    .modal-list li:before {
+      content: "✓" !important;
+      position: absolute !important;
+      left: 1rem !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      background: #f97316 !important;
+      color: white !important;
+      border-radius: 50% !important;
+      width: 18px !important;
+      height: 18px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      font-size: 0.75rem !important;
+      font-weight: bold !important;
+    }
+
+    /* Special styling for bonus items */
+    .modal-list-wrap:last-of-type .modal-list-title {
+      color: #f97316 !important;
+    }
+
+    .modal-list-wrap:last-of-type .modal-list-title:before {
+      content: "🎁" !important;
+    }
+
+    .modal-list-wrap:last-of-type .modal-list li {
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
+      border-color: #fed7aa !important;
+    }
+
+    .modal-list-wrap:last-of-type .modal-list li:before {
+      background: #ea580c !important;
+    }
+
+    /* Mobile modal adjustments */
+    @media (max-width: 768px) {
+      .modal-card {
+        margin: 0.5rem !important;
+        padding: 1.5rem !important;
+        max-height: 95vh !important;
+      }
+
+      .modal-title {
+        font-size: 1.5rem !important;
+        padding-right: 2.5rem !important;
+      }
+
+      .modal-price {
+        font-size: 2rem !important;
+      }
+
+      .modal-meta {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+      }
+
+      .modal-list li {
+        padding: 0.875rem 1rem !important;
+        padding-left: 2.25rem !important;
+        font-size: 0.9rem !important;
+      }
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .title {
+        font-size: 2rem !important;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr !important;
+      }
+      
+      .size-list, .hair-list {
+        grid-template-columns: 1fr !important;
+      }
+      
+      .actions {
+        flex-direction: column !important;
+      }
+    }
+  </style>
+
   <!-- /NEW -->
 </head>
 <body>
@@ -169,7 +730,6 @@
       </div>
 
       <div id="pkgModalBonusesWrap" class="modal-list-wrap hidden">
-        <div class="modal-list-title">Bonuses</div>
         <ul id="pkgModalBonuses" class="modal-list"></ul>
       </div>
     </div>
@@ -241,6 +801,174 @@
       <li>Priority Booking Status for future appointments</li>
     </div>
   </template>
+
+  <!-- Add modal functionality script with real package data -->
+  <script>
+    // Package data from packages.html
+    const packageData = {
+      'gloss-shield': {
+        name: 'Exterior Refresh',
+        price: '150',
+        duration: '≈1–1.5 hrs',
+        desc: 'Premium wash + protection.',
+        perfectFor: 'Quick refreshes, date nights, or weekly maintenance',
+        quote: '"Get that weekend-fresh feeling without the weekend time commitment."',
+        includes: [
+          'Hand-washed with gentle, premium soap—no machines, ever.',
+          'Expert care removes dirt and road grime safely.',
+          'Glossy carnauba wax for a deep, mirror-like shine.',
+          'Wheels and tires cleaned to perfection.',
+          'Soft microfiber towels for a spotless, swirl-free finish.',
+          'Tire dressing for that fresh-from-the-showroom look.'
+        ],
+        bonuses: []
+      },
+      'interior-revival': {
+        name: 'Interior Renew',
+        price: '270',
+        duration: '≈2–3 hrs',
+        desc: 'Deep interior reset.',
+        perfectFor: 'Deep cleaning, pet owners, families, or anyone who spends serious time in their car',
+        quote: '"Walk into a car that feels brand new again. This is where the magic happens."',
+        includes: [
+          'Full vacuum of seats, carpets, and trunk—no crumb left behind.',
+          'Carpets shampooed and deep-cleaned for a fresh feel.',
+          'Steam cleaning lifts tough stains and germs.',
+          'All surfaces wiped, sanitized, and left spotless.',
+          'UV protectant keeps your dash and doors looking new.',
+          'Leather seats cleaned and conditioned for softness.',
+          'Windows and mirrors polished crystal clear.',
+          'Door edges detailed for a complete finish.'
+        ],
+        bonuses: []
+      },
+      'showroom-rebirth': {
+        name: 'Complete Rebirth',
+        price: '480',
+        duration: '≈4–5 hrs',
+        desc: 'Complete transformation.',
+        perfectFor: 'Special occasions, car enthusiasts, selling your vehicle, or the ultimate "treat yourself" experience',
+        quote: '"This isn\'t just detailing—it\'s a complete rebirth. Your car will look better than the day you bought it."',
+        includes: [
+          '🏠 <strong>Complete Interior Transformation:</strong>',
+          'Includes everything in the Interior Revival Package.',
+          'Choose a luxury scent to make your car smell amazing.',
+          'Premium fabric protection keeps seats looking great.',
+          '',
+          '✨ <strong>Full Exterior Restoration:</strong>',
+          'Hand wash with rich, gentle soap for a flawless finish.',
+          'Wheels, tires, and undercarriage cleaned with expert care.',
+          'Clay bar treatment removes stuck-on dirt for smooth paint.',
+          'Bugs and sticky spots gently removed.',
+          'Machine polish brings out a brilliant, glossy shine.',
+          'Ceramic wax for long-lasting, luxury protection.',
+          'Windows and wheels detailed to perfection.',
+          'Tires finished with a high-gloss, premium shine.',
+          '',
+          '<strong>Additional Premium Services:</strong>',
+          'Engine bay cleaned and protected',
+          'Complete car care guide (interior + exterior)',
+          '6-month stain guard protection',
+          'Priority booking status for future appointments'
+        ],
+        bonuses: [
+          '🚀 <strong>BONUS:</strong>',
+          '$50 Loyalty Credit toward next service'
+        ]
+      }
+    };
+
+    // Modal functionality for package details
+    document.addEventListener('DOMContentLoaded', function() {
+      const modal = document.getElementById('pkgModal');
+      const modalTitle = document.getElementById('pkgModalTitle');
+      const modalPrice = document.getElementById('pkgModalPrice');
+      const modalDuration = document.getElementById('pkgModalDuration');
+      const modalDesc = document.getElementById('pkgModalDesc');
+      const modalIncludesWrap = document.getElementById('pkgModalIncludesWrap');
+      const modalIncludes = document.getElementById('pkgModalIncludes');
+      const modalBonusesWrap = document.getElementById('pkgModalBonusesWrap');
+      const modalBonuses = document.getElementById('pkgModalBonuses');
+
+      // Add click handlers to all "View details" buttons
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('details-btn')) {
+          e.preventDefault();
+          const packageId = e.target.getAttribute('data-open');
+          showPackageModal(packageId);
+        }
+
+        // Close modal on backdrop click or close button
+        if (e.target.getAttribute('data-close') === 'true' || e.target.classList.contains('modal-close')) {
+          closeModal();
+        }
+      });
+
+      // Close modal on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          closeModal();
+        }
+      });
+
+      function showPackageModal(packageId) {
+        const pkg = packageData[packageId];
+        if (!pkg) return;
+
+        // Set modal content with real package data
+        modalTitle.textContent = pkg.name;
+        modalPrice.textContent = '$' + pkg.price;
+        modalDuration.textContent = pkg.duration;
+        
+        // Create rich description with perfect for and quote
+        modalDesc.innerHTML = `
+          <div style="margin-bottom: 1.5rem;">
+            <strong style="color: #f97316;">Perfect for:</strong> ${pkg.perfectFor}
+          </div>
+          <div style="font-style: italic; color: #64748b; font-size: 1rem; padding: 1rem; background: #f8fafc; border-left: 4px solid #f97316; border-radius: 8px;">
+            ${pkg.quote}
+          </div>
+        `;
+
+        // Clear existing content
+        modalIncludes.innerHTML = '';
+        modalBonuses.innerHTML = '';
+
+        // Add includes from packages.html data
+        if (pkg.includes && pkg.includes.length > 0) {
+          pkg.includes.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = item;
+            modalIncludes.appendChild(li);
+          });
+          modalIncludesWrap.classList.remove('hidden');
+        } else {
+          modalIncludesWrap.classList.add('hidden');
+        }
+
+        // Add bonuses from packages.html data
+        if (pkg.bonuses && pkg.bonuses.length > 0) {
+          pkg.bonuses.forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = item;
+            modalBonuses.appendChild(li);
+          });
+          modalBonusesWrap.classList.remove('hidden');
+        } else {
+          modalBonusesWrap.classList.add('hidden');
+        }
+
+        // Show modal
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = ''; // Restore scrolling
+      }
+    });
+  </script>
 
   <script src="/services.js" defer></script>
 </body>
