@@ -534,6 +534,7 @@ app.get('/',           (req, res) => res.sendFile(path.join(VIEWS_DIR, 'index.ht
 app.get('/services',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'services.html')));
 app.get('/datetime',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'datetime.html')));
 app.get('/checkout',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'checkout.html')));
+app.get('/thankyou',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'Thankyou.html')));
 app.get('/packages',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'packages.html')));
 app.get('/blogs',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'blogs.html')));
 app.get('/blog1',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'blog1.html')));
