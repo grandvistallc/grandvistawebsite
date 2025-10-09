@@ -123,6 +123,22 @@
       transform: translateY(-2px) !important;
     }
 
+    /* Selected state styling */
+    .package-card:has(input:checked) {
+      border-color: #f97316 !important;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2), 0 8px 25px rgba(249, 115, 22, 0.25) !important;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* Alternative for browsers that don't support :has() */
+    .package-card.selected {
+      border-color: #f97316 !important;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2), 0 8px 25px rgba(249, 115, 22, 0.25) !important;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
+      transform: translateY(-2px) !important;
+    }
+
     .package-card.best-value {
       border-color: #f97316 !important;
       background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
@@ -889,6 +905,30 @@
       const modalIncludes = document.getElementById('pkgModalIncludes');
       const modalBonusesWrap = document.getElementById('pkgModalBonusesWrap');
       const modalBonuses = document.getElementById('pkgModalBonuses');
+
+      // Package selection visual feedback
+      const packageRadios = document.querySelectorAll('input[name="package"]');
+      const packageCards = document.querySelectorAll('.package-card');
+
+      function updatePackageSelection() {
+        // Remove selected class from all cards
+        packageCards.forEach(card => card.classList.remove('selected'));
+        
+        // Add selected class to the currently checked card
+        packageRadios.forEach(radio => {
+          if (radio.checked) {
+            radio.closest('.package-card').classList.add('selected');
+          }
+        });
+      }
+
+      // Listen for package selection changes
+      packageRadios.forEach(radio => {
+        radio.addEventListener('change', updatePackageSelection);
+      });
+
+      // Initial check for pre-selected packages
+      updatePackageSelection();
 
       // Add click handlers to all "View details" buttons
       document.addEventListener('click', function(e) {
