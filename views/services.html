@@ -144,6 +144,22 @@
       background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
     }
 
+    /* Override best-value styling when actually selected */
+    .package-card.selected {
+      border-color: #f97316 !important;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2), 0 8px 25px rgba(249, 115, 22, 0.25) !important;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
+      transform: translateY(-2px) !important;
+    }
+
+    /* Reset best-value when not selected */
+    .package-card.best-value:not(.selected) {
+      background: white !important;
+      border-color: #e2e8f0 !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
     .card-body {
       padding: 1.75rem !important;
     }
