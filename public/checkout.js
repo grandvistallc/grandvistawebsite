@@ -224,7 +224,7 @@ async function handleSubmit(e) {
     localStorage.removeItem('appointmentSelection');
     localStorage.removeItem('holdInfo');
 
-    setTimeout(() => { window.location.href = '/index.html'; }, 1500);
+    setTimeout(() => { window.location.href = '/thankyou'; }, 1500);
   } catch (err) {
     console.error(err);
     $('#errorMsg').classList.remove('hidden');
