@@ -16,6 +16,272 @@
 
   <link rel="stylesheet" href="/checkout.css" />
   <meta name="description" content="Confirm your details and finish booking." />
+  
+  <!-- Override with Site Design System -->
+  <style>
+    /* Import Poppins font to match site */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+    
+    /* CSS Variables matching site theme */
+    :root {
+      --orange: #F97316;
+      --orange-dark: #EA580C;
+      --gray-dark: #1E1E1E;
+      --gray-darker: #121212;
+      --gray-medium: #2A2A2A;
+      --gray-border: #333;
+      --headline: #F9F9F9;
+      --body: #CFCFCF;
+    }
+    
+    /* Override body styling to match site */
+    body {
+      background: var(--gray-darker) !important;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+      color: var(--body) !important;
+      font-size: 18px !important;
+      line-height: 1.7 !important;
+      letter-spacing: 0.01em !important;
+    }
+
+    /* Page container matching site layout */
+    .outer {
+      max-width: 1200px !important;
+      padding: 2rem !important;
+      margin: 3rem auto !important;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Header matching site style */
+    .header {
+      background: linear-gradient(180deg, var(--gray-dark) 0%, var(--gray-medium) 100%) !important;
+      border-radius: 24px !important;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.18) !important;
+      padding: 3rem 2rem !important;
+      margin-bottom: 3rem !important;
+    }
+
+    .title {
+      color: var(--headline) !important;
+      font-size: 2.5rem !important;
+      font-weight: 700 !important;
+      margin: 0 0 1rem !important;
+      line-height: 1.2 !important;
+      letter-spacing: 0.01em !important;
+    }
+
+    .subtitle {
+      color: var(--body) !important;
+      font-size: 1.25rem !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+    }
+
+    /* Grid layout with better spacing */
+    .grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 3rem !important;
+    }
+
+    @media (max-width: 860px) {
+      .grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+      }
+    }
+
+    /* Cards matching site style */
+    .card {
+      background: linear-gradient(180deg, var(--gray-dark) 0%, var(--gray-medium) 100%) !important;
+      border: none !important;
+      border-radius: 24px !important;
+      padding: 3rem 2rem !important;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.18) !important;
+      margin-bottom: 0 !important;
+    }
+
+    .card-title {
+      color: var(--headline) !important;
+      font-weight: 700 !important;
+      font-size: 1.5rem !important;
+      margin: 0 0 1rem !important;
+      line-height: 1.2 !important;
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      background-clip: unset !important;
+    }
+
+    /* Summary section styling */
+    .summary .row {
+      display: flex !important;
+      justify-content: space-between !important;
+      padding: 0.75rem 0 !important;
+      border-bottom: 1px solid var(--gray-border) !important;
+      color: var(--body) !important;
+    }
+
+    .summary .row:last-of-type {
+      border-bottom: none !important;
+    }
+
+    .summary .total {
+      font-weight: 700 !important;
+      font-size: 1.25rem !important;
+      border-top: 1px solid var(--gray-border) !important;
+      margin-top: 1rem !important;
+      padding-top: 1rem !important;
+      color: var(--orange) !important;
+    }
+
+    .note {
+      color: var(--body) !important;
+      font-size: 0.9rem !important;
+      font-style: italic !important;
+      margin-top: 1.5rem !important;
+      line-height: 1.7 !important;
+    }
+
+    /* Form styling */
+    .form .field {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0.5rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    .form .field span {
+      color: var(--headline) !important;
+      font-weight: 600 !important;
+      font-size: 1rem !important;
+    }
+
+    .form .row-2 {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 1.5rem !important;
+    }
+
+    @media (max-width: 680px) {
+      .form .row-2 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    .form input,
+    .form select,
+    .form textarea {
+      background: var(--gray-medium) !important;
+      border: 1px solid var(--gray-border) !important;
+      color: var(--headline) !important;
+      border-radius: 10px !important;
+      padding: 1rem 1.2rem !important;
+      outline: none !important;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+      font-size: 1rem !important;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    .form input:focus,
+    .form select:focus,
+    .form textarea:focus {
+      border-color: var(--orange) !important;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2) !important;
+    }
+
+    /* Button styling */
+    .actions {
+      display: flex !important;
+      justify-content: space-between !important;
+      gap: 1.5rem !important;
+      margin-top: 2rem !important;
+    }
+
+    .btn {
+      padding: 1rem 2.2rem !important;
+      border-radius: 10px !important;
+      border: 0 !important;
+      font-weight: 700 !important;
+      letter-spacing: 0.02em !important;
+      cursor: pointer !important;
+      font-size: 1.08rem !important;
+      font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+      transition: all 0.3s ease-in-out !important;
+      flex: 1 !important;
+    }
+
+    .btn-secondary {
+      background: transparent !important;
+      color: var(--body) !important;
+      border: 2px solid var(--gray-border) !important;
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray-medium) !important;
+      border-color: var(--orange) !important;
+      color: var(--headline) !important;
+      transform: scale(1.05) !important;
+    }
+
+    .btn-primary {
+      background: var(--orange) !important;
+      color: white !important;
+      box-shadow: 0 0 8px 0 rgba(249,115,22,0.18), 0 2px 16px rgba(249,115,22,0.10) !important;
+    }
+
+    .btn-primary:hover {
+      background: var(--orange-dark) !important;
+      transform: scale(1.05) !important;
+      box-shadow: 0 0 16px 2px rgba(249,115,22,0.25), 0 4px 24px rgba(249,115,22,0.13) !important;
+    }
+
+    /* Error and success messages */
+    .error {
+      color: #FF6B6B !important;
+      font-size: 0.875rem !important;
+      margin: 0.5rem 0 0 !important;
+      font-weight: 500 !important;
+    }
+
+    .success {
+      color: #10B981 !important;
+      font-size: 0.875rem !important;
+      margin: 0.5rem 0 0 !important;
+      font-weight: 500 !important;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+      .outer {
+        padding: 1rem !important;
+        margin: 1rem auto !important;
+      }
+
+      .header {
+        padding: 2rem 1.5rem !important;
+        margin-bottom: 2rem !important;
+      }
+
+      .title {
+        font-size: 2rem !important;
+      }
+
+      .subtitle {
+        font-size: 1.125rem !important;
+      }
+
+      .card {
+        padding: 2rem 1.5rem !important;
+      }
+
+      .actions {
+        flex-direction: column !important;
+        gap: 1rem !important;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="outer">
@@ -25,30 +291,6 @@
     </header>
 
     <main class="grid">
-      <!-- Summary -->
-      <section class="card">
-        <h2 class="card-title">Your Selection</h2>
-        <div class="summary">
-          <div class="row"><span>Package</span><span id="sumPackage">—</span></div>
-          <div class="row"><span>Size</span><span id="sumSize">—</span></div>
-          <div class="row"><span>Pet Hair</span><span id="sumHair">—</span></div>
-          <div class="row"><span>Staining/Soiling</span><span id="sumStain">—</span></div>
-          <div class="row"><span>Deep Odor</span><span id="sumOdor">—</span></div>
-          <div class="row"><span>Add-ons</span><span id="sumAddons">—</span></div>
-          <div class="row"><span>Appointment</span><span id="sumAppt">—</span></div>
-          <hr/>
-
-          <!-- Totals block required by checkout.js -->
-          <div class="row"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
-          <div class="row"><span>Mileage Fee</span><span id="sumMileageFee">$0.00</span></div>
-          <div class="row"><span>Tax</span><span id="sumTax">$0.00</span></div>
-          <div class="row total"><strong>Total</strong><strong id="sumTotal">$0.00</strong></div>
-        </div>
-        <p class="note">
-          * Final total includes mileage (first 15 miles free) and applicable sales tax based on your address.
-        </p>
-      </section>
-
       <!-- Contact -->
       <section class="card">
         <h2 class="card-title">Your Details</h2>
@@ -119,6 +361,30 @@
           <p id="errorMsg" class="error hidden">Please fill required fields.</p>
           <p id="successMsg" class="success hidden">Booking confirmed! Redirecting…</p>
         </form>
+      </section>
+
+      <!-- Summary -->
+      <section class="card">
+        <h2 class="card-title">Your Selection</h2>
+        <div class="summary">
+          <div class="row"><span>Package</span><span id="sumPackage">—</span></div>
+          <div class="row"><span>Size</span><span id="sumSize">—</span></div>
+          <div class="row"><span>Pet Hair</span><span id="sumHair">—</span></div>
+          <div class="row"><span>Staining/Soiling</span><span id="sumStain">—</span></div>
+          <div class="row"><span>Deep Odor</span><span id="sumOdor">—</span></div>
+          <div class="row"><span>Add-ons</span><span id="sumAddons">—</span></div>
+          <div class="row"><span>Appointment</span><span id="sumAppt">—</span></div>
+          <hr/>
+
+          <!-- Totals block required by checkout.js -->
+          <div class="row"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
+          <div class="row"><span>Mileage Fee</span><span id="sumMileageFee">$0.00</span></div>
+          <div class="row"><span>Tax</span><span id="sumTax">$0.00</span></div>
+          <div class="row total"><strong>Total</strong><strong id="sumTotal">$0.00</strong></div>
+        </div>
+        <p class="note">
+          * Final total includes mileage (first 15 miles free) and applicable sales tax based on your address.
+        </p>
       </section>
     </main>
   </div>
