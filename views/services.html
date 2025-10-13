@@ -168,6 +168,13 @@
       position: relative !important;
     }
 
+    .package-card.fall-deal-included:hover {
+      border-color: #f59e0b !important;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+      box-shadow: 0 6px 25px rgba(245, 158, 11, 0.35) !important;
+      transform: translateY(-2px) !important;
+    }
+
     .package-card.fall-deal-included::after {
       content: "✨ INCLUDED FREE" !important;
       position: absolute !important;
@@ -1190,7 +1197,7 @@
           
           // Update Exterior Refresh price to show fall deal pricing
           if (exteriorPrice) {
-            exteriorPrice.innerHTML = '<span style="text-decoration: line-through; color: #94a3b8;">$150</span> <span style="color: #10b981; font-weight: 800;">FREE</span>';
+            exteriorPrice.innerHTML = '<span style="text-decoration: line-through; color: #94a3b8; background: none; padding: 0; border-radius: 0;">$150</span> <span style="color: #10b981; font-weight: 800; background: none; padding: 0; border-radius: 0;">FREE</span>';
             console.log('Exterior price updated to show fall deal');
           }
         } else {
@@ -1361,7 +1368,291 @@
       // Run preselection when page loads
       preselectPackageFromURL();
     });
+
+    // Services data and functionality
+    const servicesData = {
+      vehicleSizes: [
+        { id: 'sedan', name: 'Sedan', fee: 0 },
+        { id: 'suv', name: 'SUV', fee: 25 },
+        { id: 'truck', name: 'Truck/Van', fee: 50 }
+      ],
+      petHair: [
+        { id: 'none', name: 'None', fee: 0 },
+        { id: 'light', name: 'Light', fee: 15 },
+        { id: 'heavy', name: 'Heavy', fee: 30 }
+      ],
+      staining: [
+        { id: 'none', name: 'None', fee: 0 },
+        { id: 'light', name: 'Light', fee: 20 },
+        { id: 'moderate', name: 'Moderate', fee: 40 },
+        { id: 'severe', name: 'Severe', fee: 60 }
+      ],
+      odor: [
+        { id: 'none', name: 'None', fee: 0 },
+        { id: 'light', name: 'Light', fee: 25 },
+        { id: 'moderate', name: 'Moderate', fee: 50 },
+        { id: 'severe', name: 'Severe', fee: 75 }
+      ],
+      addons: [
+        { id: 'paint-correction', name: 'Paint Correction', fee: 100 }
+      ]
+    };
+
+    // Initialize services functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeServices();
+      setupEventListeners();
+      updateSummary();
+    });
+
+    function initializeServices() {
+      // Populate vehicle sizes
+      const sizeList = document.getElementById('sizeList');
+      if (sizeList) {
+        sizeList.innerHTML = servicesData.vehicleSizes.map(size => `
+          <label class="option-card">
+            <input type="radio" name="size" value="${size.id}" data-fee="${size.fee}">
+            <div class="option-content">
+              <span class="option-name">${size.name}</span>
+              ${size.fee > 0 ? `<span class="option-fee">+$${size.fee}</span>` : ''}
+            </div>
+          </label>
+        `).join('');
+      }
+
+      // Populate pet hair options
+      const hairList = document.getElementById('hairList');
+      if (hairList) {
+        hairList.innerHTML = servicesData.petHair.map(hair => `
+          <label class="option-card">
+            <input type="radio" name="hair" value="${hair.id}" data-fee="${hair.fee}">
+            <div class="option-content">
+              <span class="option-name">${hair.name}</span>
+              ${hair.fee > 0 ? `<span class="option-fee">+$${hair.fee}</span>` : ''}
+            </div>
+          </label>
+        `).join('');
+      }
+
+      // Populate staining options
+      const stainList = document.getElementById('stainList');
+      if (stainList) {
+        stainList.innerHTML = servicesData.staining.map(stain => `
+          <label class="option-card">
+            <input type="radio" name="staining" value="${stain.id}" data-fee="${stain.fee}">
+            <div class="option-content">
+              <span class="option-name">${stain.name}</span>
+              ${stain.fee > 0 ? `<span class="option-fee">+$${stain.fee}</span>` : ''}
+            </div>
+          </label>
+        `).join('');
+      }
+
+      // Populate odor options
+      const odorList = document.getElementById('odorList');
+      if (odorList) {
+        odorList.innerHTML = servicesData.odor.map(odor => `
+          <label class="option-card">
+            <input type="radio" name="odor" value="${odor.id}" data-fee="${odor.fee}">
+            <div class="option-content">
+              <span class="option-name">${odor.name}</span>
+              ${odor.fee > 0 ? `<span class="option-fee">+$${odor.fee}</span>` : ''}
+            </div>
+          </label>
+        `).join('');
+      }
+
+      // Populate addons
+      const addonsList = document.getElementById('addonsList');
+      if (addonsList) {
+        addonsList.innerHTML = servicesData.addons.map(addon => `
+          <label class="option-card addon-card">
+            <input type="checkbox" name="addons" value="${addon.id}" data-fee="${addon.fee}">
+            <div class="option-content">
+              <span class="option-name">${addon.name}</span>
+              <span class="option-fee">+$${addon.fee}</span>
+            </div>
+          </label>
+        `).join('');
+      }
+    }
+
+    function setupEventListeners() {
+      // Listen for all form changes
+      document.addEventListener('change', function(e) {
+        if (e.target.matches('input[type="radio"], input[type="checkbox"]')) {
+          updateSummary();
+          validateForm();
+        }
+      });
+
+      // Back button
+      const backBtn = document.getElementById('backBtn');
+      if (backBtn) {
+        backBtn.addEventListener('click', function() {
+          window.history.back();
+        });
+      }
+
+      // Continue button
+      const continueBtn = document.getElementById('continueBtn');
+      if (continueBtn) {
+        continueBtn.addEventListener('click', function() {
+          if (validateForm()) {
+            // Store selections and navigate to next step
+            storeSelections();
+            window.location.href = 'datetime.html';
+          }
+        });
+      }
+    }
+
+    function updateSummary() {
+      // Get selected package
+      const selectedPackage = document.querySelector('input[name="package"]:checked');
+      const basePrice = selectedPackage ? parseInt(selectedPackage.closest('.package-card').querySelector('.price').textContent.replace(/\$|,/g, '')) || 0 : 0;
+
+      // Get size fee
+      const selectedSize = document.querySelector('input[name="size"]:checked');
+      const sizeFee = selectedSize ? parseInt(selectedSize.dataset.fee) || 0 : 0;
+
+      // Get pet hair fee
+      const selectedHair = document.querySelector('input[name="hair"]:checked');
+      const hairFee = selectedHair ? parseInt(selectedHair.dataset.fee) || 0 : 0;
+
+      // Get staining fee
+      const selectedStaining = document.querySelector('input[name="staining"]:checked');
+      const stainingFee = selectedStaining ? parseInt(selectedStaining.dataset.fee) || 0 : 0;
+
+      // Get odor fee
+      const selectedOdor = document.querySelector('input[name="odor"]:checked');
+      const odorFee = selectedOdor ? parseInt(selectedOdor.dataset.fee) || 0 : 0;
+
+      // Get addons total
+      const selectedAddons = document.querySelectorAll('input[name="addons"]:checked');
+      const addonsFee = Array.from(selectedAddons).reduce((total, addon) => {
+        return total + (parseInt(addon.dataset.fee) || 0);
+      }, 0);
+
+      // Update display
+      document.getElementById('basePrice').textContent = `$${basePrice}`;
+      document.getElementById('sizeFee').textContent = `$${sizeFee}`;
+      document.getElementById('hairTotal').textContent = `$${hairFee}`;
+      document.getElementById('stainTotal').textContent = `$${stainingFee}`;
+      document.getElementById('odorTotal').textContent = `$${odorFee}`;
+      document.getElementById('addonsTotal').textContent = `$${addonsFee}`;
+
+      // Show/hide rows based on values
+      document.getElementById('rowHair').classList.toggle('hidden', hairFee === 0);
+      document.getElementById('rowStain').classList.toggle('hidden', stainingFee === 0);
+      document.getElementById('rowOdor').classList.toggle('hidden', odorFee === 0);
+      document.getElementById('rowAddons').classList.toggle('hidden', addonsFee === 0);
+
+      // Calculate and display subtotal
+      const subtotal = basePrice + sizeFee + hairFee + stainingFee + odorFee + addonsFee;
+      document.getElementById('subtotal').textContent = `$${subtotal}`;
+    }
+
+    function validateForm() {
+      const hasPackage = document.querySelector('input[name="package"]:checked');
+      const hasSize = document.querySelector('input[name="size"]:checked');
+      const hasHair = document.querySelector('input[name="hair"]:checked');
+
+      const isValid = hasPackage && hasSize && hasHair;
+      
+      // Update continue button state
+      const continueBtn = document.getElementById('continueBtn');
+      if (continueBtn) {
+        continueBtn.disabled = !isValid;
+      }
+
+      // Show/hide validation messages
+      document.getElementById('sizeRequiredMsg').classList.toggle('hidden', hasSize);
+      document.getElementById('hairRequiredMsg').classList.toggle('hidden', hasHair);
+      document.getElementById('validationMsg').classList.toggle('hidden', isValid);
+
+      return isValid;
+    }
+
+    function storeSelections() {
+      const selections = {
+        package: document.querySelector('input[name="package"]:checked')?.value,
+        size: document.querySelector('input[name="size"]:checked')?.value,
+        hair: document.querySelector('input[name="hair"]:checked')?.value,
+        staining: document.querySelector('input[name="staining"]:checked')?.value,
+        odor: document.querySelector('input[name="odor"]:checked')?.value,
+        addons: Array.from(document.querySelectorAll('input[name="addons"]:checked')).map(cb => cb.value)
+      };
+      
+      // Store in sessionStorage for next page
+      sessionStorage.setItem('serviceSelections', JSON.stringify(selections));
+    }
   </script>
+
+  <!-- Add styles for the new option cards -->
+  <style>
+    .option-card {
+      background: white !important;
+      border: 2px solid #e2e8f0 !important;
+      border-radius: 12px !important;
+      padding: 1rem !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      display: block !important;
+    }
+
+    .option-card:hover {
+      border-color: #f97316 !important;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    .option-card input:checked + .option-content,
+    .option-card:has(input:checked) {
+      border-color: #f97316 !important;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
+      box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important;
+    }
+
+    .option-content {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      width: 100% !important;
+    }
+
+    .option-name {
+      font-weight: 600 !important;
+      color: #0f172a !important;
+    }
+
+    .option-fee {
+      color: #f97316 !important;
+      font-weight: 700 !important;
+      font-size: 0.9rem !important;
+    }
+
+    .option-card input[type="radio"],
+    .option-card input[type="checkbox"] {
+      display: none !important;
+    }
+
+    .addon-card input[type="checkbox"] + .option-content::before {
+      content: "☐" !important;
+      margin-right: 0.5rem !important;
+      font-size: 1.2rem !important;
+      color: #94a3b8 !important;
+    }
+
+    .addon-card input[type="checkbox"]:checked + .option-content::before {
+      content: "☑" !important;
+      color: #f97316 !important;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
 </body>
 </html>
 
