@@ -175,6 +175,22 @@
       transform: translateY(-2px) !important;
     }
 
+    /* Override any external CSS that might affect fall deal pricing */
+    .package-card.fall-deal-included .price span {
+      background: none !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Ensure fall deal hover doesn't change to package-specific colors */
+    .package-card[data-pkg="gloss-shield"].fall-deal-included:hover {
+      border-color: #f59e0b !important;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+      box-shadow: 0 6px 25px rgba(245, 158, 11, 0.35) !important;
+    }
+
     .package-card.fall-deal-included::after {
       content: "✨ INCLUDED FREE" !important;
       position: absolute !important;
@@ -1197,7 +1213,7 @@
           
           // Update Exterior Refresh price to show fall deal pricing
           if (exteriorPrice) {
-            exteriorPrice.innerHTML = '<span style="text-decoration: line-through; color: #94a3b8; background: none; padding: 0; border-radius: 0;">$150</span> <span style="color: #10b981; font-weight: 800; background: none; padding: 0; border-radius: 0;">FREE</span>';
+            exteriorPrice.innerHTML = '<span style="text-decoration: line-through !important; color: #94a3b8 !important; background: none !important; padding: 0 !important; border-radius: 0 !important; border: none !important; box-shadow: none !important;">$150</span> <span style="color: #10b981 !important; font-weight: 800 !important; background: none !important; padding: 0 !important; border-radius: 0 !important; border: none !important; box-shadow: none !important;">FREE</span>';
             console.log('Exterior price updated to show fall deal');
           }
         } else {
