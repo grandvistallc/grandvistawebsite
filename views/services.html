@@ -1621,68 +1621,127 @@
     }
   </script>
 
-  <!-- Add styles for the new option cards -->
+  <!-- Clean Option Cards - No Orange Background Issues -->
   <style>
+    /* Base option card styling */
     .option-card {
       background: white !important;
-      border: 2px solid #e2e8f0 !important;
-      border-radius: 12px !important;
-      padding: 1rem !important;
+      border: 1px solid #d1d5db !important;
+      border-radius: 8px !important;
+      padding: 1.25rem !important;
       cursor: pointer !important;
-      transition: all 0.2s ease !important;
+      transition: all 0.25s ease !important;
       display: block !important;
+      position: relative !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
     }
 
+    /* Hover state */
     .option-card:hover {
-      border-color: #f97316 !important;
-      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.15) !important;
+      border-color: #9ca3af !important;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07) !important;
       transform: translateY(-1px) !important;
     }
 
-    .option-card input:checked + .option-content,
-    .option-card:has(input:checked) {
+    /* Selected state - orange border approach */
+    .option-card:has(input:checked),
+    .option-card.selected {
       border-color: #f97316 !important;
-      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
-      box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.2) !important;
+      border-width: 2px !important;
+      background: white !important;
+      box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.2), 0 4px 6px rgba(0, 0, 0, 0.07) !important;
+      transform: translateY(-1px) !important;
     }
 
+    /* Content container */
     .option-content {
       display: flex !important;
       justify-content: space-between !important;
       align-items: center !important;
       width: 100% !important;
+      gap: 1rem !important;
     }
 
+    /* Option name styling */
     .option-name {
       font-weight: 600 !important;
-      color: #0f172a !important;
+      color: #374151 !important;
+      font-size: 0.95rem !important;
+      flex: 1 !important;
     }
 
+    /* Fee text - clean styling */
     .option-fee {
-      color: #f97316 !important;
-      font-weight: 700 !important;
-      font-size: 0.9rem !important;
+      color: #6b7280 !important;
+      font-weight: 600 !important;
+      font-size: 0.875rem !important;
+      background: none !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
     }
 
+    /* Selected state fee color change */
+    .option-card:has(input:checked) .option-fee,
+    .option-card.selected .option-fee {
+      color: #f97316 !important;
+    }
+
+    /* Hide radio/checkbox inputs */
     .option-card input[type="radio"],
     .option-card input[type="checkbox"] {
       display: none !important;
     }
 
-    .addon-card input[type="checkbox"] + .option-content::before {
-      content: "☐" !important;
-      margin-right: 0.5rem !important;
-      font-size: 1.2rem !important;
-      color: #94a3b8 !important;
+    /* Remove checkmark indicator - using orange border instead */
+    .option-card:has(input[type="radio"]:checked)::before {
+      display: none !important;
     }
 
-    .addon-card input[type="checkbox"]:checked + .option-content::before {
-      content: "☑" !important;
-      color: #f97316 !important;
+    /* Checkbox styling for add-ons - orange border when selected */
+    .addon-card {
+      border-left: 3px solid transparent !important;
     }
 
+    .addon-card:has(input:checked) {
+      border-left-color: #f97316 !important;
+    }
+
+    .addon-card .option-content::before {
+      content: "" !important;
+      width: 18px !important;
+      height: 18px !important;
+      border: 2px solid #d1d5db !important;
+      border-radius: 3px !important;
+      margin-right: 0.75rem !important;
+      background: white !important;
+      flex-shrink: 0 !important;
+    }
+
+    .addon-card input:checked + .option-content::before {
+      background: #f97316 !important;
+      border-color: #f97316 !important;
+    }
+
+    .addon-card input:checked + .option-content::after {
+      content: "✓" !important;
+      position: absolute !important;
+      left: 1.875rem !important;
+      color: white !important;
+      font-size: 0.75rem !important;
+      font-weight: bold !important;
+    }
+
+    /* Utility class */
     .hidden {
       display: none !important;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .option-card { padding: 1rem !important; }
+      .option-name { font-size: 0.9rem !important; }
+      .option-fee { font-size: 0.8rem !important; }
     }
   </style>
 </body>
