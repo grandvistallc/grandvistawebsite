@@ -15,8 +15,6 @@
     gtag('config', 'G-SWCX8FXK49');
   </script>
 
-  <link rel="stylesheet" href="/services.css">
-
   <!-- Custom Clean Modern Light Mode Styling -->
   <style>
     /* Import modern font */
@@ -182,6 +180,24 @@
       border-radius: 0 !important;
       border: none !important;
       box-shadow: none !important;
+    }
+
+    /* Completely override any price styling for fall deal */
+    .package-card.fall-deal-included .price span,
+    .package-card[data-pkg="gloss-shield"].fall-deal-included .price span,
+    .package-card[data-pkg="gloss-shield"].selected .price span {
+      background-color: transparent !important;
+      background-image: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      outline: none !important;
+      display: inline !important;
+      position: static !important;
+      transform: none !important;
     }
 
     /* Ensure fall deal hover doesn't change to package-specific colors */
