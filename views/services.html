@@ -160,6 +160,80 @@
       transform: none !important;
     }
 
+    /* Fall deal included styling */
+    .package-card.fall-deal-included {
+      border-color: #f59e0b !important;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25) !important;
+      position: relative !important;
+    }
+
+    .package-card.fall-deal-included::after {
+      content: "✨ INCLUDED FREE" !important;
+      position: absolute !important;
+      top: 10px !important;
+      right: 10px !important;
+      background: #f59e0b !important;
+      color: white !important;
+      font-size: 0.7rem !important;
+      font-weight: 700 !important;
+      padding: 4px 8px !important;
+      border-radius: 12px !important;
+      letter-spacing: 0.5px !important;
+    }
+
+    /* Package-specific color outlines */
+    .package-card[data-pkg="gloss-shield"] {
+      border-color: #10b981 !important;
+      background: white !important;
+    }
+
+    .package-card[data-pkg="gloss-shield"]:hover {
+      border-color: #059669 !important;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25) !important;
+    }
+
+    .package-card[data-pkg="gloss-shield"]:has(input:checked),
+    .package-card[data-pkg="gloss-shield"].selected {
+      border-color: #10b981 !important;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2), 0 8px 25px rgba(16, 185, 129, 0.25) !important;
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%) !important;
+    }
+
+    .package-card[data-pkg="interior-revival"] {
+      border-color: #f97316 !important;
+      background: white !important;
+    }
+
+    .package-card[data-pkg="interior-revival"]:hover {
+      border-color: #ea580c !important;
+      box-shadow: 0 8px 25px rgba(249, 115, 22, 0.25) !important;
+    }
+
+    .package-card[data-pkg="interior-revival"]:has(input:checked),
+    .package-card[data-pkg="interior-revival"].selected {
+      border-color: #f97316 !important;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2), 0 8px 25px rgba(249, 115, 22, 0.25) !important;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%) !important;
+    }
+
+    .package-card[data-pkg="showroom-rebirth"] {
+      border-color: #8b5cf6 !important;
+      background: white !important;
+    }
+
+    .package-card[data-pkg="showroom-rebirth"]:hover {
+      border-color: #7c3aed !important;
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.25) !important;
+    }
+
+    .package-card[data-pkg="showroom-rebirth"]:has(input:checked),
+    .package-card[data-pkg="showroom-rebirth"].selected {
+      border-color: #8b5cf6 !important;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2), 0 8px 25px rgba(139, 92, 246, 0.25) !important;
+      background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%) !important;
+    }
+
     .card-body {
       padding: 1.75rem !important;
     }
@@ -772,9 +846,6 @@
               </div>
               <p class="desc">Premium wash + protection.</p>
               <div class="meta">≈1–1.5 hrs</div>
-              <!-- NEW: cross-card note so shoppers see the promo right away -->
-              <div class="promo-note">🎁 <strong>FREE with Interior Revival</strong> <span class="muted">(Fall Deal)</span> — <span class="expires">Ends Nov 30</span>. Auto-applied.</div>
-              <!-- /NEW -->
               <button type="button" class="details-btn" data-open="gloss-shield">View details</button>
             </div>
           </label>
@@ -792,9 +863,6 @@
               </div>
               <p class="desc">Deep interior reset.</p>
               <div class="meta">≈2–3 hrs</div>
-              <!-- NEW: clarify the rules inline -->
-              <div class="promo-note">Includes the <strong>Exterior Refresh ($150 value)</strong> at no extra cost. <span class="expires">Ends Nov 30</span>. No code needed.</div>
-              <!-- /NEW -->
               <button type="button" class="details-btn" data-open="interior-revival">View details</button>
             </div>
           </label>
@@ -1059,24 +1127,140 @@
       const packageCards = document.querySelectorAll('.package-card');
 
       function updatePackageSelection() {
-        // Remove selected class from all cards
-        packageCards.forEach(card => card.classList.remove('selected'));
+        console.log('updatePackageSelection called');
         
-        // Add selected class to the currently checked card
+        // Don't remove selected classes - let handlePackageSelection manage them
+        // This prevents conflicts with fall deal logic
+        
         packageRadios.forEach(radio => {
           if (radio.checked) {
-            radio.closest('.package-card').classList.add('selected');
+            console.log('Radio checked:', radio.value);
+            const card = radio.closest('.package-card');
+            if (card && !card.classList.contains('selected')) {
+              card.classList.add('selected');
+              console.log('Added selected class to:', radio.value);
+            }
           }
         });
       }
 
+      // Handle package selection with special Interior Revival logic
+      function handlePackageSelection(selectedValue) {
+        console.log('handlePackageSelection called with:', selectedValue);
+        
+        const interiorRevivalRadio = document.querySelector('input[value="interior-revival"]');
+        const exteriorRefreshRadio = document.querySelector('input[value="gloss-shield"]');
+        const exteriorRefreshCard = document.querySelector('[data-pkg="gloss-shield"]');
+        const interiorRevivalCard = document.querySelector('[data-pkg="interior-revival"]');
+        const exteriorPrice = document.querySelector('[data-pkg="gloss-shield"] .price');
+        
+        console.log('Found elements:', {
+          interiorRevivalRadio: !!interiorRevivalRadio,
+          exteriorRefreshRadio: !!exteriorRefreshRadio,
+          exteriorPrice: !!exteriorPrice,
+          exteriorRefreshCard: !!exteriorRefreshCard,
+          interiorRevivalCard: !!interiorRevivalCard
+        });
+        
+        // Clear all visual selections first
+        packageCards.forEach(card => {
+          card.classList.remove('selected');
+          card.classList.remove('fall-deal-included');
+        });
+        
+        if (selectedValue === 'interior-revival') {
+          console.log('Interior Revival selected - activating fall deal');
+          
+          // Select Interior Revival radio (this is the main selection)
+          if (interiorRevivalRadio) {
+            interiorRevivalRadio.checked = true;
+            console.log('Interior Revival radio checked');
+          }
+          
+          // Add visual selection to Interior Revival
+          if (interiorRevivalCard) {
+            interiorRevivalCard.classList.add('selected');
+          }
+          
+          // Add visual selection to Exterior Refresh (fall deal)
+          if (exteriorRefreshCard) {
+            exteriorRefreshCard.classList.add('selected', 'fall-deal-included');
+            console.log('Exterior Refresh card marked as selected with fall deal');
+          }
+          
+          // Update Exterior Refresh price to show fall deal pricing
+          if (exteriorPrice) {
+            exteriorPrice.innerHTML = '<span style="text-decoration: line-through; color: #94a3b8;">$150</span> <span style="color: #10b981; font-weight: 800;">FREE</span>';
+            console.log('Exterior price updated to show fall deal');
+          }
+        } else {
+          console.log('Other package selected:', selectedValue);
+          
+          // For other packages, select normally
+          const selectedRadio = document.querySelector(`input[value="${selectedValue}"]`);
+          if (selectedRadio) {
+            selectedRadio.checked = true;
+            console.log('Selected radio checked:', selectedValue);
+            
+            // Add visual selection to the selected card
+            const selectedCard = selectedRadio.closest('.package-card');
+            if (selectedCard) {
+              selectedCard.classList.add('selected');
+            }
+          }
+          
+          // Reset Exterior Refresh price to normal
+          if (exteriorPrice) {
+            exteriorPrice.textContent = '$150';
+            console.log('Exterior price reset to $150');
+          }
+        }
+        
+        console.log('Package selection update complete');
+      }
+
+      // Log found elements for debugging
+      console.log('Package selection setup - Found radios:', packageRadios.length);
+      console.log('Package selection setup - Found cards:', packageCards.length);
+      
+      // Log radio values
+      packageRadios.forEach((radio, index) => {
+        console.log(`Radio ${index}:`, radio.value, radio.name);
+      });
+
       // Listen for package selection changes
       packageRadios.forEach(radio => {
-        radio.addEventListener('change', updatePackageSelection);
+        radio.addEventListener('change', function() {
+          console.log('Radio change event:', this.value, this.checked);
+          if (this.checked) {
+            handlePackageSelection(this.value);
+          }
+        });
+      });
+
+      // Add click handlers for package cards
+      packageCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+          // Skip if clicking on the details button
+          if (e.target.classList.contains('details-btn')) {
+            return;
+          }
+          
+          const radio = this.querySelector('input[type="radio"]');
+          if (radio) {
+            handlePackageSelection(radio.value);
+          }
+        });
       });
 
       // Initial check for pre-selected packages
       updatePackageSelection();
+      
+      // Check if Interior Revival is initially selected and apply fall deal
+      const initialInteriorRevival = document.querySelector('input[value="interior-revival"]:checked');
+      if (initialInteriorRevival) {
+        handlePackageSelection('interior-revival');
+      }
 
       // Add click handlers to all "View details" buttons
       document.addEventListener('click', function(e) {
@@ -1155,10 +1339,29 @@
         modal.classList.add('hidden');
         document.body.style.overflow = ''; // Restore scrolling
       }
+
+      // Pre-select package based on URL parameter
+      function preselectPackageFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const packageParam = urlParams.get('package');
+        
+        if (packageParam) {
+          const packageInput = document.querySelector(`input[value="${packageParam}"]`);
+          if (packageInput) {
+            packageInput.checked = true;
+            // Trigger the change event to update UI and calculations
+            packageInput.dispatchEvent(new Event('change', { bubbles: true }));
+            
+            // Scroll to the packages section
+            document.getElementById('packagesSection').scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+
+      // Run preselection when page loads
+      preselectPackageFromURL();
     });
   </script>
-
-  <script src="/services.js" defer></script>
 </body>
 </html>
 
