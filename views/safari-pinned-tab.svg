@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <rect width="100%" height="100%" fill="none"/>
-  <g fill="currentColor">
-    <text x="50%" y="52%" font-family="DejaVu Sans, Arial Black, Arial, Helvetica, sans-serif" font-weight="900" font-size="300" text-anchor="middle" dominant-baseline="middle">
-      GV
-    </text>
-  </g>
-</svg>
