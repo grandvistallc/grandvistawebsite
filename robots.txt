@@ -1,7 +1,0 @@
-# Allow all user agents to crawl the site
-User-agent: *
-Allow: /
-
-# Sitemap location
-# Please replace https://www.your-website-url.com with your actual website domain.
-Sitemap: https://grandvistadetailing.com/sitemap.xml
