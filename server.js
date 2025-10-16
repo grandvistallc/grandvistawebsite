@@ -546,6 +546,9 @@ app.get('/fleet',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'fleet.ht
 app.get('/freestuff',  (req, res) => res.sendFile(path.join(VIEWS_DIR, 'freestuff.html')));
 app.get('/mobile',     (req, res) => res.sendFile(path.join(VIEWS_DIR, 'mobile.html')));
 
+app.get('/privacy',    (req, res) => res.sendFile(path.join(VIEWS_DIR, 'privacy.html')));
+app.get('/terms',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'terms.html')));
+
 // Aliases to catch mixed-case or .html requests
 app.get(['/Contact', '/Contact.html'], (req, res) => res.redirect(301, '/contact'));
 
