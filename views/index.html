@@ -246,6 +246,13 @@
       margin: 0 auto;
     }
 
+    /* Offset anchor scrolling to account for sticky header
+       Browsers will position the element this many pixels below the top
+       when navigating to fragments (supports modern browsers). */
+    #contact {
+      scroll-margin-top: 140px;
+    }
+
     .section-header {
       text-align: center;
       margin-bottom: 4rem;
@@ -1638,5 +1645,31 @@
     </div>
   </section>
 
+  <!-- Page bottom anchor for direct linking -->
+  <div id="bottom" aria-hidden="true"></div>
+
 </body>
 </html>
+
+<script>
+  // If navigated with #bottom, force scroll to exact bottom after layout settles.
+  (function() {
+    if (window.location.hash === '#bottom') {
+      const scrollToBottom = () => {
+        const height = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+        window.scrollTo({ top: height, left: 0, behavior: 'auto' });
+      };
+
+      // Try periodically for a short while in case images or fonts change layout.
+      let tries = 0;
+      const iv = setInterval(() => {
+        scrollToBottom();
+        tries++;
+        if (tries > 12) clearInterval(iv);
+      }, 80);
+
+      // Also ensure one final attempt after full load.
+      window.addEventListener('load', () => setTimeout(scrollToBottom, 50));
+    }
+  })();
+</script>
