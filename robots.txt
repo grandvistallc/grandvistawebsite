@@ -4,4 +4,4 @@ Allow: /
 
 # Sitemap location
 # Please replace https://www.your-website-url.com with your actual website domain.
-Sitemap: https://www.your-website-url.com/sitemap.xml
+Sitemap: https://grandvistadetailing.com/sitemap.xml
