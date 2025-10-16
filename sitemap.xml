@@ -29,4 +29,14 @@
     <lastmod>2025-10-16</lastmod>
     <priority>0.50</priority>
   </url>
+  <url>
+    <loc>https://www.your-website-url.com/privacy.html</loc>
+    <lastmod>2025-10-16</lastmod>
+    <priority>0.30</priority>
+  </url>
+  <url>
+    <loc>https://www.your-website-url.com/terms.html</loc>
+    <lastmod>2025-10-16</lastmod>
+    <priority>0.30</priority>
+  </url>
 </urlset>
