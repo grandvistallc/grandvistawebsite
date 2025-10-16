@@ -1,41 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- 
-    Please replace https://www.your-website-url.com with your actual website domain.
     The lastmod date is set to today's date. You can update it if the content changes.
   -->
   <url>
-    <loc>https://www.your-website-url.com/index.html</loc>
+    <loc>https://grandvistadetailing.com/index.html</loc>
     <lastmod>2025-10-16</lastmod>
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://www.your-website-url.com/services.html</loc>
+    <loc>https://grandvistadetailing.com/services.html</loc>
     <lastmod>2025-10-16</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://www.your-website-url.com/datetime.html</loc>
+    <loc>https://grandvistadetailing.com/datetime.html</loc>
     <lastmod>2025-10-16</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://www.your-website-url.com/checkout.html</loc>
+    <loc>https://grandvistadetailing.com/checkout.html</loc>
     <lastmod>2025-10-16</lastmod>
     <priority>0.70</priority>
   </url>
   <url>
-    <loc>https://www.your-website-url.com/Thankyou.html</loc>
+    <loc>https://grandvistadetailing.com/Thankyou.html</loc>
     <lastmod>2025-10-16</lastmod>
     <priority>0.50</priority>
   </url>
   <url>
-    <loc>https://www.your-website-url.com/privacy.html</loc>
+    <loc>https://grandvistadetailing.com/privacy.html</loc>
     <lastmod>2025-10-16</lastmod>
     <priority>0.30</priority>
   </url>
   <url>
-    <loc>https://www.your-website-url.com/terms.html</loc>
+    <loc>https://grandvistadetailing.com/terms.html</loc>
     <lastmod>2025-10-16</lastmod>
     <priority>0.30</priority>
   </url>
