@@ -90,37 +90,35 @@ body {
   justify-items: center;
 }
 
-.calendar-cell {
+
+.calendar-day {
   width: var(--cell);
   height: var(--cell);
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #000000;
+  color: #000;
   font-weight: 700;
   font-size: clamp(12px, 3.5vw, 14px);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
   user-select: none;
   touch-action: manipulation;
 }
-
-.calendar-cell:hover {
+.calendar-day:hover {
   transform: scale(1.05);
   box-shadow: 0 0 10px rgba(245, 179, 1, 0.6);
 }
-
-.calendar-cell.inactive {
+.calendar-day.disabled {
   background-color: #333;
   opacity: 0.55;
   cursor: default;
 }
-
-.calendar-cell.selected {
+.calendar-day.selected {
   background-color: #f5b301;
-  color: #000000;
+  color: #000;
 }
 
 /* ---- Time Slots ---- */
@@ -138,25 +136,35 @@ body {
   margin-top: 10px;
 }
 
-.slot-btn {
+
+.time-slot {
   background-color: #2ecc71;
-  color: #ffffff;
+  color: #fff;
   padding: 10px 14px;
   border-radius: 20px;
   font-size: 0.95rem;
   cursor: pointer;
   border: none;
-  min-height: 40px;                       /* touch target */
-  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  min-height: 40px;
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
   touch-action: manipulation;
   width: 100%;
   text-align: center;
+  font-family: inherit;
 }
-.slot-btn:hover { background-color: #27ae60; box-shadow: 0 0 8px rgba(245,179,1,0.4); }
-.slot-btn.selected { outline: 2px solid #f5b301; transform: scale(1.02); }
-
-.slot-btn.limited { background-color: #f39c12; }
-.slot-btn.full { background-color: #e74c3c; cursor: not-allowed; opacity: 0.8; }
+.time-slot:hover { background-color: #27ae60; box-shadow: 0 0 8px rgba(245,179,1,0.4); }
+.time-slot.selected, .time-slot.active {
+  outline: 2px solid #f5b301;
+  transform: scale(1.02);
+  background: linear-gradient(90deg, #f5b301, #ff9800);
+  color: #222;
+}
+.time-slot.limited { background-color: #f39c12; }
+.time-slot.full, .time-slot:disabled {
+  background-color: #e74c3c;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
 
 /* ---- Reserve Button ---- */
 .reserve-btn {
