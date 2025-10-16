@@ -1137,6 +1137,55 @@
       opacity: 0;
       animation: fadeInUp 0.6s ease forwards;
     }
+
+    /* Footer */
+    .footer {
+      background: var(--gray-100);
+      padding: 2rem 1rem;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .footer p {
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      color: var(--gray-600);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--orange);
+    }
+
+    @media (min-width: 768px) {
+      .footer-container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
   </style>
 </head>
 
@@ -1644,6 +1693,17 @@
       <p style="font-size:1.125rem;margin:0.5rem 0;"><strong>Email:</strong> <a href="mailto:Grandvistacorp@gmail.com">Grandvistacorp@gmail.com</a></p>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="footer-container">
+      <p>&copy; 2025 GrandVista Mobile Detailing. All Rights Reserved.</p>
+      <ul class="footer-links">
+        <li><a href="/privacy">Privacy Policy</a></li>
+        <li><a href="/terms">Terms of Service</a></li>
+      </ul>
+    </div>
+  </footer>
 
   <!-- Page bottom anchor for direct linking -->
   <div id="bottom" aria-hidden="true"></div>
