@@ -92,7 +92,7 @@ body {
 
 
 
-.calendar-cell {
+.calendar-day {
   width: var(--cell);
   height: var(--cell);
   background-color: #ffffff;
@@ -108,16 +108,21 @@ body {
   user-select: none;
   touch-action: manipulation;
 }
-.calendar-cell:hover {
+.calendar-day:hover {
   transform: scale(1.05);
   box-shadow: 0 0 10px rgba(245, 179, 1, 0.6);
 }
-.calendar-cell.inactive {
+.calendar-day.disabled {
   background-color: #333;
   opacity: 0.55;
   cursor: default;
 }
-.calendar-cell.selected {
+.calendar-day.inactive {
+  background-color: #333;
+  opacity: 0.55;
+  cursor: default;
+}
+.calendar-day.selected {
   background-color: #f5b301;
   color: #000000;
 }
@@ -140,23 +145,30 @@ body {
 
 
 .slot-btn {
-  background-color: #2ecc71;
-  color: #ffffff;
-  padding: 10px 14px;
-  border-radius: 20px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  border: none;
-  min-height: 40px;                       /* touch target */
-  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
-  touch-action: manipulation;
-  width: 100%;
-  text-align: center;
+  background-color: #2ecc71 !important;
+  color: #ffffff !important;
+  padding: 10px 14px !important;
+  border-radius: 20px !important;
+  font-size: 0.95rem !important;
+  cursor: pointer !important;
+  border: none !important;
+  min-height: 40px !important;
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease !important;
+  touch-action: manipulation !important;
+  width: 100% !important;
+  text-align: center !important;
+  display: block !important;
 }
-.slot-btn:hover { background-color: #27ae60; box-shadow: 0 0 8px rgba(245,179,1,0.4); }
-.slot-btn.selected { outline: 2px solid #f5b301; transform: scale(1.02); }
-.slot-btn.limited { background-color: #f39c12; }
-.slot-btn.full { background-color: #e74c3c; cursor: not-allowed; opacity: 0.8; }
+.slot-btn:hover { 
+  background-color: #27ae60 !important; 
+  box-shadow: 0 0 8px rgba(245,179,1,0.4) !important; 
+}
+.slot-btn.selected { 
+  outline: 2px solid #f5b301 !important; 
+  transform: scale(1.02) !important; 
+}
+.slot-btn.limited { background-color: #f39c12 !important; }
+.slot-btn.full { background-color: #e74c3c !important; cursor: not-allowed !important; opacity: 0.8 !important; }
 
 /* ---- Reserve Button ---- */
 .reserve-btn {
