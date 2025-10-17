@@ -173,7 +173,30 @@
     slots.forEach(slot => {
       const btn = document.createElement("div");
       btn.className = "slot-btn";
-      btn.textContent = to12h(slot);
+      
+      // Handle different slot formats
+      let displayText = "";
+      if (typeof slot === "string") {
+        // Try to parse as time (HH:MM or HHMM format)
+        if (slot.includes(":")) {
+          displayText = to12h(slot);
+        } else if (/^\d{3,4}$/.test(slot)) {
+          // Format like "0900" or "900" → convert to "09:00"
+          const padded = slot.padStart(4, "0");
+          const timeStr = `${padded.slice(0, 2)}:${padded.slice(2)}`;
+          displayText = to12h(timeStr);
+        } else {
+          // Fallback: just display as-is
+          displayText = String(slot);
+        }
+      } else if (typeof slot === "object" && slot !== null) {
+        // If it's an object, try to extract time property
+        displayText = slot.time ? String(slot.time) : String(slot);
+      } else {
+        displayText = String(slot);
+      }
+      
+      btn.textContent = displayText || "TBD";
       if (activeTime === slot) btn.classList.add("selected");
       btn.addEventListener("click", () => {
         activeTime = slot;
