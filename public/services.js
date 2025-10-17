@@ -24,6 +24,7 @@ console.log('📄 services.js loading...');
 const state = {
   data: { packages: [], addons: [], vehicleSizes: [] },
   selectedPackageId: null,         // 'gloss-shield' | 'interior-revival' | 'showroom-rebirth'
+  secondaryPackageId: null,        // For the auto-applied Exterior Refresh bonus
   selectedSizeId: null,            // 'car' | 'suv' | 'truck'
   selectedAddons: new Set(),       // checkbox addons (paint-correction)
   hairLevel: null,                 // 'none' | 'normal' | 'heavy'  (start null to force explicit choice)
@@ -87,6 +88,44 @@ function bootstrapPackagesFromDOM() {
   return true;
 }
 
+// Auto-apply FREE Exterior Refresh when Interior Revival is selected
+function applyInteriorExteriorDeal() {
+  const glossCard = $('.package-card[data-pkg="gloss-shield"]');
+  const glossShieldRadio = $('input[name="package"][value="gloss-shield"]');
+  const priceEl = glossCard?.querySelector('.price');
+  
+  if (state.selectedPackageId === 'interior-revival') {
+    // Store that we have the bonus
+    state.secondaryPackageId = 'gloss-shield';
+    
+    // Mark exterior card as also selected (visually)
+    if (glossCard) glossCard.classList.add('selected');
+    
+    // Check the radio without triggering change event listener
+    if (glossShieldRadio) glossShieldRadio.checked = true;
+    
+    // Mark the exterior price as $0 (FREE) with strikethrough
+    if (priceEl) {
+      priceEl.classList.add('free-bonus');
+      priceEl.innerHTML = '<span class="strikethrough">$150</span> <span class="bonus-price">$0</span>';
+    }
+  } else {
+    // Clear the bonus flag
+    state.secondaryPackageId = null;
+    
+    // Uncheck and deselect exterior if it was only there as a bonus
+    if (glossCard) glossCard.classList.remove('selected');
+    if (glossShieldRadio) glossShieldRadio.checked = false;
+    
+    // Restore the exterior price to normal
+    if (priceEl) {
+      priceEl.classList.remove('free-bonus');
+      priceEl.innerHTML = '$150';
+    }
+  }
+}
+
+
 // Bind change + details to existing DOM (no re-render)
 function bindStaticPackageEvents() {
   // Package select
@@ -102,6 +141,9 @@ function bindStaticPackageEvents() {
       const pkg = currentPackage();
       const allowed = new Set(pkg?.addons || []);
       [...state.selectedAddons].forEach(id => { if (!allowed.has(id)) state.selectedAddons.delete(id); });
+
+      // Apply Interior/Exterior deal if needed
+      applyInteriorExteriorDeal();
 
       renderAddons();   // respect showroom rule
       calcTotals();
@@ -459,7 +501,9 @@ function persistAndContinue() {
     odor:  { level: state.odorLevel,  price: ODOR_PRICES[state.odorLevel]  || 0 },
     addons: addonsPersist,
     subtotal: subtotalNum,
-    travelFees: [] // (if you later wire distance)
+    travelFees: [], // (if you later wire distance)
+    bonusPackageId: state.secondaryPackageId || null, // Include bonus Exterior Refresh if applicable
+    bonusPackageName: state.secondaryPackageId ? 'Exterior Refresh (FREE BONUS)' : null
   };
 
   console.log('📦 Selection object to persist:');
