@@ -46,6 +46,9 @@ function loadSelections() {
 function renderSummary() {
   const { selection, appointment } = loadSelections();
 
+  console.log('DEBUG renderSummary - selection:', selection);
+  console.log('DEBUG renderSummary - appointment:', appointment);
+
   if (selection) {
     $('#sumPackage').textContent = selection.packageName || '—';
     $('#sumSize').textContent    = selection.sizeLabel   || '—';
@@ -68,8 +71,12 @@ function renderSummary() {
 
     if (selection.subtotal != null && !Number.isNaN(Number(selection.subtotal))) {
       window.__checkoutSubtotal = Number(selection.subtotal);
+      console.log('DEBUG: Setting subtotal from selection:', window.__checkoutSubtotal);
+    } else {
+      console.log('DEBUG: subtotal not found in selection. selection.subtotal =', selection.subtotal);
     }
   } else {
+    console.log('DEBUG: No selection found in localStorage');
     $('#sumPackage').textContent = '—';
     $('#sumSize').textContent    = '—';
     $('#sumHair').textContent    = '—';
@@ -90,8 +97,12 @@ function renderSummary() {
 // ====== PRICING ======
 function syncSubtotal() {
   const stored = Number(window.__checkoutSubtotal || 0);
-  if (Number.isFinite(stored)) {
+  console.log('DEBUG syncSubtotal: window.__checkoutSubtotal =', window.__checkoutSubtotal, 'stored =', stored);
+  if (Number.isFinite(stored) && stored > 0) {
     $('#sumSubtotal').textContent = fmt(stored);
+  } else {
+    console.log('DEBUG: Subtotal is 0 or not a valid number');
+    $('#sumSubtotal').textContent = fmt(0);
   }
 }
 function buildAddressFromInputs() {
@@ -236,13 +247,30 @@ async function handleSubmit(e) {
 
 // ====== INIT ======
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log('DEBUG: Checkout page loaded');
+  
   renderSummary();
   syncSubtotal();
+  
   ['street', 'city', 'state', 'zip'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('input', debouncedRecalc);
   });
-  await estimateFromServer();
+  
+  // Try to estimate from server, but fallback to just showing subtotal
+  const estimateSuccess = await estimateFromServer();
+  console.log('DEBUG: estimateFromServer returned:', estimateSuccess);
+  
+  if (!estimateSuccess) {
+    // Fallback: if address is empty, just use subtotal as total
+    const stored = Number(window.__checkoutSubtotal || 0);
+    if (Number.isFinite(stored) && stored > 0) {
+      console.log('DEBUG: Using subtotal as total (no address):', stored);
+      $('#sumMileageFee').textContent = fmt(0);
+      $('#sumTax').textContent = fmt(0);
+      $('#sumTotal').textContent = fmt(stored);
+    }
+  }
 
   const backBtn = $('#backBtn');
   if (backBtn) backBtn.addEventListener('click', () => history.back());
