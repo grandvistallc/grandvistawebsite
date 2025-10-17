@@ -24,7 +24,8 @@ console.log('📄 services.js loading...');
 const state = {
   data: { packages: [], addons: [], vehicleSizes: [] },
   selectedPackageId: null,         // 'gloss-shield' | 'interior-revival' | 'showroom-rebirth'
-  secondaryPackageId: null,        // For the auto-applied Exterior Refresh bonus
+  selectedPackageIds: new Set(),   // Track ALL selected packages (primary + bonus)
+  bonusPackageId: null,            // 'gloss-shield' when auto-applied via interior-revival
   selectedSizeId: null,            // 'car' | 'suv' | 'truck'
   selectedAddons: new Set(),       // checkbox addons (paint-correction)
   hairLevel: null,                 // 'none' | 'normal' | 'heavy'  (start null to force explicit choice)
@@ -89,38 +90,52 @@ function bootstrapPackagesFromDOM() {
 }
 
 // Auto-apply FREE Exterior Refresh when Interior Revival is selected
+// But also allow independent selection of Exterior Refresh
 function applyInteriorExteriorDeal() {
-  const glossCard = $('.package-card[data-pkg="gloss-shield"]');
-  const glossShieldRadio = $('input[name="package"][value="gloss-shield"]');
-  const priceEl = glossCard?.querySelector('.price');
+  const interiorCard = $('.package-card[data-pkg="interior-revival"]');
+  const exteriorCard = $('.package-card[data-pkg="gloss-shield"]');
+  const exteriorRadio = $('input[name="package"][value="gloss-shield"]');
+  const exteriorPriceEl = exteriorCard?.querySelector('.price');
   
+  // Case 1: Interior Revival is selected
   if (state.selectedPackageId === 'interior-revival') {
-    // Store that we have the bonus
-    state.secondaryPackageId = 'gloss-shield';
+    // Auto-mark exterior as bonus
+    state.bonusPackageId = 'gloss-shield';
     
-    // Mark exterior card as also selected (visually)
-    if (glossCard) glossCard.classList.add('selected');
-    
-    // Check the radio without triggering change event listener
-    if (glossShieldRadio) glossShieldRadio.checked = true;
-    
-    // Mark the exterior price as $0 (FREE) with strikethrough
-    if (priceEl) {
-      priceEl.classList.add('free-bonus');
-      priceEl.innerHTML = '<span class="strikethrough">$150</span> <span class="bonus-price">$0</span>';
+    // Add exterior to the selected set ONLY if not already independently selected
+    if (!state.selectedPackageIds.has('gloss-shield')) {
+      state.selectedPackageIds.add('gloss-shield');
     }
-  } else {
-    // Clear the bonus flag
-    state.secondaryPackageId = null;
     
-    // Uncheck and deselect exterior if it was only there as a bonus
-    if (glossCard) glossCard.classList.remove('selected');
-    if (glossShieldRadio) glossShieldRadio.checked = false;
+    // Visually select exterior card
+    if (exteriorCard) exteriorCard.classList.add('selected');
+    if (exteriorRadio) exteriorRadio.checked = true;
     
-    // Restore the exterior price to normal
-    if (priceEl) {
-      priceEl.classList.remove('free-bonus');
-      priceEl.innerHTML = '$150';
+    // Display crossed-out price + green $0
+    if (exteriorPriceEl) {
+      exteriorPriceEl.classList.add('free-bonus');
+      exteriorPriceEl.innerHTML = '<span class="strikethrough">$150</span> <span class="bonus-price">$0</span>';
+    }
+  } 
+  // Case 2: Interior Revival is deselected
+  else {
+    // If exterior was ONLY a bonus (not independently selected), remove it
+    if (state.bonusPackageId === 'gloss-shield' && state.selectedPackageIds.has('gloss-shield')) {
+      state.selectedPackageIds.delete('gloss-shield');
+    }
+    
+    state.bonusPackageId = null;
+    
+    // Deselect exterior only if it's NOT independently selected
+    if (!state.selectedPackageIds.has('gloss-shield')) {
+      if (exteriorCard) exteriorCard.classList.remove('selected');
+      if (exteriorRadio) exteriorRadio.checked = false;
+    }
+    
+    // Restore exterior price to normal
+    if (exteriorPriceEl && !state.selectedPackageIds.has('gloss-shield')) {
+      exteriorPriceEl.classList.remove('free-bonus');
+      exteriorPriceEl.innerHTML = '$150';
     }
   }
 }
@@ -132,18 +147,78 @@ function bindStaticPackageEvents() {
   $$('#packagesGrid .package-card input[type="radio"]').forEach(radio => {
     radio.addEventListener('change', () => {
       const pkgId = radio.value;
-      state.selectedPackageId = pkgId;
-      // highlight
-      $$('#packagesGrid .package-card').forEach(c => c.classList.remove('selected'));
-      radio.closest('.package-card')?.classList.add('selected');
+      const card = radio.closest('.package-card');
+      
+      // Determine if this is the primary package or bonus selection
+      const isBonus = state.bonusPackageId === pkgId && state.selectedPackageId === 'interior-revival';
+      
+      // If clicking exterior refresh (gloss-shield)
+      if (pkgId === 'gloss-shield') {
+        if (state.selectedPackageId === 'interior-revival') {
+          // Interior is selected → exterior becomes independent selection
+          state.selectedPackageIds.add('gloss-shield');
+          state.bonusPackageId = null; // No longer a bonus, it's independent
+          card?.classList.add('selected');
+          
+          // Update price to normal $150
+          const priceEl = card?.querySelector('.price');
+          if (priceEl) {
+            priceEl.classList.remove('free-bonus');
+            priceEl.innerHTML = '$150';
+          }
+        } else {
+          // No other package selected → normal selection
+          $$('#packagesGrid .package-card').forEach(c => c.classList.remove('selected'));
+          $$('#packagesGrid .package-card input[type="radio"]').forEach(r => r.checked = false);
+          
+          state.selectedPackageId = pkgId;
+          state.selectedPackageIds.clear();
+          state.selectedPackageIds.add(pkgId);
+          state.bonusPackageId = null;
+          card?.classList.add('selected');
+        }
+      }
+      // If clicking interior revival
+      else if (pkgId === 'interior-revival') {
+        // Clear all previous selections and reset
+        $$('#packagesGrid .package-card').forEach(c => c.classList.remove('selected'));
+        $$('#packagesGrid .package-card input[type="radio"]').forEach(r => r.checked = false);
+        
+        state.selectedPackageId = pkgId;
+        state.selectedPackageIds.clear();
+        state.selectedPackageIds.add(pkgId);
+        state.bonusPackageId = null;
+        
+        card?.classList.add('selected');
+        radio.checked = true;
+        
+        // Apply the bonus deal (auto-selects exterior refresh as bonus)
+        applyInteriorExteriorDeal();
+      }
+      // If clicking showroom rebirth or other packages
+      else {
+        $$('#packagesGrid .package-card').forEach(c => c.classList.remove('selected'));
+        $$('#packagesGrid .package-card input[type="radio"]').forEach(r => r.checked = false);
+        
+        state.selectedPackageId = pkgId;
+        state.selectedPackageIds.clear();
+        state.selectedPackageIds.add(pkgId);
+        state.bonusPackageId = null;
+        card?.classList.add('selected');
+        
+        // Reset exterior refresh pricing if it was a bonus
+        const exteriorCard = $('.package-card[data-pkg="gloss-shield"]');
+        const exteriorPriceEl = exteriorCard?.querySelector('.price');
+        if (exteriorPriceEl && !state.selectedPackageIds.has('gloss-shield')) {
+          exteriorPriceEl.classList.remove('free-bonus');
+          exteriorPriceEl.innerHTML = '$150';
+        }
+      }
 
       // prune add-ons when package changes
       const pkg = currentPackage();
       const allowed = new Set(pkg?.addons || []);
       [...state.selectedAddons].forEach(id => { if (!allowed.has(id)) state.selectedAddons.delete(id); });
-
-      // Apply Interior/Exterior deal if needed
-      applyInteriorExteriorDeal();
 
       renderAddons();   // respect showroom rule
       calcTotals();
@@ -502,8 +577,9 @@ function persistAndContinue() {
     addons: addonsPersist,
     subtotal: subtotalNum,
     travelFees: [], // (if you later wire distance)
-    bonusPackageId: state.secondaryPackageId || null, // Include bonus Exterior Refresh if applicable
-    bonusPackageName: state.secondaryPackageId ? 'Exterior Refresh (FREE BONUS)' : null
+    bonusPackageId: state.bonusPackageId || null, // Include bonus Exterior Refresh if applicable
+    bonusPackageName: state.bonusPackageId === 'gloss-shield' ? 'Exterior Refresh (FREE)' : null,
+    selectedPackageIds: Array.from(state.selectedPackageIds) // All selected packages (primary + bonus)
   };
 
   console.log('📦 Selection object to persist:');
@@ -528,8 +604,21 @@ function resetUISelections() {
   // Explicitly uncheck any previously checked radios (browser back-cache safe)
   $$('#packagesGrid .package-card input[type="radio"]').forEach(r => r.checked = false);
   $$('#packagesGrid .package-card').forEach(c => c.classList.remove('selected'));
+  
+  // Reset price displays for all cards
+  $$('#packagesGrid .package-card .price').forEach(p => {
+    p.classList.remove('free-bonus');
+    const pkgCard = p.closest('.package-card');
+    const pkgId = pkgCard?.dataset.pkg;
+    if (pkgId === 'gloss-shield') p.innerHTML = '$150';
+    else if (pkgId === 'interior-revival') p.innerHTML = '$270';
+    else if (pkgId === 'showroom-rebirth') p.innerHTML = '$480';
+  });
+  
   // Reset state to enforce fresh start
   state.selectedPackageId = null;
+  state.selectedPackageIds.clear();
+  state.bonusPackageId = null;
   state.selectedSizeId = null;
   state.selectedAddons.clear();
   state.hairLevel = null;
