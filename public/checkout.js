@@ -39,6 +39,16 @@ function loadSelections() {
   let selection = null, appointment = null;
   try { selection = JSON.parse(localStorage.getItem('bookingSelection') || 'null'); } catch {}
   try { appointment = JSON.parse(localStorage.getItem('appointmentSelection') || 'null'); } catch {}
+  
+  // DEBUG: Log all localStorage keys
+  console.log('=== ALL LOCALSTORAGE ===');
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    console.log(`${key}:`, value);
+  }
+  console.log('=======================');
+  
   return { selection, appointment };
 }
 
@@ -46,17 +56,24 @@ function loadSelections() {
 function renderSummary() {
   const { selection, appointment } = loadSelections();
 
-  console.log('DEBUG renderSummary - selection:', selection);
-  console.log('DEBUG renderSummary - appointment:', appointment);
+  console.log('DEBUG renderSummary - selection:', JSON.stringify(selection, null, 2));
+  console.log('DEBUG renderSummary - appointment:', JSON.stringify(appointment, null, 2));
 
   if (selection) {
-    $('#sumPackage').textContent = selection.packageName || '—';
-    $('#sumSize').textContent    = selection.sizeLabel   || '—';
+    const packageName = selection.packageName || '—';
+    const sizeLabel = selection.sizeLabel || '—';
+    console.log('Setting package to:', packageName);
+    console.log('Setting size to:', sizeLabel);
+    
+    $('#sumPackage').textContent = packageName;
+    $('#sumSize').textContent = sizeLabel;
 
     const hair  = selection.hair?.level  ?? selection.petHair ?? selection.hair ?? selection.petHairLevel;
     const stain = selection.stain?.level ?? selection.staining ?? selection.stainLevel;
     const odor  = selection.odor?.level  ?? selection.deepOdor ?? selection.odorLevel;
 
+    console.log('Hair:', hair, 'Stain:', stain, 'Odor:', odor);
+    
     $('#sumHair').textContent  = valToText(hair);
     $('#sumStain').textContent = valToText(stain);
     $('#sumOdor').textContent  = valToText(odor);
@@ -68,15 +85,17 @@ function renderSummary() {
         .join(', ');
     }
     $('#sumAddons').textContent = addonsText;
+    console.log('Addons:', addonsText);
 
     if (selection.subtotal != null && !Number.isNaN(Number(selection.subtotal))) {
       window.__checkoutSubtotal = Number(selection.subtotal);
-      console.log('DEBUG: Setting subtotal from selection:', window.__checkoutSubtotal);
+      console.log('✓ Setting window.__checkoutSubtotal =', window.__checkoutSubtotal);
     } else {
-      console.log('DEBUG: subtotal not found in selection. selection.subtotal =', selection.subtotal);
+      console.log('✗ ERROR: subtotal not found in selection. selection.subtotal =', selection.subtotal);
+      window.__checkoutSubtotal = 0;
     }
   } else {
-    console.log('DEBUG: No selection found in localStorage');
+    console.log('✗ ERROR: No selection found in localStorage. Checkout cannot proceed!');
     $('#sumPackage').textContent = '—';
     $('#sumSize').textContent    = '—';
     $('#sumHair').textContent    = '—';
@@ -88,9 +107,12 @@ function renderSummary() {
   if (appointment) {
     const d = appointment.date || appointment.dateISO || '';
     const t = appointment.time || appointment.timeLabel || '';
-    $('#sumAppt').textContent = (d && t) ? `${d} at ${t}` : (d || t || '—');
+    const apptText = (d && t) ? `${d} at ${t}` : (d || t || '—');
+    $('#sumAppt').textContent = apptText;
+    console.log('Appointment:', apptText);
   } else {
     $('#sumAppt').textContent = '—';
+    console.log('⚠ No appointment found');
   }
 }
 
