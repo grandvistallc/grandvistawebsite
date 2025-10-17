@@ -181,9 +181,15 @@ const debouncedRecalc = debounce(async () => { await estimateFromServer(); }, 50
 // ====== SUBMIT ======
 async function handleSubmit(e) {
   e.preventDefault();
+  console.log('');
+  console.log('╔════════════════════════════════════════════════════════════════╗');
+  console.log('║  CONFIRM BOOKING - handleSubmit() CALLED                       ║');
+  console.log('╚════════════════════════════════════════════════════════════════╝');
   const name  = $('#customerName').value.trim();
   const phone = $('#phone').value.trim();
+  console.log('📝 Customer inputs: Name=', name, 'Phone=', phone);
   if (!name || !phone) {
+    console.log('❌ Validation failed - missing name or phone');
     $('#errorMsg').classList.remove('hidden');
     return;
   }
@@ -224,6 +230,47 @@ async function handleSubmit(e) {
   };
 
   try {
+    console.log('💰 Running estimateFromServer...');
+    await estimateFromServer();
+
+    const { selection, appointment } = loadSelections();
+    console.log('📦 Selection from localStorage:', JSON.stringify(selection, null, 2));
+    console.log('📦 Appointment from localStorage:', JSON.stringify(appointment, null, 2));
+
+    const payload = {
+      selection,
+      appointment: {
+        date: appointment?.date || appointment?.dateISO || "",
+        time: appointment?.time || appointment?.timeLabel || "",
+        tz:   appointment?.tz   || Intl.DateTimeFormat().resolvedOptions().timeZone || 'local'
+        // Optional: endTime if you calculate duration client-side
+        // endTime: "16:30"
+      },
+      customer: {
+        name,
+        phone,
+        email:  $('#email').value.trim(),
+        address: {
+          street: $('#street').value.trim(),
+          city:   $('#city').value.trim(),
+          state:  $('#state').value.trim(),
+          zip:    $('#zip').value.trim(),
+        },
+        heardFrom: $('#heardFrom').value || '',
+        notes:     $('#notes').value || '',
+      },
+      pricing: {
+        subtotal:   toNumber(window.__checkoutSubtotal || 0),
+        mileageFee: toNumber($('#sumMileageFee').textContent.replace(/[^0-9.]/g, '')),
+        tax:        toNumber($('#sumTax').textContent.replace(/[^0-9.]/g, '')),
+        total:      toNumber($('#sumTotal').textContent.replace(/[^0-9.]/g, '')),
+      }
+    };
+
+    console.log('📤 Full payload to send:');
+    console.log(JSON.stringify(payload, null, 2));
+    
+    console.log('🔗 Making fetch request to:', `${API_BASE}/api/confirm-booking`);
     const res = await fetch(`${API_BASE}/api/confirm-booking`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -231,7 +278,7 @@ async function handleSubmit(e) {
       body: JSON.stringify(payload)
     });
 
-    // ---- Overlap handling: redirect back with bubble ----
+    console.log('📡 Response received - Status:', res.status, res.statusText);
     let overlapMsg = null;
 
     if (res.status === 409) {
@@ -256,6 +303,7 @@ async function handleSubmit(e) {
     if (!res.ok) throw new Error(`Booking failed: ${res.status}`);
 
     // Success
+    console.log('✅✅✅ BOOKING SUCCESSFUL! ✅✅✅');
     $('#successMsg').classList.remove('hidden');
     $('#errorMsg').classList.add('hidden');
 
@@ -263,9 +311,18 @@ async function handleSubmit(e) {
     localStorage.removeItem('appointmentSelection');
     localStorage.removeItem('holdInfo');
 
+    console.log('🔄 Redirecting to /thankyou in 1.5 seconds...');
     setTimeout(() => { window.location.href = '/thankyou'; }, 1500);
   } catch (err) {
-    console.error(err);
+    console.error('');
+    console.error('╔════════════════════════════════════════════════════════════════╗');
+    console.error('║  ❌ BOOKING FAILED - ERROR DETAILS BELOW                       ║');
+    console.error('╚════════════════════════════════════════════════════════════════╝');
+    console.error('Error:', err);
+    console.error('Message:', err.message);
+    console.error('Stack:', err.stack);
+    console.error('');
+    
     $('#errorMsg').classList.remove('hidden');
     const errBox = document.getElementById('errorMsg');
     if (errBox) errBox.textContent = 'Something went wrong. Please try again.';
