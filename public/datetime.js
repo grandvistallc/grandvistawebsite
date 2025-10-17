@@ -190,8 +190,12 @@
           displayText = String(slot);
         }
       } else if (typeof slot === "object" && slot !== null) {
-        // If it's an object, try to extract time property
-        displayText = slot.time ? String(slot.time) : String(slot);
+        // If it's an object, try to extract time property and convert to 12h format
+        if (slot.time) {
+          displayText = to12h(String(slot.time));
+        } else {
+          displayText = String(slot);
+        }
       } else {
         displayText = String(slot);
       }
