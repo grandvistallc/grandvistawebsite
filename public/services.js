@@ -2,9 +2,12 @@
    GrandVista Services (static cards + template breakdowns)
    ========================= */
 
+console.log('📄 services.js loading...');
+
 /* --- NEW: Always start fresh on Services page --- */
 (function clearBookingStateOnLoad() {
   try {
+    console.log('🧹 Clearing previous booking state from localStorage');
     localStorage.removeItem('bookingSelection');
     localStorage.removeItem('appointmentSelection');
     localStorage.removeItem('holdInfo');
@@ -13,6 +16,7 @@
     localStorage.removeItem('flashMsg');
     // If you had any previous keys from older versions, clear them too (no-op if missing):
     localStorage.removeItem('selectedPackage');
+    console.log('✅ Previous state cleared');
   } catch {}
 })();
 
@@ -381,7 +385,17 @@ function calcTotals() {
 }
 
 function validateSelection() {
-  const ok = !!state.selectedPackageId && !!state.selectedSizeId && !!state.hairLevel;
+  const hasPackage = !!state.selectedPackageId;
+  const hasSize = !!state.selectedSizeId;
+  const hasHair = !!state.hairLevel;
+  const ok = hasPackage && hasSize && hasHair;
+  
+  console.log('🔍 validateSelection() results:');
+  console.log('  Package selected:', hasPackage ? '✅' : '❌', `(${state.selectedPackageId})`);
+  console.log('  Size selected:', hasSize ? '✅' : '❌', `(${state.selectedSizeId})`);
+  console.log('  Hair level selected:', hasHair ? '✅' : '❌', `(${state.hairLevel})`);
+  console.log('  Overall result:', ok ? '✅ VALID' : '❌ INVALID');
+  
   $('#validationMsg').classList.toggle('hidden', ok);
   $('#sizeRequiredMsg').classList.toggle('hidden', !!state.selectedSizeId);
   $('#hairRequiredMsg').classList.toggle('hidden', !!state.hairLevel);
@@ -389,10 +403,34 @@ function validateSelection() {
 }
 
 function persistAndContinue() {
-  if (!validateSelection()) return;
+  console.log('');
+  console.log('╔════════════════════════════════════════════════════════════════╗');
+  console.log('║  persistAndContinue() CALLED - STARTING BOOKING SAVE PROCESS  ║');
+  console.log('╚════════════════════════════════════════════════════════════════╝');
+  console.log('');
+  
+  console.log('📋 Current State:');
+  console.log('  selectedPackageId:', state.selectedPackageId);
+  console.log('  selectedSizeId:', state.selectedSizeId);
+  console.log('  hairLevel:', state.hairLevel);
+  console.log('  stainLevel:', state.stainLevel);
+  console.log('  odorLevel:', state.odorLevel);
+  console.log('  selectedAddons:', Array.from(state.selectedAddons));
+  console.log('');
+  
+  console.log('🔍 Validating selection...');
+  
+  if (!validateSelection()) {
+    console.log('❌ VALIDATION FAILED - Stopping here');
+    return;
+  }
 
   const pkg  = currentPackage();
   const size = currentSize();
+  
+  console.log('✅ Validation passed');
+  console.log('  Package:', pkg?.name);
+  console.log('  Size:', size?.label);
 
   const addonsPersist = [...state.selectedAddons].map(id => {
     if (id === 'paint-correction') {
@@ -401,6 +439,12 @@ function persistAndContinue() {
     }
     return null;
   }).filter(Boolean);
+
+  const subtotalText = $('#subtotal').textContent;
+  const subtotalNum = Number(subtotalText.replace(/[^0-9.]/g,''));
+  console.log('💰 Pricing:');
+  console.log('  Subtotal text:', subtotalText);
+  console.log('  Subtotal number:', subtotalNum);
 
   const selection = {
     step: 'services',
@@ -414,11 +458,24 @@ function persistAndContinue() {
     stain: { level: state.stainLevel, price: STAIN_PRICES[state.stainLevel] || 0 },
     odor:  { level: state.odorLevel,  price: ODOR_PRICES[state.odorLevel]  || 0 },
     addons: addonsPersist,
-    subtotal: Number($('#subtotal').textContent.replace(/[^0-9.]/g,'')),
+    subtotal: subtotalNum,
     travelFees: [] // (if you later wire distance)
   };
 
-  try { localStorage.setItem('bookingSelection', JSON.stringify(selection)); } catch {}
+  console.log('📦 Selection object to persist:');
+  console.log(JSON.stringify(selection, null, 2));
+  
+  try { 
+    localStorage.setItem('bookingSelection', JSON.stringify(selection));
+    console.log('✅ Successfully saved bookingSelection to localStorage');
+    console.log('  Keys in storage now:', Object.keys(localStorage));
+  } catch (e) {
+    console.error('❌ FAILED to save to localStorage:', e);
+    return;
+  }
+  
+  console.log('');
+  console.log('🔄 Redirecting to /datetime...');
   window.location.href = '/datetime';
 }
 
@@ -438,6 +495,7 @@ function resetUISelections() {
 
 function init() {
   // read from static DOM
+  console.log('[Services] Starting init...');
   bootstrapPackagesFromDOM();
 
   // FORCE FRESH START (do NOT restore from storage)
@@ -452,8 +510,33 @@ function init() {
   calcTotals();
 
   // Buttons
-  $('#continueBtn')?.addEventListener('click', persistAndContinue);
-  $('#backBtn')?.addEventListener('click', () => history.back());
+  const continueBtn = $('#continueBtn');
+  const backBtn = $('#backBtn');
+  
+  console.log('[Services] Continue button found:', !!continueBtn);
+  console.log('[Services] Back button found:', !!backBtn);
+  
+  if (continueBtn) {
+    continueBtn.addEventListener('click', (e) => {
+      console.log('[Services] ⭐ CONTINUE BUTTON CLICKED');
+      console.log('Event:', e);
+      persistAndContinue();
+    });
+    console.log('[Services] ✓ Continue button listener attached');
+  } else {
+    console.error('[Services] ✗ Continue button NOT FOUND');
+  }
+  
+  if (backBtn) {
+    backBtn.addEventListener('click', () => history.back());
+  }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('');
+  console.log('╔════════════════════════════════════════════════════════════════╗');
+  console.log('║  DOMContentLoaded: Services page is ready                      ║');
+  console.log('╚════════════════════════════════════════════════════════════════╝');
+  console.log('');
+  init();
+});
