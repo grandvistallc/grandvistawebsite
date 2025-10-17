@@ -401,4 +401,24 @@ body::before{
 .expires { font-weight: 600; }
 .muted { opacity: .9; }
 
+/* ---- Interior/Exterior Deal Styling ---- */
+.price.free-bonus {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+}
+
+.price.free-bonus .strikethrough {
+  text-decoration: line-through;
+  color: #9aa0ad;
+  font-size: 0.9em;
+}
+
+.price.free-bonus .bonus-price {
+  color: #22c55e;  /* green */
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
 
