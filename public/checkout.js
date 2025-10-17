@@ -195,40 +195,6 @@ async function handleSubmit(e) {
   }
   $('#errorMsg').classList.add('hidden');
 
-  await estimateFromServer();
-
-  const { selection, appointment } = loadSelections();
-
-  const payload = {
-    selection,
-    appointment: {
-      date: appointment?.date || appointment?.dateISO || "",
-      time: appointment?.time || appointment?.timeLabel || "",
-      tz:   appointment?.tz   || Intl.DateTimeFormat().resolvedOptions().timeZone || 'local'
-      // Optional: endTime if you calculate duration client-side
-      // endTime: "16:30"
-    },
-    customer: {
-      name,
-      phone,
-      email:  $('#email').value.trim(),
-      address: {
-        street: $('#street').value.trim(),
-        city:   $('#city').value.trim(),
-        state:  $('#state').value.trim(),
-        zip:    $('#zip').value.trim(),
-      },
-      heardFrom: $('#heardFrom').value || '',
-      notes:     $('#notes').value || '',
-    },
-    pricing: {
-      subtotal:   toNumber(window.__checkoutSubtotal || 0),
-      mileageFee: toNumber($('#sumMileageFee').textContent.replace(/[^0-9.]/g, '')),
-      tax:        toNumber($('#sumTax').textContent.replace(/[^0-9.]/g, '')),
-      total:      toNumber($('#sumTotal').textContent.replace(/[^0-9.]/g, '')),
-    }
-  };
-
   try {
     console.log('💰 Running estimateFromServer...');
     await estimateFromServer();
@@ -237,14 +203,18 @@ async function handleSubmit(e) {
     console.log('📦 Selection from localStorage:', JSON.stringify(selection, null, 2));
     console.log('📦 Appointment from localStorage:', JSON.stringify(appointment, null, 2));
 
+    // Extract time properly - handle both string and object formats
+    let appointmentTime = appointment?.time || appointment?.timeLabel || "";
+    if (typeof appointmentTime === 'object' && appointmentTime.time) {
+      appointmentTime = appointmentTime.time;
+    }
+
     const payload = {
       selection,
       appointment: {
         date: appointment?.date || appointment?.dateISO || "",
-        time: appointment?.time || appointment?.timeLabel || "",
+        time: appointmentTime,
         tz:   appointment?.tz   || Intl.DateTimeFormat().resolvedOptions().timeZone || 'local'
-        // Optional: endTime if you calculate duration client-side
-        // endTime: "16:30"
       },
       customer: {
         name,
@@ -283,12 +253,15 @@ async function handleSubmit(e) {
 
     if (res.status === 409) {
       const j = await res.json().catch(() => ({}));
-      overlapMsg = j?.message || 'That start time won’t fit the full service duration (includes travel). Please choose another time.';
+      overlapMsg = j?.message || 'Time overlap - please choose another slot';
     } else if (!res.ok) {
-      // Try to parse server json for overlap hint
+      // Try to parse server json for error details
       const j = await res.json().catch(() => ({}));
-      if (j?.error === 'overlap' || /won’t fit the full service duration/i.test(j?.message || '')) {
-        overlapMsg = j.message || 'That start time won’t fit the full service duration (includes travel). Please choose another time.';
+      console.log('Server error response body:', j);
+      if (j?.error === 'overlap' || /won't fit the full service duration/i.test(j?.message || '')) {
+        overlapMsg = j.message || 'Time overlap - please choose another slot';
+      } else {
+        console.log('Server returned error:', j?.message || j?.error || 'Unknown error');
       }
     }
 
