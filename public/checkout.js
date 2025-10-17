@@ -106,7 +106,13 @@ function renderSummary() {
 
   if (appointment) {
     const d = appointment.date || appointment.dateISO || '';
-    const t = appointment.time || appointment.timeLabel || '';
+    let t = appointment.time || appointment.timeLabel || '';
+    
+    // Handle case where time is an object with {time: "HH:MM", ...}
+    if (typeof t === 'object' && t.time) {
+      t = t.time;
+    }
+    
     const apptText = (d && t) ? `${d} at ${t}` : (d || t || '—');
     $('#sumAppt').textContent = apptText;
     console.log('Appointment:', apptText);
