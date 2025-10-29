@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Grand Vista Detailing</title>
+    <link rel="stylesheet" href="/public/grandvista-shared.css">
+    <link rel="stylesheet" href="/public/customers.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon-16x16.png">
+    <link rel="manifest" href="/public/site.webmanifest">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="container">
+            <h1>Customer Dashboard</h1>
+            <nav class="dashboard-nav">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/services" class="nav-link">Services</a>
+                <a href="/customers" class="nav-link active">Customers</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="container">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-container">
+                    <h2>Search Customers</h2>
+                    <div class="search-controls">
+                        <input type="text" id="searchInput" placeholder="Search by name, email, phone, or address..." class="search-input">
+                        <button id="searchBtn" class="btn btn-primary">Search</button>
+                        <button id="clearSearchBtn" class="btn btn-secondary">Clear</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Add Customer Section -->
+            <section class="add-customer-section">
+                <div class="add-customer-container">
+                    <h2>Add New Customer</h2>
+                    <button id="toggleAddFormBtn" class="btn btn-primary">+ Add Customer</button>
+                    
+                    <form id="addCustomerForm" class="add-customer-form hidden">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="customerName">Name *</label>
+                                <input type="text" id="customerName" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customerEmail">Email *</label>
+                                <input type="email" id="customerEmail" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customerPhone">Phone</label>
+                                <input type="tel" id="customerPhone" name="phone">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customerAddress">Address</label>
+                                <input type="text" id="customerAddress" name="address">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customerCity">City</label>
+                                <input type="text" id="customerCity" name="city">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customerState">State</label>
+                                <input type="text" id="customerState" name="state">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="customerZip">ZIP Code</label>
+                                <input type="text" id="customerZip" name="zip">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="vehicleInfo">Vehicle Information</label>
+                                <input type="text" id="vehicleInfo" name="vehicleInfo" placeholder="Year Make Model">
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="customerNotes">Notes</label>
+                                <textarea id="customerNotes" name="notes" rows="3" placeholder="Additional customer information..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-success">Save Customer</button>
+                            <button type="button" id="cancelAddBtn" class="btn btn-secondary">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Customer List Section -->
+            <section class="customer-list-section">
+                <div class="customer-list-container">
+                    <div class="list-header">
+                        <h2>Customer List</h2>
+                        <div class="list-controls">
+                            <button id="syncFromBookingsBtn" class="btn btn-secondary">Sync from Bookings</button>
+                            <div class="list-stats">
+                                <span id="customerCount">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="customer-table-container">
+                        <table id="customerTable" class="customer-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Vehicle</th>
+                                    <th>Last Service</th>
+                                    <th>Total Services</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customerTableBody">
+                                <tr>
+                                    <td colspan="8" class="loading-cell">Loading customers...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Customer Detail Modal -->
+            <div id="customerModal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modalCustomerName">Customer Details</h3>
+                        <button id="closeModal" class="close-btn">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="customerDetails" class="customer-details">
+                            <!-- Customer details will be loaded here -->
+                        </div>
+                        <div id="customerBookings" class="customer-bookings">
+                            <h4>Booking History</h4>
+                            <div id="bookingsList" class="bookings-list">
+                                <!-- Booking history will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="editCustomerBtn" class="btn btn-primary">Edit Customer</button>
+                        <button id="closeModalBtn" class="btn btn-secondary">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner hidden">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="messageContainer" class="message-container"></div>
+
+    <script src="/public/customers.js"></script>
+</body>
+</html>
