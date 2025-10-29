@@ -361,6 +361,7 @@ function syncCustomersFromBookings(data) {
     
     const customerHeaders = customerData[0];
     const existingCustomers = customerData.slice(1);
+    const bookingHeaders = bookingData[0];
     const bookingRows = bookingData.slice(1);
     
     // Find column indices for customer sheet
@@ -374,6 +375,7 @@ function syncCustomersFromBookings(data) {
       return -1;
     };
     
+    // Customer sheet columns
     const nameCol = getColumnIndex(customerHeaders, ['name']);
     const emailCol = getColumnIndex(customerHeaders, ['email', 'e-mail']);
     const phoneCol = getColumnIndex(customerHeaders, ['phone', 'telephone', 'mobile']);
@@ -385,9 +387,22 @@ function syncCustomersFromBookings(data) {
     const notesCol = getColumnIndex(customerHeaders, ['notes', 'comments']);
     const dateCol = getColumnIndex(customerHeaders, ['date', 'created', 'added']);
     
+    // Booking sheet columns - flexible detection
+    const bookingEmailCol = getColumnIndex(bookingHeaders, ['email', 'e-mail']);
+    const bookingPhoneCol = getColumnIndex(bookingHeaders, ['phone', 'telephone', 'mobile']);
+    const bookingNameCol = getColumnIndex(bookingHeaders, ['name', 'customer', 'client']);
+    const bookingAddressCol = getColumnIndex(bookingHeaders, ['address', 'street', 'location']);
+    const bookingVehicleCol = getColumnIndex(bookingHeaders, ['vehicle', 'car', 'auto']);
+    
     if (nameCol < 0 || emailCol < 0) {
       return ContentService
         .createTextOutput(JSON.stringify({ success: false, message: 'Customer sheet must have Name and Email columns' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    if (bookingEmailCol < 0) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ success: false, message: 'Booking sheet must have an Email column to sync customers' }))
         .setMimeType(ContentService.MimeType.JSON);
     }
     
@@ -402,11 +417,13 @@ function syncCustomersFromBookings(data) {
     const newCustomers = [];
     const seenEmails = new Set();
     
-    // Process bookings
+    // Process bookings - now using flexible column detection
     for (const booking of bookingRows) {
-      const email = booking[2] ? booking[2].toString() : '';
-      const phone = booking[3] ? booking[3].toString() : '';
-      const customerName = booking[9] ? booking[9].toString() : '';
+      const email = bookingEmailCol >= 0 ? (booking[bookingEmailCol] || '').toString() : '';
+      const phone = bookingPhoneCol >= 0 ? (booking[bookingPhoneCol] || '').toString() : '';
+      const customerName = bookingNameCol >= 0 ? (booking[bookingNameCol] || '').toString() : '';
+      const address = bookingAddressCol >= 0 ? (booking[bookingAddressCol] || '').toString() : '';
+      const vehicle = bookingVehicleCol >= 0 ? (booking[bookingVehicleCol] || '').toString() : '';
       
       if (email && !existingEmails.has(email.toLowerCase()) && !seenEmails.has(email.toLowerCase())) {
         seenEmails.add(email.toLowerCase());
@@ -419,8 +436,8 @@ function syncCustomersFromBookings(data) {
         if (nameCol >= 0) newRow[nameCol] = customerName || email.split('@')[0];
         if (emailCol >= 0) newRow[emailCol] = email;
         if (phoneCol >= 0) newRow[phoneCol] = phone;
-        if (addressCol >= 0) newRow[addressCol] = booking[7] ? booking[7].toString() : '';
-        if (vehicleCol >= 0) newRow[vehicleCol] = booking[5] ? booking[5].toString() : '';
+        if (addressCol >= 0) newRow[addressCol] = address;
+        if (vehicleCol >= 0) newRow[vehicleCol] = vehicle;
         if (notesCol >= 0) newRow[notesCol] = 'Auto-added from booking';
         if (dateCol >= 0) newRow[dateCol] = currentDate;
         
@@ -438,7 +455,15 @@ function syncCustomersFromBookings(data) {
       .createTextOutput(JSON.stringify({ 
         success: true, 
         message: `Synced ${newCustomers.length} new customers from bookings`,
-        newCustomersCount: newCustomers.length
+        newCustomersCount: newCustomers.length,
+        debugInfo: {
+          totalBookings: bookingRows.length,
+          bookingEmailColumn: bookingEmailCol,
+          bookingPhoneColumn: bookingPhoneCol,
+          bookingNameColumn: bookingNameCol,
+          customerEmailColumn: emailCol,
+          existingCustomersCount: existingCustomers.length
+        }
       }))
       .setMimeType(ContentService.MimeType.JSON);
       
