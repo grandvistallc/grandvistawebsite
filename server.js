@@ -14,10 +14,16 @@ const {
   GOOGLE_SHEET_ID,
   GOOGLE_SERVICE_ACCOUNT_EMAIL,
   GOOGLE_PRIVATE_KEY,
+  
+  CUSTOMER_SHEET_ID = '11jE8pvTUMQl6eRrt1KET9P9E4ENK1Nh1CpWKlD4JmQc',
+  BOOKING_SHEET_ID = '152pBQmy7OKze84ShxJLj4MUPLFquHXjIvaTk-cCJYco',
+  GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS_sBvwxLOC3VRaK_oQT0G1noX8rORkPsEGAKA5X4-kvPp7y9zNJjA-FhiHkqEpyNC/exec',
 
   SHEET_AVAIL_TAB = 'Availability',
   SHEET_BOOKINGS_TAB = 'Bookings',
   SHEET_BLACKOUTS_TAB = 'Blackouts',
+  CUSTOMER_TAB = 'Sheet1',
+  BOOKING_TAB = 'Sheet1',
 
   MIN_LEAD_MINUTES = '0',
   SAME_DAY_CUTOFF_MIN = '0',
@@ -52,7 +58,7 @@ app.use('/public', express.static(PUBLIC_DIR));
 app.use('/Images', express.static(path.join(__dirname, 'Images')));
 app.use(express.static(VIEWS_DIR));
 
-/* ========= ✅ Sitemap & Robots.txt Fix ========= */
+/* ========= ✅ Sitemap & Robots.txt (FIX) ========= */
 app.get('/sitemap.xml', (req, res) => {
   res.type('application/xml');
   res.sendFile(path.join(PUBLIC_DIR, 'sitemap.xml'));
@@ -87,18 +93,18 @@ async function getSheets() {
 }
 
 /* ========= Sheets helpers ========= */
-async function getValues(range) {
+async function getValues(range, sheetId = GOOGLE_SHEET_ID) {
   const sheets = await getSheets();
   const res = await sheets.spreadsheets.values.get({
-    spreadsheetId: GOOGLE_SHEET_ID,
+    spreadsheetId: sheetId,
     range,
   });
   return res.data.values || [];
 }
-async function appendValues(range, rows) {
+async function appendValues(range, rows, sheetId = GOOGLE_SHEET_ID) {
   const sheets = await getSheets();
   await sheets.spreadsheets.values.append({
-    spreadsheetId: GOOGLE_SHEET_ID,
+    spreadsheetId: sheetId,
     range,
     valueInputOption: 'USER_ENTERED',
     insertDataOption: 'INSERT_ROWS',
@@ -145,7 +151,7 @@ async function loadSnapshot(force = false) {
   return inflight;
 }
 
-/* ========= Time & date helpers ========= */
+/* ========= Helper Functions ========= */
 function timeToMinutes(t) {
   const [hh, mm] = String(t || '00:00').split(':').map(Number);
   return (hh * 60) + (mm || 0);
@@ -174,6 +180,243 @@ function parseSheetDateToISO(cell) {
   return null;
 }
 
+/* ========= Google Apps Script Helper ========= */
+async function callGoogleAppsScript(action, data = {}) {
+  try {
+    if (!GOOGLE_APPS_SCRIPT_URL) {
+      throw new Error('Google Apps Script URL not configured');
+    }
+    
+    const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: action,
+        ...data
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const text = await response.text();
+    
+    // Check if response is HTML (error page) instead of JSON
+    if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+      throw new Error('Google Apps Script returned HTML error page instead of JSON');
+    }
+    
+    const result = JSON.parse(text);
+    return result;
+  } catch (error) {
+    console.error('Error calling Google Apps Script:', error.message);
+    // Return a fallback response structure
+    return {
+      success: false,
+      message: `Google Apps Script error: ${error.message}`,
+      fallback: true
+    };
+  }
+}
+
+/* ========= Customer API Endpoints ========= */
+
+// Get all customers
+app.get('/api/customers', async (req, res) => {
+  try {
+    const result = await callGoogleAppsScript('getCustomers', {
+      customerSheetId: CUSTOMER_SHEET_ID,
+      bookingSheetId: BOOKING_SHEET_ID,
+      customerTab: CUSTOMER_TAB,
+      bookingTab: BOOKING_TAB
+    });
+    
+    if (result.success) {
+      res.json({ success: true, customers: result.customers || [] });
+    } else if (result.fallback) {
+      // Provide fallback demo data when Google Apps Script is not available
+      const demoCustomers = [
+        {
+          id: '1',
+          name: 'John Doe',
+          email: 'john.doe@email.com',
+          phone: '(555) 123-4567',
+          address: '123 Main St',
+          city: 'Anytown',
+          state: 'CA',
+          zip: '12345',
+          vehicleInfo: '2020 Honda Civic',
+          notes: 'Regular customer',
+          createdDate: '2024-01-15',
+          totalServices: 3,
+          lastService: '2024-10-15'
+        },
+        {
+          id: '2',
+          name: 'Jane Smith',
+          email: 'jane.smith@email.com',
+          phone: '(555) 987-6543',
+          address: '456 Oak Ave',
+          city: 'Another City',
+          state: 'CA',
+          zip: '67890',
+          vehicleInfo: '2019 Toyota Camry',
+          notes: 'Demo customer data',
+          createdDate: '2024-02-20',
+          totalServices: 1,
+          lastService: '2024-09-10'
+        }
+      ];
+      res.json({ 
+        success: true, 
+        customers: demoCustomers,
+        message: 'Demo data - Google Apps Script not connected',
+        isDemoData: true
+      });
+    } else {
+      res.status(500).json({ success: false, message: result.message || 'Failed to fetch customers' });
+    }
+  } catch (error) {
+    console.error('Error fetching customers:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch customers' });
+  }
+});
+
+// Get specific customer with booking history
+app.get('/api/customers/:id', async (req, res) => {
+  try {
+    const customerId = req.params.id;
+    
+    const result = await callGoogleAppsScript('getCustomer', {
+      customerSheetId: CUSTOMER_SHEET_ID,
+      bookingSheetId: BOOKING_SHEET_ID,
+      customerTab: CUSTOMER_TAB,
+      bookingTab: BOOKING_TAB,
+      customerId: customerId
+    });
+    
+    if (result.success) {
+      res.json({ success: true, customer: result.customer, bookings: result.bookings || [] });
+    } else if (result.fallback) {
+      // Provide fallback demo data
+      const demoCustomer = {
+        id: customerId,
+        name: 'Demo Customer',
+        email: 'demo@email.com',
+        phone: '(555) 123-4567',
+        address: '123 Demo St',
+        city: 'Demo City',
+        state: 'CA',
+        zip: '12345',
+        vehicleInfo: '2020 Demo Car',
+        notes: 'This is demo data',
+        createdDate: '2024-01-15',
+        totalServices: 2
+      };
+      
+      const demoBookings = [
+        {
+          date: '2024-10-15',
+          time: '10:00 AM',
+          service: 'Full Detail',
+          amount: '$150',
+          notes: 'Demo booking'
+        }
+      ];
+      
+      res.json({ 
+        success: true, 
+        customer: demoCustomer, 
+        bookings: demoBookings,
+        message: 'Demo data - Google Apps Script not connected',
+        isDemoData: true
+      });
+    } else {
+      res.status(404).json({ success: false, message: result.message || 'Customer not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching customer details:', error);
+    res.status(500).json({ success: false, message: 'Failed to fetch customer details' });
+  }
+});
+
+// Add new customer
+app.post('/api/customers', async (req, res) => {
+  try {
+    const { name, email, phone, address, city, state, zip, vehicleInfo, notes } = req.body;
+    
+    if (!name || !email) {
+      return res.status(400).json({ success: false, message: 'Name and email are required' });
+    }
+    
+    const result = await callGoogleAppsScript('addCustomer', {
+      customerSheetId: CUSTOMER_SHEET_ID,
+      customerTab: CUSTOMER_TAB,
+      customerData: {
+        name,
+        email,
+        phone: phone || '',
+        address: address || '',
+        city: city || '',
+        state: state || '',
+        zip: zip || '',
+        vehicleInfo: vehicleInfo || '',
+        notes: notes || ''
+      }
+    });
+    
+    if (result.success) {
+      res.json({ success: true, message: 'Customer added successfully' });
+    } else if (result.fallback) {
+      res.json({ 
+        success: true, 
+        message: 'Customer would be added to Google Sheets when connected',
+        isDemoMode: true
+      });
+    } else {
+      res.status(400).json({ success: false, message: result.message || 'Failed to add customer' });
+    }
+  } catch (error) {
+    console.error('Error adding customer:', error);
+    res.status(500).json({ success: false, message: 'Failed to add customer' });
+  }
+});
+
+// Sync customers from bookings (automatically detect and add new customers)
+app.post('/api/customers/sync-from-bookings', async (req, res) => {
+  try {
+    const result = await callGoogleAppsScript('syncCustomersFromBookings', {
+      customerSheetId: CUSTOMER_SHEET_ID,
+      bookingSheetId: BOOKING_SHEET_ID,
+      customerTab: CUSTOMER_TAB,
+      bookingTab: BOOKING_TAB
+    });
+    
+    if (result.success) {
+      res.json({ 
+        success: true, 
+        message: result.message || `Synced ${result.newCustomersCount || 0} new customers from bookings`,
+        newCustomersCount: result.newCustomersCount || 0
+      });
+    } else if (result.fallback) {
+      res.json({ 
+        success: true, 
+        message: 'Sync would process bookings when Google Apps Script is connected',
+        newCustomersCount: 0,
+        isDemoMode: true
+      });
+    } else {
+      res.status(500).json({ success: false, message: result.message || 'Failed to sync customers from bookings' });
+    }
+  } catch (error) {
+    console.error('Error syncing customers from bookings:', error);
+    res.status(500).json({ success: false, message: 'Failed to sync customers from bookings' });
+  }
+});
+
 /* ========= APIs ========= */
 app.get('/api/available-dates', async (req, res) => {
   try {
@@ -188,7 +431,8 @@ app.get('/api/available-dates', async (req, res) => {
     for (let d = 1; d <= lastDay; d++) {
       const dt = new Date(y, m - 1, d);
       const iso = dt.toISOString().slice(0,10);
-      const hasOpen = true; // simplified for example
+      const capMap = capacityMapForDateFromSnapshot(iso, snap);
+      const hasOpen = [...capMap.entries()].some(([t, c]) => c > 0);
       if (hasOpen) openDates.push(iso);
     }
 
@@ -205,6 +449,7 @@ app.get('/services',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'services
 app.get('/datetime',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'datetime.html')));
 app.get('/checkout',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'checkout.html')));
 app.get('/thankyou',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'Thankyou.html')));
+app.get('/customers',  (req, res) => res.sendFile(path.join(VIEWS_DIR, 'Customers.html')));
 app.get('/packages',   (req, res) => res.sendFile(path.join(VIEWS_DIR, 'packages.html')));
 app.get('/blogs',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'blogs.html')));
 app.get('/blog1',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'blog1.html')));
@@ -217,6 +462,7 @@ app.get('/freestuff',  (req, res) => res.sendFile(path.join(VIEWS_DIR, 'freestuf
 app.get('/mobile',     (req, res) => res.sendFile(path.join(VIEWS_DIR, 'mobile.html')));
 app.get('/privacy',    (req, res) => res.sendFile(path.join(VIEWS_DIR, 'privacy.html')));
 app.get('/terms',      (req, res) => res.sendFile(path.join(VIEWS_DIR, 'terms.html')));
+app.get('/test',       (req, res) => res.sendFile(path.join(VIEWS_DIR, 'test.html')));
 
 app.get(['/Contact', '/Contact.html'], (req, res) => res.redirect(301, '/contact'));
 
