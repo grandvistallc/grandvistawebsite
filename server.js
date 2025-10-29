@@ -17,7 +17,6 @@ const {
   
   CUSTOMER_SHEET_ID = '11jE8pvTUMQl6eRrt1KET9P9E4ENK1Nh1CpWKlD4JmQc',
   BOOKING_SHEET_ID = '152pBQmy7OKze84ShxJLj4MUPLFquHXjIvaTk-cCJYco',
-  GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS_sBvwxLOC3VRaK_oQT0G1noX8rORkPsEGAKA5X4-kvPp7y9zNJjA-FhiHkqEpyNC/exec',
 
   SHEET_AVAIL_TAB = 'Availability',
   SHEET_BOOKINGS_TAB = 'Bookings',
@@ -37,6 +36,9 @@ const {
 
   DRIVE_ROUND_TRIP = 'true'
 } = process.env;
+
+// Google Apps Script Web App URL (replace with your deployed URL)
+const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3TUoMP7Ta4vF5fBE-Isz7J7E4mhumSzZqc9XMtNHpn2o5ikEqZuN5pgCEoujzM5E8Pg/exec';
 
 const MIN_LEAD   = Number(MIN_LEAD_MINUTES) || 0;
 const SAME_DAY_C = Number(SAME_DAY_CUTOFF_MIN) || 0;
