@@ -6,15 +6,15 @@ import os
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
-CSV_FILE = 'customer-import-template.csv'
+CSV_FILE = os.path.join('Views', 'customer-import-template.csv')
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'Customer.html')
+    return send_from_directory('Views', 'Customer.html')
 
 @app.route('/<path:path>')
 def serve_static(path):
-    return send_from_directory('.', path)
+    return send_from_directory('Views', path)
 
 @app.route('/api/update-customer', methods=['POST'])
 def update_customer():
@@ -112,7 +112,4 @@ def add_customer():
             'message': str(e)
         }), 500
 
-if __name__ == '__main__':
-    print('Starting server on http://localhost:5000')
-    print('Open http://localhost:5000 in your browser')
-    app.run(debug=True, port=5000)
+## Remove app.run block for PythonAnywhere WSGI deployment
