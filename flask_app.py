@@ -8,8 +8,13 @@ CORS(app)  # Enable CORS for all routes
 
 CSV_FILE = os.path.join('Views', 'customer-import-template.csv')
 
+
 @app.route('/')
 def index():
+    return send_from_directory('Views', 'Customer.html')
+
+@app.route('/Customer.html')
+def customer_html():
     return send_from_directory('Views', 'Customer.html')
 
 @app.route('/<path:path>')
