@@ -3240,7 +3240,7 @@ function showAddCustomerForm() {
 
 		// Add to CSV via server
 		try {
-			const response = await fetch('/add-customer', {
+			const response = await fetch('https://grandvista.pythonanywhere.com/add-customer', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(newCustomer)
